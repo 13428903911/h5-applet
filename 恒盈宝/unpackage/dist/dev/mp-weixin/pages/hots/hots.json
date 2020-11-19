@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "金斗云",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "header": "/pages/header/header",
+    "hotsbanner": "/pages/hots/hots_banner/hots_banner",
+    "hostcenter": "/pages/hots/host_center/host_center",
+    "hostrz": "/pages/hots/host_rz/host_rz",
+    "detailsone": "/pages/hots/hostdetails/detail_one/detail_one",
+    "jobfooter": "/pages/job_detail/jobfooter/jobfooter"
+  }
+}

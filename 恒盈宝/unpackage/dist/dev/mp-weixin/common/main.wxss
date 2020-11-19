@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'iconfont';  /* project id 2162073 */
+  src: url('https://at.alicdn.com/t/font_2162073_13br8335iw2.eot');
+  src: url('https://at.alicdn.com/t/font_2162073_13br8335iw2.eot?#iefix') format('embedded-opentype'),
+  url('https://at.alicdn.com/t/font_2162073_13br8335iw2.woff2') format('woff2'),
+  url('https://at.alicdn.com/t/font_2162073_13br8335iw2.woff') format('woff'),
+  url('https://at.alicdn.com/t/font_2162073_13br8335iw2.ttf') format('truetype'),
+  url('https://at.alicdn.com/t/font_2162073_13br8335iw2.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-16:before {
+  content: "\e65e";
+}
+.icon-longtime:before {
+  content: "\e6b8";
+}
+.icon-dui:before {
+  content: "\e651";
+}
+.icon-shou:before {
+  content: "\e61c";
+}
+.icon-location:before {
+  content: "\e611";
+}
+.icon-jishiqia:before {
+  content: "\e604";
+}
+.icon-xing:before {
+  content: "\e62d";
+}
+.icon-rencai:before {
+  content: "\e63f";
+}
+.icon-rencai1:before {
+  content: "\e711";
+}
+.icon-duanqi:before {
+  content: "\e689";
+}
+.icon-jishiqi:before {
+  content: "\e787";
+}
+.icon-dui1:before {
+  content: "\e624";
+}
+.icon-gongzuo:before {
+  content: "\e66c";
+}
+.icon-weibiaoti-1-15:before {
+  content: "\e6a7";
+}
+.icon-riqiqishu:before {
+  content: "\e6be";
+}
+.icon-jiesuanfangshishoufutaizhang:before {
+  content: "\e60a";
+}
+/* 解决头条小程序组件内引入字体不生效的问题 */
+
+
+
+
+
+
+

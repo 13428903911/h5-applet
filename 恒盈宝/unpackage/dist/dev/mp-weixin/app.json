@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/hots/hots",
+    "pages/job_detail/job_detail",
+    "pages/index/index",
+    "pages/register/register"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#007AFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "swiperList": [{
+        "id": "0001",
+        "imgUrl": "/static/images/banner1.png"
+      },{
+        "id": "0002",
+        "imgUrl": "/static/images/banner2.jpg"
+      },{
+        "id": "0003",
+        "imgUrl": "/static/images/banner3.jpg"
+      }] 
+  }
+}
