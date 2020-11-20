@@ -13,7 +13,7 @@
 						<p>您还没有投递过的职位</p>
 					</view>
 					<view class="">
-						<view class="item" v-for="(item,index) in management" :key="index">
+						<view class="item" v-for="(item,index) in management" :key="index" @tap="workManagement(item.id)">
 							<view class="info">
 								<p class="title">
 									<a>{{item.task_name}}</a>
@@ -107,11 +107,11 @@
 					}
 				}
 			},
-			// zhiweiguanli(){
-			// 	wx.navigateTo({
-			// 		url:'/pages/job_detail/job_detail'
-			// 	})
-			// },
+			workManagement(id){
+				wx.navigateTo({
+					url:'/pages/job_detail/job_detail?id='+id
+				})
+			},
 			chtt(){
 				 this.flag = !this.flag;
 			},

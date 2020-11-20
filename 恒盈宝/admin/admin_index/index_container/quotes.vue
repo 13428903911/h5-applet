@@ -11,7 +11,7 @@
 					<p>您还没有投递过的职位</p>
 				</view>
 				<view class="">
-					<view class="item" v-for="(item,index) in management" :key="index">
+					<view class="item" v-for="(item,index) in management" :key="index" @tap="postDetails(item.id)">
 						<view class="info">
 							<p class="title">
 								<a>{{item.task_name}}</a>
@@ -100,6 +100,9 @@
 						break;	
 					}
 				}
+			},
+			postDetails(id){//跳转详情页
+				wx.navigateTo({url:'/pages/job_detail/job_detail?id='+id})
 			},
 			// zhiweiguanli(){
 			// 	wx.navigateTo({

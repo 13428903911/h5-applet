@@ -41,7 +41,7 @@
 						</view> 
 						<view class="content no-border cl">
 							<view class="tags cl">
-								<view class="item filter_item" v-for="(item,index) in productListc" :key="item.id" @click="positionc_click(item.id,index)" :class="{'acti': fla == item.id}">
+								<view class="item filter_item" v-for="(item,index) in productListc" :key="item.id" @click="positionc_click(item.id,index)" :class="{'acti': rSelect.indexOf(index) != -1}">
 									{{item.skill_label}}
 								</view>
 							</view>
@@ -74,9 +74,9 @@
 				show:false,
 				show2:false,
 				productList:[],
-				flag: 0,
-				fla: 0,
-				fl: 0,
+				flag: null,
+				fla: null,
+				fl: null,
 				productListb:[],
 				productListc:[],
 				rSelect:[],
@@ -85,7 +85,7 @@
 			
 					user_id:this.$store.state.userInfo.user_id,
 					position_type:'',
-					occupate:[],
+					occupate:'',
 					skill:[]
 				
 				}
@@ -142,37 +142,39 @@
 							return item.id
 						}
 					})
+					console.log(position_type2)
 					position_type2.forEach(itme => {
-						this.occupate.push(itme.id)
-						
+						this.occupate = itme.id
 					})
-					
-					this.skill.push(position_type2)
+				
 				},
 				positionc_click(id,index){
-					this.fla = id
-					// let that = this;
-					//        if (that.rSelect.indexOf(index) == -1 && that.rSelect.length<3) {
-					//         // console.log(e); //打印下标
-					//         that.rSelect.push(index); //选中添加到数组里
-					//        }else if(that.rSelect.length==3 || that.rSelect.indexOf(index),1){
-					//         uni.showToast({
-					//          title:'最多只能选四个',
-					//          duration:1000,
-					//          icon:'none'
-					//         })
+					
+					       if (this.rSelect.indexOf(index) == -1 ) {
+								this.rSelect.push(index);
+								if(this.rSelect.length>3){
+									uni.showToast({title:'最多只能选四个',duration:1000,icon:'none'})
+								
+			
+							}//选中添加到数组里
+					      //  }else if(that.rSelect.length==3 || that.rSelect.indexOf(index),1){
+					      //   uni.showToast({
+					      //    title:'最多只能选四个',
+					      //    duration:1000,
+					      //    icon:'none'
+					      //   })
 					        
-					//         return false
-					//         that.rSelect.splice(that.rSelect.indexOf(index), 1); //取消
+					      //   return false
+					        // this.rSelect.splice(this.rSelect.indexOf(index), 1); //取消
 					        
-					//       }
-				let position_type3 = this.productListc.filter(item => {
-					if(item.id == id) {
-						return item.id
-						}
-					})
+					      }
+				let position_type3=[]
+				for(let i=0; i<this.productListc.length; i++){
+					if(this.productListc[i].id == id){
+						position_type3.push(this.productListc[i])
+					}
+				}
 					this.skill.push(position_type3)
-					console.log(position_type3)
 				},
 				// tapInfo(e) {
 				       
@@ -198,7 +200,7 @@
 					this.$http.post('/public/index.php/api/Position/saveWorkType',{
 						user_id:this.user_id,
 						position_type:this.position_type,
-						occupate:1,
+						occupate:this.occupate,
 						skill:JSON.stringify(this.skill)
 					}).then(res => {
 						console.log(res)
@@ -347,6 +349,6 @@
 .activ{background: #cce8fd!important;}
 .acti{background: #cce8fd!important;}
 .filter_item:first-child{
-	background: #cce8fd!important;
+	// background: #cce8fd!important;
 }
 </style>

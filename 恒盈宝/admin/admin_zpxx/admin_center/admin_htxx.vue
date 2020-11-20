@@ -62,10 +62,11 @@
 					</dl>
 				</view>
 			</view>
-			<view class="ft-wrap w1060 cl"><span @click = "qianyue" class="btn btn-blue btn-disabled">确 认</span></view>
+			<view class="ft-wrap w1060 cl"  v-if="status"><span @click = "qianyue" class="btn btn-blue btn-disabled" style="backgroundColor: #646566;">已签约</span></view>
+			<view class="ft-wrap w1060 cl" v-else><span @click = "qianyue" class="btn btn-blue btn-disabled" >确 认</span></view>
 		</view>
 		<view class="dialog quote-retract" v-show="flag">
-			<view class="panel">
+			<view class="panel"> 
 				<view class="hd"><h2 class="title">是否确认该合同？</h2> <i @click="xx" class="icon iconfont">&#xe60d;</i></view>
 				<view class="bd">
 					<view class="dialog-retract">
@@ -82,6 +83,7 @@
 	export default {
 		data() {
 			return {
+				status:false,
 				getContract:[],
 				contractname:"",
 				flag:false,
@@ -106,8 +108,11 @@
 					task_id:this.task_id,
 					user_id:this.$store.state.userInfo.user_id,
 				}).then(res => {
-					this.flag = !this.flag;
-					console.log(res)
+					if(res.data.code == 1){
+						this.flag = !this.flag;
+						this.status = true
+					}
+					
 				})
 			}
 		},

@@ -1,17 +1,18 @@
 <template>
 	<view class="page-admin container">
 		<view class="main">
-			<view class="settlein">
+			<!-- <view class="settlein">
 				<p><i class="icon iconfont">&#xe601;</i> <span>您未完成入驻审核，无法投递平台职位</span></p> 
 				<a @click="sqrz()" class="btn-text">申请入驻</a>
-			</view>
+			</view> -->
 			<view class="box box-stats">
 				<view class="user">
 					<view class="avatar">
-						<img @click="aimg" src="/static/images/touxiang5.png" alt="">
+						<img @click="aimg" src="/static/images/touxiang5.png" alt="" v-if="!imageUrl">
+						<img @click="aimg" :src="imageUrl" alt="" v-else>
 					</view>
 					<view class="info">
-						<p class="name">金斗云-hJgcVdJw</p>
+						<p class="name">{{userName}}</p>
 						<view class="meta">
 							<!-- <view class="legalize">
 								<view class="item legalize-un">
@@ -45,6 +46,8 @@
 	export default {
 		data() {
 			return {
+				 userName:'',
+				 imageUrl:'',
 				totalEarned:"",
 				totalWorkTime:"",
 				averageHourlyRate:"",
@@ -56,6 +59,15 @@
 			}
 		},
 		methods: {
+			userMessageQuery() {//查询个人信息
+				 this.$http.post('/public/index.php/api/User/index',{user_id:this.$store.state.userInfo.user_id}).then(res => {
+					 if(res.data.data.length<0){}
+					else{
+					   this.userName = res.data.data[0].username
+					   this.imageUrl =  res.data.data[0].avatar
+					}
+				 })
+			},
 			sqrz(){
 				wx.navigateTo({
 					url: '/admin/admin_data/admin_data'
@@ -74,6 +86,7 @@
 		},
 		created() {
 			this.$http.post('/public/index.php/api/User/getUserTotal',{user_id:this.$store.state.userInfo.user_id,}).then(res => {
+				console.log(res)
 				 if(res.data.data.totalEarned==0){
 				 	this.flag = false
 				 }else{
@@ -98,7 +111,8 @@
 				 	this.f = true
 				   this.totalContractedJob = res.data.data.totalContractedJob
 				 }
-			})
+			}),
+			this.userMessageQuery()
 			
 		}
 	}
