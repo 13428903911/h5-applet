@@ -25,12 +25,12 @@
 							<view class="center">绑定邮箱</view>
 						    <view class="right"><i class="icon iconfont">&#xe605;</i></view>
 					</view> -->
-					<view @click="zhmm()" class="admin_nbr gaodu">
+					<!-- <view @click="zhmm()" class="admin_nbr gaodu">
 							<view class="left"><i class="icon iconfont" style="margin-top:15px;font-size: 22px;color:#9ca6ae">&#xe77f;</i></view>
 							<view class="center">账户密码</view>
 						    <view class="right"><i class="icon iconfont">&#xe605;</i></view>
 					</view>
-					
+					 -->
 			<!-- </uni-drawer> -->
 			</view>
 	</view>

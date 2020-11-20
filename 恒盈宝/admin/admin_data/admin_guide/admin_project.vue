@@ -2,10 +2,15 @@
 	<view>
 		<Adminheader></Adminheader>
 		<view class="resume-work w700 fixed-ft work-exper container">
-				<el-form class="form-wrap" :model="project" ref="project" :rules="rules">
+				<el-form class="form-wrap" :model="dynamicValidateForm" ref="dynamicValidateForm" :rules="rules">
 					<view class="form-group-hd"><h2 class="title">您的项目经验</h2></view>
-					<view class="form-group"><view class="subtitle"><label>项目经验 1</label></view></view>
-					<view style="margin-top: 10px;"><p>项目名称不能为空</p></view>
+					<el-form-item class="form-group"
+					  v-for="(project,index) in dynamicValidateForm.project"
+					  :label="'项目经验' + (index+1)"
+					  :key="project.key"
+					  :prop="'project.' + index + '.value'" 
+					>
+					<view style="margin-top: 40px;"><p>项目名称不能为空</p></view>
 					<view class="form-group">
 						<view class="label"><label>项目名称</label></view> 
 						<el-form-item class="content" prop="project_name">
@@ -73,24 +78,24 @@
 							   :before-upload="handleBeforeUpload"
 							  drag
 							  action="http://81.69.199.157:82/public/index.php/api/Common/upload"
-							  multiple>
-							  
+							  multiple>  
 							  <div class="el-upload__text"><em>点击上传</em></div>
 							</el-upload>
 						</view>
 					</view>
 					<div class="form-group form-group-del"><div style="margin-top: 10px;"><span class="fr" style="color: rgb(0, 139, 247);"><i class="icon iconfont" style="color: rgb(0, 139, 247);margin-right: 5px;">&#xe60c;</i>&nbsp;删除此项目</span></div></div>
 					<div class="flrs"></div>
+					</el-form-item>
 				</el-form>
 				<view class="other"><span class="btn-text"></span></view>
 				<view align="center" class="other" style="margin-top: 20px; border-top: 1px solid rgb(237, 241, 244);">
-					<span class="btn-text" style="margin-top: 16px;">
+					<span class="btn-text" style="margin-top: 16px;" @click="addDomain">
 						<i class="icon iconfont">&#xe76e;</i>&nbsp;再添加一段工作经历
 					</span>
 				</view>
 				<view class="ft-wrap"><view class="w700 mcenter cl"><span @click="fanhui()" class="to-head fl-li-co">
 					<i style="font-size: 24px;margin-right: 5px;vertical-align: bottom;" class="icon iconfont">&#xe60b;</i>&nbsp;返回
-				            </span> <span class="btn btn-blue fr" @tap="submit('project')">保 存</span> <!----></view></view>
+				            </span> <span class="btn btn-blue fr" @tap="submit('dynamicValidateForm')">保 存</span> <!----></view></view>
 			</view>
 	</view>
 </template>
@@ -108,25 +113,29 @@
 				   },
 				reqData:[],
 				user_id: this.$store.state.userInfo.user_id,
-				project:{
-					user_id: this.$store.state.userInfo.user_id,
-					project_name:'',
-					introduce:'',
-					start_time:'',
-					end_time:'',
-					project_link:'',
-					file_id:'',
-					file:"",
-					create_time:parseInt(new Date().getTime()/1000),
-					update_time:parseInt(new Date().getTime()/1000)
-				},
+				dynamicValidateForm: {
+					project:[
+						{
+							user_id: this.$store.state.userInfo.user_id,
+							project_name:'',
+							introduce:'',
+							start_time:'',
+							end_time:'',
+							project_link:'',
+							file_id:'',
+							file:"",
+							create_time:parseInt(new Date().getTime()/1000),
+							update_time:parseInt(new Date().getTime()/1000)
+						}
+					]
+					},
 				rules: {
-				        project_name: [
-				          { required: true, message: '项目名称不能为空', trigger: 'blur' },
-				        ],
-				        introduce: [
-				          { required: true, message: '项目介绍不能为空', trigger: 'blur' }
-				        ]
+				        // project_name: [
+				        //   { required: true, message: '项目名称不能为空', trigger: 'blur' },
+				        // ],
+				        // introduce: [
+				        //   { required: true, message: '项目介绍不能为空', trigger: 'blur' }
+				        // ]
 				
 				      }
 			}
@@ -134,8 +143,14 @@
 		methods: {  
 			upload(res, file) {//上传成功钩子
 			     uni.showToast({icon: 'none',title: '上传成功'});
-				 this.project.file_id = res.data.id
-				  this.project.file = res.data.fullurl
+				 this.dynamicValidateForm.project.forEach(item => {
+					 item.file_id = res.data.id
+					 item.file = res.data.fullurl
+				 })
+				 // this.dynamicValidateForm.project.file_id = res.data.id
+				 // console.log( this.dynamicValidateForm.project.file_id)
+				 //  this.dynamicValidateForm.project.file = res.data.fullurl
+				 //  console.log( this.dynamicValidateForm.project.file)
 			},
 			handleError() {//上传失败钩子
 			  uni.showToast({icon: 'none',title: '上传失败，请重新上传'});
@@ -154,11 +169,13 @@
 			 submit(formName) {//保存
 			 this.$refs[formName].validate((valid) => {
 			         if (valid) {
-			           this.reqData.push(this.project)
+			         // this.reqData.push(this.project)
 					 this.$http.post('/public/index.php/api/Position/saveProject',{
 						 user_id:this.user_id,
-						 project: JSON.stringify(this.reqData)
+						 project: JSON.stringify(this.dynamicValidateForm.project)
 					 }).then(res => {
+						 console.log(this.dynamicValidateForm.project)
+						 console.log(res)
 						 if(res.data.code == 1) {
 							 uni.showToast({icon: 'none',title: '保存成功'});
 							 uni.reLaunch({url: '/admin/admin_data/admin_data'})
@@ -170,29 +187,51 @@
 			       });
 			 
 			 },
+			  resetForm(formName) {
+				 this.$refs[formName].resetFields();
+			   },
+			   removeDomain(item) {
+				 var index = this.dynamicValidateForm.project.indexOf(item)
+				 if (index !== -1) {
+				   this.dynamicValidateForm.project.splice(index, 1)
+				 }
+			   },
+			   addDomain() {
+				 this.dynamicValidateForm.project.push({
+				     user_id: this.$store.state.userInfo.user_id,
+				     project_name:'',
+				     introduce:'',
+				     start_time:'',
+				     end_time:'',
+				     project_link:'',
+				     file_id:'',
+				     file:"",
+				     create_time:parseInt(new Date().getTime()/1000),
+				     update_time:parseInt(new Date().getTime()/1000)
+				 });
+			   },
 			 fanhui(){
 			 	uni.reLaunch({url: '/admin/admin_data/admin_data'})
 			 },
 			 undergoQuery() {//查询
 		
 					this.$http.post('/public/index.php/api/Position/getProject',{user_id:this.$store.state.userInfo.user_id}).then(res => {
+						//console.log(res)
 							if(res.data.data.length<0){}
 							      else{
-							       this.project = res.data.data[0]
-							       this.imgObj.name = res.data.data[0].file.slice(-9)
-							       this.imgObj.url = res.data.data[0].file
-							       this.fileList.push(this.imgObj)
+									this.dynamicValidateForm.project = res.data.data
+								   this.imgObj.name = this.dynamicValidateForm.project[0].file.slice(-9)
+								   this.imgObj.url = this.dynamicValidateForm.project[0].file
+								   this.fileList.push(this.imgObj)
+									
+									   
 							      }
 					})
 				
 			 }
 		},
 		onLoad() {
-			
 				this.undergoQuery()
-			
-				
-			
 		},
 		components:{
 			Adminheader
@@ -224,6 +263,10 @@
 /deep/ .uni-input-placeholder{
 	text-indent: 1em;
 }
+/deep/ .el-form-item__label{
+	font-size: 20px;
+	font-weight: bold;
+}
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -234,7 +277,6 @@
 	background: #FFFFFF;
 	.form-wrap{
 		.form-group-hd {
-		    margin-bottom: 32px;
 			.title {
 			    font-size: 24px;
 			    line-height: 32px;
@@ -242,7 +284,7 @@
 			}
 		}
 		.form-group {
-		    margin-top: 20px;
+		    margin-top: 10px;
 			.subtitle {
 			    margin-bottom: 12px;
 				label {

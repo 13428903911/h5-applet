@@ -93,7 +93,7 @@
 		methods: {
 			default(){//默认第0项数据
 				this.$http.post('/public/index.php/api/Work/contractOrder',{
-					user_id:1,
+					user_id:this.$store.state.userInfo.user_id,
 					wait_sign:0,
 					is_account:0,
 					state:0,
@@ -107,7 +107,7 @@
 				this.num = index
 				if(index == 0) {
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
-						user_id:1,
+						user_id:this.$store.state.userInfo.user_id,
 						wait_sign:0,
 						is_account:0,
 						state:0,

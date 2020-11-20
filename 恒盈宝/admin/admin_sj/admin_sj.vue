@@ -165,6 +165,9 @@
 /deep/ .el-upload-dragger .el-upload__text em {
     line-height: 60px;
 }
+/deep/ .el-upload-dragger{
+	width: 17rem;
+}
 .container {
     margin-left: auto;
     margin-right: auto;

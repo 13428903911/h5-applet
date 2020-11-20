@@ -104,9 +104,9 @@
 							]
 						},
 					rules: {
-						job_title: [
-						  { required: true, message: '职位头衔不能为空', trigger: 'blur' },
-						],
+						// job_title: [
+						//   { required: true, message: '职位头衔不能为空', trigger: 'blur' },
+						// ],
 						// company: [
 						//   { required: true, message: '公司名称不能为空', trigger: 'blur' },
 						// ],
@@ -221,7 +221,7 @@
 			
 		}
 		.form-group {
-		    margin-top: 20px;
+		    margin-top: 10px;
 			.subtitle {
 			    margin-bottom: 12px;
 				label {

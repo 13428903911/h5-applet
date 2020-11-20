@@ -97,7 +97,7 @@
 			         },
 			bank(){//跳转银行卡图片
 				wx.navigateTo({
-					url: '/seting_bank/seting_bank'
+					url: '/settings/seting_bank/seting_bank'
 				})
 			}
 		},

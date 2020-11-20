@@ -1,11 +1,19 @@
 {
 	"pages": [
+		
 		{
 		    "path" : "pages/hots/hots",
 		   "style": {
 		   	"navigationBarTitleText": "金斗云",
 		   	"navigationBarBackgroundColor":"#FFFFFF"
 		   }
+		},
+		{
+		    "path" : "settings/settings_withdraw/settings_withdraw",
+		    "style": {
+		    	"navigationBarTitleText": "金斗云",
+		    	"navigationBarBackgroundColor":"#FFFFFF"
+		    }
 		},
 		{
 		    "path" : "pages/job_tdzw/job_tdzw",
@@ -16,7 +24,10 @@
 		},
 		{
 		    "path" : "admin/admin_sj/admin_sj",
-		    "style" : {}
+		    "style": {
+		    	"navigationBarTitleText": "金斗云",
+		    	"navigationBarBackgroundColor":"#FFFFFF"
+		    }
 		},
 		
 		{
@@ -156,7 +167,10 @@
        
         ,{
             "path" : "admin/admin_data/admin_guide/admin_resumes",
-            "style" : {}
+           "style": {
+           	"navigationBarTitleText": "金斗云",
+           	"navigationBarBackgroundColor":"#FFFFFF"
+           }
         },
 		{
       "path" : "admin/admin_discounts/admin_discounts",//优惠券页
@@ -289,6 +303,15 @@
             }
         }
         
+        
+        ,{
+            "path" : "settings/settings_jyzd/settings_jyzd",
+            "style" : {}
+        }
+        ,{
+            "path" : "settings/settings_jyxq/settings_jyxq",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

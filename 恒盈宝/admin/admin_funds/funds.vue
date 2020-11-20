@@ -7,11 +7,11 @@
 				</view>
 				<view class="box-bd">
 					<view class="account">
-						<view class="balance"><p class="num">0</p> <p class="t-gray">收入账户余额（元）</p> <!----></view>
+						<view class="balance"><p class="num">{{getCapitalInfo}}</p> <p class="t-gray">收入账户余额（元）</p> <!----></view>
 						<view class="btn-group">
 							<span class="btn-text btn-withdraw btn-disabled">提 现
 								<view class="tool-tip">
-									<p>账号未认证，请先完成认证后再进行提现操作<a target="_blank" href="/setting/verified" class="btn-text">去认证</a></p>
+									<p>账号未认证，请先完成认证后再进行提现操作<a @click="renzheng" class="btn-text">去认证</a></p>
 								</view>
 							</span>
 						</view>
@@ -26,11 +26,18 @@
 	export default {
 		data() {
 			return {
-				
+				getCapitalInfo:""
 			}
 		},
 		methods: {
-			
+			renzheng(){
+				wx.navigateTo({url:'/settings/settings_withdraw/settings_withdraw'})
+			}
+		},
+		created() {
+			this.$http.post('/public/index.php/api/User/getCapitalInfo',{user_id:this.$store.state.userInfo.user_id}).then(res => {
+				this.getCapitalInfo = res.data.data.money
+			}) 
 		}
 	}
 </script>

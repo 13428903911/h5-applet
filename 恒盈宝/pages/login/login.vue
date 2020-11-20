@@ -160,7 +160,7 @@
 					uni.showToast({icon: 'none',title: '登录成功'});
 					this.$store.commit('login',resData.data.userinfo)
 					// uni.setStorage({key:'userinfo',data:resData.data.userinfo});
-					uni.reLaunch({url: '/admin/admin_index/admin_index'})
+					uni.reLaunch({url:'/admin/admin_data/admin_data'})
 				}else{
 					uni.showToast({icon: 'none',title: '用户名或密码错误'})
 				}

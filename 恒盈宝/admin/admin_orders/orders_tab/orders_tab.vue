@@ -117,7 +117,7 @@
 						wait_sign:0,
 						is_account:0,
 						state:0,
-						// doing:0
+						doing:0
 					}).then(res => {
 						this.orderForm = res.data.data.row
 						

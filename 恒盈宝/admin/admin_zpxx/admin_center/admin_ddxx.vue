@@ -73,7 +73,7 @@
 		methods: {
 			ckgz(){
 				wx.navigateTo({
-					url:'/admin/admin_log/admin_log'
+					url:'/admin/admin_log/admin_log?apply_id='+this.apply_id
 				})
 			},
 			indentDetails(){

@@ -89,7 +89,7 @@
 		}
 
 		.mod {
-			margin-top: 50px;
+			margin-top: 20px;
 			line-height: 24px;
 			padding: 20px;
 
