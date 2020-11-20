@@ -150,7 +150,9 @@
 	 powerQuery(){//查询
 		
 				this.$http.post('/public/index.php/api/Position/getAbility',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-						this.ruleForm = res.data.data	
+					if(res.data.data.length<0){}
+					      else{this.ruleForm = res.data.data}
+							
 				})
 			
 		}

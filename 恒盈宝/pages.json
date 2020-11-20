@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+		    "path" : "pages/hots/hots",
+		   "style": {
+		   	"navigationBarTitleText": "金斗云",
+		   	"navigationBarBackgroundColor":"#FFFFFF"
+		   }
+		},
+		{
 		    "path" : "pages/job_tdzw/job_tdzw",
 		   "style": {
 		   	"navigationBarTitleText": "金斗云",
@@ -10,14 +17,6 @@
 		{
 		    "path" : "admin/admin_sj/admin_sj",
 		    "style" : {}
-		},
-		
-		{
-		    "path" : "pages/hots/hots",
-		   "style": {
-		   	"navigationBarTitleText": "金斗云",
-		   	"navigationBarBackgroundColor":"#FFFFFF"
-		   }
 		},
 		
 		{

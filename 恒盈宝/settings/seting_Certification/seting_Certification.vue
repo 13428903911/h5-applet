@@ -74,10 +74,11 @@
 		},
 		onLoad(option) {
 			this.userObj = JSON.parse(option.userData)
-			console.log(this.userObj)
+			// console.log(this.userObj)
 			if(this.userObj.id){
 				this.ruleForm = this.userObj
 			}
+			console.log(this.userObj)
 		},
 		methods:{
 			submitForm(formName) {
@@ -85,7 +86,7 @@
 			             if (valid) {
 			             this.$http.post('/public/index.php/api/User/saveAuth',this.ruleForm).then(res => {
 			             						this.ruleForm = ''
-			             	wx.navigateTo({url: '../setting_verified/setting_verified'})
+			             	wx.navigateTo({url: '/settings/setting_verified/setting_verified'})
 			             })
 			             } else {
 			               return false;

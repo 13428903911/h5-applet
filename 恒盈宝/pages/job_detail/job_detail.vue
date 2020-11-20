@@ -158,7 +158,8 @@
 				Detailsll:{},
 				task_id:'',
 				id: '',//任务id
-				is_send:''//是否已投递过简历  0未投递过  1已投递过
+				is_send:'',//是否已投递过简历  0未投递过  1已投递过
+				dqitem:{}
 			}
 		},
 		
@@ -193,7 +194,10 @@
 					user_id:this.$store.state.userInfo.user_id,
 					expand_content:''
 				}).then(res => {
-					console.log(res)
+					if(res.data.code == 1){
+						let optionObj = JSON.stringify(this.RedJow)
+						uni.reLaunch({url: '/pages/job_tdzw/job_tdzw?optionObj='+optionObj})
+					}
 				})
 			},
 			queryTask(){//查看任务是否投递
@@ -206,10 +210,15 @@
 			}
 		},
 		onLoad(options) {
+			
+			// this.dqitem = JSON.parse(options.option)
+			// this.task_id = this.dqite.id
 			this.task_id = options.id
 			this.postRed()
 			this.detail()
-			this.queryTask()
+			this.queryTask()	
+			
+			
 			
 		},
 		components:{

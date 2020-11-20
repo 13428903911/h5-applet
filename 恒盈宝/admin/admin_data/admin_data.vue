@@ -8,8 +8,8 @@
 					<h3 class="title fl">简历信息</h3>
 					<view class="link fr">
 						<a @click="cktxjy()">查看填写建议</a>
-						<span>|</span>
-						<a @click="ckjlyl()">查看简历预览</a>
+						<!-- <span>|</span> -->
+						<!-- <a @click="ckjlyl()">查看简历预览</a> -->
 					</view>
 					<view style="clear: both;"></view>
 				</view>

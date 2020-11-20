@@ -8,7 +8,7 @@
 			<button class="blue" type="default" @tap="postAdmin">职位管理</button>
 			<button class="red" type="default" @tap="backJow">返回热门工作</button>
 		</view>
-			<view class="mod mod-jobs hide-jobs" v-for="(item,index) in RedJow" :key="item.id" @click="details(item)">
+			<view class="mod mod-jobs hide-jobs" @click="details(item.id)" v-for="(item,index) in RedJow">
 				<view class="hd cl"><h3 class="title">{{item.income_method}}</h3></view>
 				<view class="bd">
 					<view class="hot-list">
@@ -44,12 +44,12 @@
 			}
 		},
 		onLoad(option) {
-			this.RedJow = JSON.parse(option.RedJow)
+			this.RedJow = JSON.parse(option.optionObj)
 		},
 		methods: {
-			details(item) {//跳转详情页，item当前页那一项数据
-			wx.navigateTo({url:'/pages/job_detail/job_detail?id='+item.id})
-				this.Detailsll = item
+			details(id) {//跳转详情页，item当前页那一项数据
+			wx.navigateTo({url:'/pages/job_detail/job_detail?id='+id})
+				// this.Detailsll = item
 				
 			},
 			backJow() {//返回热门工作

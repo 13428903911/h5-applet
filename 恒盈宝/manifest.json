@@ -50,7 +50,7 @@
     "h5" : {
         "title" : "金斗云",
         "router" : {
-            "mode" : "history",
+            "mode" : "hash",
             "base" : ""
         },
         "optimization" : {

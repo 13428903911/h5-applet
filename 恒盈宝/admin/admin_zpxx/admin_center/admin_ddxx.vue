@@ -50,25 +50,9 @@
 						<dd>{{aimMsge.working_hours}}</dd>
 					</dl>
 				</view> 
-			<!-- <view class="btn-group">
-				<span class="btn-text">查看合同</span>
-			</view> -->
 		</view>
 		</view>
-		
-		
-		<view class="mod">
-			<view class="mod-hd"><h2 class="title">预付信息</h2></view>
-			<view class="mod-bd flex">
-				<div class="cont">
-					<view class="oul">
-						<li><view><p class="num">¥ 0</p> <p class="text">已结算金额</p></view></li> 
-						<li><view><p class="num">¥ 0</p> <p class="text">待结算金额</p></view></li>
-					</view>
-				</div>
-			<div class="btn-group"><a @click="ckgz" class="btn-text">查看工作</a></div>
-			</view>
-		</view>
+		<div class="btn-group"><a @click="ckgz" class="btn-text">查 看 工 作</a></div>
 	</view>
 </template>
 
@@ -88,7 +72,9 @@
 		},
 		methods: {
 			ckgz(){
-				wx.navigateTo({url:'/admin/admin_log/admin_log?apply_id='+this.apply_id})
+				wx.navigateTo({
+					url:'/admin/admin_log/admin_log'
+				})
 			},
 			indentDetails(){
 				this.$http.post('/public/index.php/api/Work/getOrderInfo',{
@@ -105,10 +91,34 @@
 </script>
 
 <style scoped lang="scss">
-
+.btn-group{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0;
+	padding: 15px;
+	background: #fff;
+	border-top: 1px solid #edf1f4;
+	.btn-text{
+		display: inline-block;
+		    height: 50px;
+		    line-height: 50px;
+		    text-align: center;
+		    border: none;
+		    border-radius: 2px;
+		    box-sizing: border-box;
+		    width: 100%;
+		    margin: 0;
+		    float: none;
+		background: #008bf7;
+		color: #fff;    
+	}
+}
 .box {
     padding: 30px 1rem;
 	background: #fff;
+	margin-bottom: 80px;
 }
 
 .box-order{
@@ -117,7 +127,7 @@
 	    text-align: center;
 		.done{
 			position: relative;
-			padding: 0 .42rem!important;
+			padding: 0 .82rem!important;
 			text-align: center;
 			color: #9ca6ae;
 			.num {

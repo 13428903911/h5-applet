@@ -103,9 +103,9 @@
 				remnant:0,
 				 fileList: [],//显示图片地址
 				 imgObj:{//图片地址
-					 name:'',
-					 url:''
-				 },
+					   name:'',
+					   url:''
+				   },
 				reqData:[],
 				user_id: this.$store.state.userInfo.user_id,
 				project:{
@@ -176,14 +176,13 @@
 			 undergoQuery() {//查询
 		
 					this.$http.post('/public/index.php/api/Position/getProject',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-						if(res.data.data.length<0){}
-						else{
-							this.project = res.data.data[0]
-							this.imgObj.name = res.data.data[0].file.slice(-9)
-							this.imgObj.url = res.data.data[0].file
-							this.fileList.push(this.imgObj)
-							}
-							
+							if(res.data.data.length<0){}
+							      else{
+							       this.project = res.data.data[0]
+							       this.imgObj.name = res.data.data[0].file.slice(-9)
+							       this.imgObj.url = res.data.data[0].file
+							       this.fileList.push(this.imgObj)
+							      }
 					})
 				
 			 }

@@ -97,10 +97,15 @@
 			
 			},
 			   submitForm(formName) {//保存
+					// window.location.reload();
 			        this.$refs[formName].validate((valid) => {
 			            if (valid) {
 			               this.$http.post('/public/index.php/api/User/saveUser',this.ruleForm).then(res => {
 			               	uni.showToast({icon: 'none',title: '保存成功'})
+							console.log(res)
+			               	uni.navigateTo({
+			               		url:'/admin/admin_index/admin_index'
+			               	})
 							this.ruleForm = ''
 							this.imageUrl = ''
 			               })
@@ -120,16 +125,17 @@
 					this.ruleForm.province = item.province
 				 }
 			 })
-			 console.log(id)
 				this.$http.post('/public/index.php/api/Index/getCity',{province_id:id}).then(res => {
 					this.cityList = res.data.data
 				})
 			 },
 			 userMessageQuery() {//查询
 				 this.$http.post('/public/index.php/api/User/index',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					 console.log(res.data.data[0].avatar)
-					  this.ruleForm = res.data.data[0]
-					   this.imageUrl =  res.data.data[0].avatar
+					 if(res.data.data.length<0){}
+					       else{
+							   this.ruleForm = res.data.data[0]
+							   this.imageUrl =  res.data.data[0].avatar
+						   }
 				 })
 			 }
 		},

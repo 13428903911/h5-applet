@@ -13,7 +13,7 @@
 		 
 		 <!-- 主题内容 -->
 		 <view v-if="fang == false">
-		 <view @click="xq(item.id,item)" class="item cl" v-for="(item,index) in allList" :key="index" ref="popover">
+		 <view @click="xq(item.id)" class="item cl" v-for="(item,index) in allList" :key="index" ref="popover">
 		 	<view class="item_a">
 		 		<div class="item-side fl"><p class="num">{{item.price}}</p> <p class="t-gray">{{item.income_method}}</p></div>
 		 		<div class="item-main">
@@ -34,7 +34,7 @@
 		 </view>
 		 
 		 
-		<view @click="xq(item.id,item)" class="item cl" v-for="(item,index) in Detailsll" :key="index" ref="popover">
+		<view @click="xq(item.id)" class="item cl" v-for="(item,index) in Detailsll" :key="index" ref="popover">
 		 	<view class="item_a">
 		 		<div class="item-side fl"><p class="num">{{item.price}}</p> <p class="t-gray">{{item.income_method}}</p></div>
 		 		<div class="item-main">
@@ -107,7 +107,7 @@
 				})
 				
 			},
-			xq(id,item){//点击显示当前详情
+			xq(id){//点击显示当前详情
 				wx.navigateTo({url:'/pages/job_detail/job_detail?id='+id})
 				
 		}

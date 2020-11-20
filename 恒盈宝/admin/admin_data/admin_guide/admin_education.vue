@@ -115,7 +115,7 @@
 				        ],
 				        major: [
 				          { required: true, message: '工作经验不能为空', trigger: 'blur' }
-				        ],
+				        ]
 						// start_time: [
 						//   { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
 						// ],
@@ -151,12 +151,12 @@
 			},
 			educationQuery() {//查询
 				this.$http.post('/public/index.php/api/Position/getEducate',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					if(res.data.data == ''){}
-					else{
-						this.fomeData = res.data.data
-						this.value1 = res.data.data.start_time
-						this.value2 =  res.data.data.end_time
-					}
+					if(res.data.data==""){}
+					      else{
+							 this.fomeData = res.data.data
+							 this.value1 = res.data.data.start_time
+							 this.value2 =  res.data.data.end_time 
+						  }
 					
 				})
 			}

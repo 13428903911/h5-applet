@@ -4,14 +4,14 @@
 			<view class="box box-orders">
 				<view class="box-hd cl"><h2 class="title fl">合同订单</h2> <!----></view>
 				<view class="table-box">
-					<view class="table" v-for="(item,index) in tableList" :class="{active:index==num}" @tap="table(index,item.id)">{{item.name}}</view>
+					<view class="table" v-for="(item,index) in tableList" :class="{active:index==num}" @tap="table(index,item.id)" :key="index">{{item.name}}</view>
 				</view>
 			</view>
 		</view>
 		
 		
 		<!-- 主题内容 -->
-		<view class="item" v-for="(item,index) in tabDefault" v-if="flag == false" :key="item.id" @tap="lineItem(item.id)">
+		<view class="item" v-for="(item,index) in tabDefault" :key="item.id" @tap="lineItem(item.id)">
 			<view class="item-hd cl">
 				<view class="fl">
 					<span class="date fl">{{item.create_time}}</span> 
@@ -66,7 +66,10 @@
 			</view>
 		</view>
 		
-		
+		<!-- <view class="data-empty" v-if="flag == true">
+			<img src="/static/images/order_a.png"> 
+			<p>您还没有合同订单</p>
+		</view> -->
 		<!-- <Tabfour v-if="jow"></Tabfour> -->
 		<!-- <Tabfive :class="[hideing === 4 ? 'actineclass' : 'errorclass']"></Tabfive>
 		<Tabsix :class="[hideing === 5 ? 'actineclass' : 'errorclass']"></Tabsix -->
@@ -87,7 +90,7 @@
 				tableList:[{id:1,name:"全部"},{id:2,name:'工作中'},{id:3,name:'待结算'},{id:4,name:'已完成'}],
 				orderForm:[],
 				tabDefault:[],
-				flag:false,
+				flag:true,
 				jow:false
 			}
 		},
@@ -97,7 +100,7 @@
 		methods: {
 			default(){//默认第0项数据
 				this.$http.post('/public/index.php/api/Work/contractOrder',{
-					user_id:1,
+					user_id:this.$store.state.userInfo.user_id,
 					wait_sign:0,
 					is_account:0,
 					state:0,
@@ -107,17 +110,17 @@
 				})	
 			},
 			table(index,id){
-				this.flag = true
 				this.num = index
 				if(index == 0) {
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
-						user_id:1,
+						user_id:this.$store.state.userInfo.user_id,
 						wait_sign:0,
 						is_account:0,
 						state:0,
-						doing:0
+						// doing:0
 					}).then(res => {
 						this.orderForm = res.data.data.row
+						
 					})	
 				}else if(index == 1){
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
@@ -127,7 +130,7 @@
 						state:0,
 						doing:1
 					}).then(res => {
-							this.orderForm = res.data.data.row
+							this.orderForm = res.data.data.row		
 					})
 				}else if(index == 2){
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
@@ -257,7 +260,8 @@
 		}
 	}
 	.item-bd {
-	    border-bottom: 1px solid #edf1f4;
+	    border: 1px solid #edf1f4;
+	    border-top: 0px solid #edf1f4;
 		.cell {
 		    display: block;
 		    width: 100%;

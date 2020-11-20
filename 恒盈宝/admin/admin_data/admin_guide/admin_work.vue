@@ -2,10 +2,15 @@
 	<view>
 		<Adminheader></Adminheader>
 		<view class="resume-work w700 fixed-ft work-exper container">
-			<el-form class="form-wrap" :model="experience" ref="experience" :rules="rules">
-				<view class="form-group-hd"><h2 class="title">您的工作经历</h2></view>
-				<view class="form-group"><view class="subtitle"><label>工作经历 1</label></view></view>
-				<view style="margin-top: 10px;"><p>请从最近的工作经历开始填写</p></view>
+			<view class="form-group-hd"><h2 class="title">您的工作经历</h2></view>
+			<el-form class="form-wrap" :model="dynamicValidateForm" ref="dynamicValidateForm.experience" :rules="rules">
+				<el-form-item class="form-group"
+				  v-for="(experience,index) in dynamicValidateForm.experience"
+				  :label="'工作经历' + (index+1)"
+				  :key="experience.key"
+				  :prop="'experience.' + index + '.value'" 
+				>
+				<view style="margin-top: 40px;"><p>请从最近的工作经历开始填写</p></view>
 				<view class="form-group">
 					<view class="label"><label>职位头衔</label></view> 
 					<el-form-item class="content" prop="job_title">
@@ -53,23 +58,23 @@
 						class="ipt-area" data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.job_content">
 						</textarea>
 					</el-form-item>
-					<p class="tips-error" style="display: none;"></p>
-					<view class="form-group form-group-del">
-						<span class="fr" style="color: rgb(0, 139, 247);">
-							<i class="icon iconfont" style="color: rgb(0, 110, 247);margin-right: 5px;">&#xe60c;</i>&nbsp;删除此项目
-						</span>
-					</view>
 				</view>
+			
+				 <view class="form-group form-group-del" @click.prevent="removeDomain(experience)">
+				 	<span class="fr" style="color: rgb(0, 139, 247);">
+				 		<i class="icon iconfont" style="color: rgb(0, 110, 247);margin-right: 5px;">&#xe60c;</i>&nbsp;删除此项目
+				 	</span>
+				 </view>
+			  </el-form-item>
 			</el-form>
-			<view class="other"><span class="btn-text"></span></view>
 			<view align="center" class="other" style="margin-top: 20px; border-top: 1px solid rgb(237, 241, 244);">
-				<span class="btn-text" style="margin-top: 16px;">
+				<span class="btn-text" style="margin-top: 16px;" @click="addDomain">
 					<i class="icon iconfont">&#xe76e;</i>&nbsp;再添加一段工作经历
 				</span>
 			</view>
 			<view class="ft-wrap"><view class="w700 mcenter cl"><span @click="fanhui()" class="to-head fl-li-co">
 				<i style="font-size: 24px;margin-right: 5px;vertical-align: bottom;" class="icon iconfont">&#xe60b;</i>&nbsp;返回
-			            </span> <span class="btn btn-blue fr" @click="submit('experience')">保 存</span> <!----></view></view>
+			            </span> <span class="btn btn-blue fr" @click="submit('dynamicValidateForm.experience')">保 存</span> <!----></view></view>
 		</view>
 	</view>
 </template>
@@ -80,35 +85,39 @@
 		data() {
 			return {
 				arr:[],
+				endId:'',
 				 remnant:0,
 				//保存的参数
-			
 						user_id:this.$store.state.userInfo.user_id,
-						experience:{
-								user_id:this.$store.state.userInfo.user_id,
-								job_title:'',
-								company:'',
-								entry_time:'',
-								leave_time:'',
-								job_content:'',
-								create_time: parseInt(new Date().getTime()/1000),
-								update_time: parseInt(new Date().getTime()/1000)
+						dynamicValidateForm:{
+							experience:[
+								{
+									user_id:this.$store.state.userInfo.user_id,
+									job_title:'',
+									company:'',
+									entry_time:'',
+									leave_time:'',
+									job_content:'',
+									create_time: parseInt(new Date().getTime()/1000),
+									update_time: parseInt(new Date().getTime()/1000)
+								}
+							]
 						},
-			
 					rules: {
-					        job_title: [
-					          { required: true, message: '职位头衔不能为空', trigger: 'blur' },
-					        ],
-							company: [
-							  { required: true, message: '公司名称不能为空', trigger: 'blur' },
-							],
-							job_content: [
-							  { required: true, message: '工作内容及业绩不能为空', trigger: 'blur' },
-							],
-					      }
+						job_title: [
+						  { required: true, message: '职位头衔不能为空', trigger: 'blur' },
+						],
+						// company: [
+						//   { required: true, message: '公司名称不能为空', trigger: 'blur' },
+						// ],
+						// job_content: [
+						//   { required: true, message: '工作内容及业绩不能为空', trigger: 'blur' },
+						// ],
+					}
 				}	
 		},
 		methods: {
+			
 			descInput(e){
 				this.remnant = e.detail.value.length
 			 },
@@ -116,12 +125,11 @@
 			 submit(formName) {
 				 this.$refs[formName].validate((valid) => {
 				         if (valid) {
-							 this.arr.push(this.experience)
-							 console.log(this.arr)
 							 this.$http.post('/public/index.php/api/Position/saveExperience',{
 							 	user_id:this.user_id,
-							 	experience: JSON.stringify(this.arr)
+							 	experience: JSON.stringify(this.dynamicValidateForm.experience)
 							 }).then(res => {
+								 console.log(res)
 							 	if(res.data.code === 1){
 							 		this.experience=''
 							 		uni.showToast({icon: 'none',title: '保存成功'})
@@ -134,29 +142,50 @@
 				           return false;
 				         }
 				       });
-				this.arr.push(this.experience)
 				
 			 },
+			 resetForm(formName) {
+				this.$refs[formName].resetFields();
+			  },
+			  removeDomain(item) {
+				var index = this.dynamicValidateForm.experience.indexOf(item)
+				if (index !== -1) {
+				  this.dynamicValidateForm.experience.splice(index, 1)
+				}
+			  },
+			addDomain() {
+				  this.dynamicValidateForm.experience.push({
+					id:this.endId,
+					user_id:this.$store.state.userInfo.user_id,
+					job_title:'',
+					company:'',
+					entry_time:'',
+					leave_time:'',
+					job_content:'',
+					create_time: parseInt(new Date().getTime()/1000),
+					update_time: parseInt(new Date().getTime()/1000),
+				  });
+				},
 			 fanhui(){
 			 	 uni.reLaunch({url: '/admin/admin_data/admin_data'})
 			 },
 			 jowUndergoQuery() {//查询
 	
 					this.$http.post('/public/index.php/api/Position/getExperience',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-						console.log(res.data.data)
 						if(res.data.data.length<=0){
-							console.log(123)
-						}
-						else{
-							console.log(456)
-							this.experience = res.data.data[0]	
-							}
-								  
+						      }
+						      else{
+								let resdata = res.data.data
+						       this.dynamicValidateForm.experience = resdata
+							   let objdata = resdata[resdata.length-1]  //让数组最后一个长度-1
+							    this.endId = objdata.id+1//数组的id加1
+						       }
+								
 					}) 	
 				
 			 },
 		},
-		onLoad() {
+		mounted() {
 			this.jowUndergoQuery()
 		},
 		components:{
@@ -166,6 +195,18 @@
 </script>
 
 <style lang="scss" scoped>
+.title {
+	font-size: 24px;
+	line-height: 32px;
+	font-weight: 700;
+}
+/deep/ .el-form-item__label{
+	font-weight: 700;
+	font-family: PingFangSC-Semibold;
+	font-size: 20px;
+	color: #092235;
+	letter-spacing: 0;
+}
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -177,11 +218,7 @@
 	.form-wrap{
 		.form-group-hd {
 		    margin-bottom: 32px;
-			.title {
-			    font-size: 24px;
-			    line-height: 32px;
-				font-weight: 700;
-			}
+			
 		}
 		.form-group {
 		    margin-top: 20px;

@@ -1,7 +1,7 @@
 <template>
 	<view class="harder">
 		<Adminheader></Adminheader>
-		<view class="log-list w1060 container" v-for="(item,index) in LookWork" :key="item.name">
+		<view class="log-list w1060 container" v-for="(item,index) in LookWork" :key="index">
 			<view class="page-hd">
 				<h2 class="title">{{item.name}}</h2>
 				<view class="meta">
@@ -39,70 +39,38 @@
 			</view>
 		</view>
 		<view class="tabs cl">
-			<view class="fl ul table">
-				<li v-for="(item,index) in facility" :key="item.id" :class="{active:index==currents}"  @click="clickTab(index,item.name)">{{item.name}}</li>
+			<view class="fl ul">
+				<li class="fl" :class="{'active' : 1 == currents}" @click="clickTab(1)">全部</li>
+				<li class="fl" :class="{'active' : 2 == currents}" @click="clickTab(2)">Mac</li>
+				<li class="fl" :class="{'active' : 3 == currents}" @click="clickTab(3)">Windows</li>
+				<li class="fl" :class="{'active' : 4 == currents}" @click="clickTab(4)">Android</li>
 			</view>
 			<view style="clear: both;"></view>
 		</view>
 		<view class="sj">
-			 <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox> -->
 			<view class="scsj fl" @click="tjsj">
 				<i class="icon iconfont">&#xe76e;</i>添加时间
 			</view>
-			<view class="scsj" @tap="delet">
-				<i class="icon iconfont" >&#xe60c;</i>删除时间
+			<view class="scsj">
+				<i class="icon iconfont">&#xe60c;</i>删除时间
 			</view>
 		</view>
-		
-	<view class="gzjl" v-for="(items,index) in LookWorkTime" :key="index">
-		<view class="gzjl_zz">
-			<view class="gzjl_top">
-				<!-- {{items.work_desc}} -->
-				<el-popover placement="top-start" width="300">
-				    <div class="checkFieldAuditPolicy">{{items.work_desc}}</div>
-				    <span slot="reference">{{items.work_desc.substr(0, 6) + "..."}}</span>
-				</el-popover>
+		<view class="gzjl" v-for="(items,index) in LookWorkTime" :key="index" @click="clickTab(1)">
+			<view class="gzjl_zz">
+				<view class="gzjl_top">
+					{{items.work_desc}}
+				</view>
+				<view class="ckxq">
+					<span @click="ckxq">查看详情</span>
+				</view>
 			</view>
-			<view class="ckxq">
-				<el-popover placement="top-end" width="300" trigger="click">
-					<span class="tips-content">{{items.work_desc}}</span>
-					<span slot="reference">查看详情</span>
-				 </el-popover>
+			<view class="gzjl_bottom">
+				<span class="fl">工作时长：{{items.work_hours}}小时</span>
+				<span class="fr">{{items.work_date}}</span>
+				<view style="clear: both;"></view>
 			</view>
 		</view>
-		<view class="gzjl_bottom">
-			<span class="fl">工作时长：{{items.work_hours}}小时</span>
-			<span class="fr">{{items.work_date}}</span>
-			<view style="clear: both;"></view>
-		</view>
-	</view>
 
-	<!-- 默认显示 -->
-	<view class="admin_main" v-for="(items,index) in defaultData" :key="index" v-if="fang == false">
-		 <el-checkbox class="check" @change="handleCheckedCitiesChange(index,items,items.id)"></el-checkbox>
-		<view>
-			<view class="details">
-				<view>
-					<el-popover placement="top-start" width="300" trigger="manual">
-					    <div class="checkFieldAuditPolicy">{{items.work_desc}}</div>
-					    <span slot="reference">{{items.work_desc.substr(0, 6) + "..."}}</span>
-					</el-popover>
-				</view>
-				<view class="viewDetails">
-					<el-popover placement="top-end" width="300" trigger="click">
-						<span class="tips-content">{{items.work_desc}}</span>
-						<span slot="reference">查看详情</span>
-					 </el-popover>
-				</view>
-			</view>
-			<view class="jobTime">
-				<view>工作时长：{{items.work_hours}}小时</view>
-				<view>{{items.work_date}}</view>
-			</view>
-		</view>
-		
-	</view>
-	
 		<!-- <view class="data-empty">
 			<img src="/static/images/default-time.png"> <p>暂无工作记录</p>
 		</view> -->
@@ -117,42 +85,14 @@
 	export default {
 		data() {
 			return {
-				checkAll: false,
-				isIndeterminate: true,
-				currents:0,
+				currents:1,
 				LookWork:[],
-				LookWorkTime:[],
-				defaultData:[],
-				apply_id:'',
-				fang:false,
-				facility:[{id:1,name:'全部'},{id:2,name:'Mac'},{id:3,name:'Windows'},{id:4,name:'Android'}],
-				todayItem:{},
-				todayId:'',
-				todayIndex:''
+				LookWorkTime:[]
 			}
 		},
 		methods: {
-			  handleCheckAllChange(val) {
-			        this.isIndeterminate = false;
-			      },
-			      handleCheckedCitiesChange(index,items,id) {
-					  this.todayItem = items
-					  this.todayId = id
-					  this.todayIndex = index
-			        // let checkedCount = value.length;
-			        // this.checkAll = checkedCount === this.cities.length;
-			        // this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
-			      
-			    },
-			clickTab(index,name){//工作时间
-				this.fang = true
-				this.currents = index
-				this.$http.post('/public/index.php/api/Work/LookWorkTime',{
-					 apply_id:2,
-					work_device:name
-					 }).then(res => {
-					 this.LookWorkTime = res.data.data
-				})
+			clickTab(cur){
+				this.currents = cur
 			},
 			tjsj(){
 				wx.navigateTo({
@@ -162,28 +102,19 @@
 			undergoQuery() {//查看工作
 				 this.$http.post('/public/index.php/api/Work/LookWork',{apply_id:2}).then(res => {
 					 this.LookWork = res.data.data
-					 console.log(this.LookWork)
 				})
 			},
 			undergo() {//查看工作时间
-				 this.$http.post('/public/index.php/api/Work/LookWorkTime',{
-					 apply_id:2,
-					 work_device:'全部'
-					 }).then(res => {
+				 this.$http.post('/public/index.php/api/Work/LookWorkTime',{apply_id:2}).then(res => {
 					 console.log(res)
-					 this.defaultData = res.data.data
+					 this.LookWorkTime = res.data.data
 				})
 			},
-			delet(){//删除时间
-				this.$http.post('/public/index.php/api/Work/deleteWorkTime',{id:this.todayId}).then(res => {
-					if(res.data.code == 1){
-						this.defaultData.splice(this.todayIndex,1)
-					}
-				})
+			ckxq(){
+				
 			}
 		},
-		onLoad(option) {
-			this.apply_id = option.apply_id
+		onLoad() {
 			this.undergoQuery()
 			this.undergo()
 		},
@@ -195,8 +126,6 @@
 
 <style lang="scss" scoped>
 .sj{
-	display: flex;
-	justify-content: space-between;
 	text-align: right;
 	padding: 10px 20px;
 	background: #FFFFFF;
@@ -343,9 +272,10 @@
 	background: #fff;
 	padding: 0 20px;
 	.ul{
-		display: flex;
 		margin-bottom: -1px;
-		justify-content: space-between;
+		li:not(:last-child) {
+		    margin-right: 20px;
+		}
 		li{
 			height: 44px;
 			line-height: 44px;
@@ -357,6 +287,9 @@
 		    border-bottom: 1px solid #008bf7;
 		    color: #008bf7;
 		}
+	}
+	.fl {
+	    float: left;
 	}
 }
 .jsbutton{
@@ -377,27 +310,36 @@
 		color: #FFFFFF;
 	}
 }
-.admin_main{
-	display:flex;
-	align-items: center;
-	padding: 20px;
+.gzjl{
+	padding: 20px 20px;
 	background: #FFFFFF;
+	position: relative;
 	border-bottom: 1px solid #edf1f4;
-	.check{
-		margin-right: 20px;
+	.gzjl_top{
+		line-height: 24px;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
 	}
-	.details{
-		display: flex;
-		justify-content: space-between;
-		.viewDetails{
-			color: #008bf7;
-		}
-	},
-	.jobTime{
-		margin-top:10px;
-		display:flex;
-		justify-content: space-between;
+	.gzjl_tops{
+		line-height: 24px;
 	}
- }
+	.ckxq{
+		color: #008bf7;
+		text-align: right;
+		margin-top: 10px;
+	}
+	.gzjl_bottom{
+		margin-top: 10px;
+	}
+	.fl{
+		float: left;
+	}
+	.fr{
+		float: right;
+	}
+}
 
 </style>

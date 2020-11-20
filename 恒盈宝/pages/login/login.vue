@@ -110,15 +110,18 @@
 				}
 			},
 			//提交登录
-			dl(){
+			dl(){//短信登录
 				var that = this;
 				that.$http.post('public/index.php/api/User/mobilelogin',{
 					mobile: that.mobile,
 					captcha:that.captcha,
 				}).then(function(res) {
+					console.log(res)
+					// let resData =res.data
 					if (res.data.code == 1) {
+						that.$store.commit('login',res.data.data.userinfo)
 					    uni.navigateTo({
-					    	url:'/settings/setting_user/setting_user'
+					    	url:'/admin/admin_data/admin_data'
 					    });
 					} else {
 					    uni.showToast({icon: 'none',title: '手机号或验证码错误'})
@@ -135,7 +138,7 @@
 				this.current = cur
 				this.currents = cur
 			},
-		 btn(){
+		 btn(){//账号密码登录
 			 if(this.nameValue.length <= 0) {
 				 uni.showToast({icon:'none',title:'请输入用户名'});
 			 }

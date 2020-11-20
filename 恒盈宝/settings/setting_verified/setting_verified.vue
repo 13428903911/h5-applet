@@ -41,8 +41,9 @@
 		methods: {
 			autonymProve() {//查询
 				this.$http.post('/public/index.php/api/User/getAuthInfo',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					this.userData = res.data.data
-					console.log(this.userData)
+				
+						this.userData = res.data.data
+					
 				})
 			},
 			modifiedData(item){

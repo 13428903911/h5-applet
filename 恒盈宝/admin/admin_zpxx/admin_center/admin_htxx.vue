@@ -62,7 +62,7 @@
 					</dl>
 				</view>
 			</view>
-			<view class="ft-wrap w1060 cl"><span @click = "qianyue" class="btn btn-blue btn-disabled">确认</span></view>
+			<view class="ft-wrap w1060 cl"><span @click = "qianyue" class="btn btn-blue btn-disabled">确 认</span></view>
 		</view>
 		<view class="dialog quote-retract" v-show="flag">
 			<view class="panel">
@@ -72,7 +72,7 @@
 						<p class="t-red">确认合同后，雇佣关系将正式确立。为保障您的资金安全，建议您在雇主托管预付款后再开始进行工作。</p> 
 					</view>
 				</view>
-				<view class="ft"><span @click="qrht" class="btn btn-blue">确认合同</span> <span class="btn btn-default" @click="quxiao">取消</span></view>
+				<view class="ft"><span @click="qrht" class="btn btn-blue">确 认 合 同</span> <span class="btn btn-default" @click="quxiao">取 消</span></view>
 			</view>
 		</view>
 	</view>

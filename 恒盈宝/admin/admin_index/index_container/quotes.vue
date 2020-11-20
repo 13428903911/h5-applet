@@ -6,10 +6,10 @@
 				<h2 class="title">职位管理</h2> 
 			</view>
 			<view class="box-bd">
-				<!-- <view class="data-empty">
+				<view class="data-empty" v-if="fl == false">
 					<img src="/static/images/jianli_a.png"> 
 					<p>您还没有投递过的职位</p>
-				</view> -->
+				</view>
 				<view class="">
 					<view class="item" v-for="(item,index) in management" :key="index">
 						<view class="info">
@@ -66,6 +66,7 @@
 				radio: '0',
 				 flag:false,
 				 flg:false,
+				 fl:false,
 				 task_id:'',
 				 revocate_reason:'',
 				  items: [{
@@ -138,6 +139,11 @@
 				page:1,
 				limit:3
 			}).then(res => {
+				if(res.data.data.row.length==0){
+					this.fl = false
+				}else{
+					this.fl = true
+				}
 				this.management = res.data.data.row
 				this.management.forEach(item => {
 					this.task_id = item.id
@@ -153,6 +159,7 @@
     padding: 20px 15px;
 	background: #fff;
 	line-height: 24px;
+	margin-top: 20px;
 	.box-hd {
 	    line-height: 28px;
 		.title {

@@ -8,7 +8,7 @@
 				<img src="/static/images/jianli_b.png"> 
 				<p>提升云队友竞争力指数，获取更多职位推荐</p>
 			</view> -->
-			<view class="item" @click="zhiweiguanli()">
+			<!-- <view class="item" @click="zhiweiguanli()">
 				<view class="info">
 					<p class="title">
 						<a>招平面设计，宣传单设计</a>
@@ -25,7 +25,7 @@
 				
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="item" @click="zhiweiguanli()">
 				<view class="info">
 					<p class="title">
@@ -38,9 +38,9 @@
 						<view class="cl"><p class="fl">待雇主筛选</p> <p class="filter t-gray fl">已被查看简历</p><view style="clear: both;"></view></view>
 					</view> 
 					<view class="btn-group">
-						<a class="btn-text btn-im">在线沟通</a> 
+						<!-- <a class="btn-text btn-im">在线沟通</a> 
 						<a class="btn-text">查看报价</a>
-						
+						 -->
 					</view>
 				</view>
 			</view>
@@ -61,6 +61,15 @@
 					url:'/pages/job_detail/job_detail'
 				})
 			}
+		},
+		created() {
+			this.$http.post('/public/index.php/api/Work/positionRecommend',{
+				user_id:1,
+				page:1,
+				limit:15
+			}).then(res => {
+				console.log(res)
+			})
 		}
 	}
 </script>

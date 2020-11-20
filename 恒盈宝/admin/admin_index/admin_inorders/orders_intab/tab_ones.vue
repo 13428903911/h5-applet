@@ -109,7 +109,6 @@
 		    padding: 20px;
 		    box-sizing: border-box;
 			.inner {
-			    width: 100%;
 				.t-gray {
 				    color: #9ca6ae;
 				}

@@ -13,18 +13,16 @@
 				</view>
 				<view class="header-drawer" :class="{active:flag}">
 					<ul class="nav">
-							<li @click = "denglu()">
+							<li @click = "denglu()" v-show="fla">
 								<a>登录</a>
 							</li>
-							<li @click = "zhuce()" class="">
+							<li @click = "zhuce()" class="" v-show="fla">
 								<a>注册</a>
 							</li>
-						<li class="hr"></li>
-						 <navigator url="../hots/hots" open-type="navigate">
-						<li class="">
+						<li class="hr" v-show="fla"></li>
+						<li @click = "rmgz()" class="">
 							<a>热门工作</a>
 						</li>
-						 </navigator>
 						 <li @click = "jies()"><a>产品介绍</a></li>
 						<li @click = "gushi()"><a>金斗云故事</a></li>
 					</ul>
@@ -40,7 +38,8 @@
 		data() {
 			return {
 				showUpImg:true,
-				flag:false		
+				flag:false,
+				fla:true,		
 			}
 		},
 		methods: {
@@ -59,7 +58,12 @@
 					url:'/pages/register/register'
 				})
 			},
-			
+			rmgz(){
+				wx.navigateTo({
+					url:'/pages/hots/hots'
+				})
+				window.location.reload();
+			},
 			gushi(){
 				wx.navigateTo({
 					url:'/pages/story/story'
@@ -75,10 +79,17 @@
 				if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
 				     wx.navigateTo({url:'/admin/admin_data/admin_data'})
 				    }else{
-				 wx.navigateTo({url:'/pages/login/login'})
+					wx.navigateTo({url:'/pages/login/login'})
 				}
 			}
 				
+		},
+		mounted() {
+			if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
+				this.fla = !this.fla;
+			}else{
+				this.fla = this.fla;
+			}
 		}
 		
 	}
@@ -173,7 +184,7 @@
 				}
 			}
 		}
-		.active{display: block;padding: 0px 0 405px;}
+		.active{display: block;padding: 0px 0 470px;}
 	}
 	.header.switch {
 	    // background: #fff;

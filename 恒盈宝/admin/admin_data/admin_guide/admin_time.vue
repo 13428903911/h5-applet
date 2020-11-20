@@ -93,9 +93,7 @@
 									 this.formMess=''
 								 }
 							})
-				          wx.navigateTo({
-				          	url: '/settings/setting_verified/setting_verified'
-				          })
+			
 				        } else {
 				          return false;
 				        }
@@ -103,7 +101,9 @@
 			   },
 			   jowTimeQuery() {//查询
 				   this.$http.post('/public/index.php/api/Position/getWage',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					   this.formMess = res.data.data
+					   if(res.data.data.length<0){} //数组
+					         else{ this.formMess = res.data.data}
+					  
 				   })
 			   }
 			 

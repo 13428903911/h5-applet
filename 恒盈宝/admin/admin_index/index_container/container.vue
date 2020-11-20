@@ -13,27 +13,27 @@
 					<view class="info">
 						<p class="name">金斗云-hJgcVdJw</p>
 						<view class="meta">
-							<view class="legalize">
+							<!-- <view class="legalize">
 								<view class="item legalize-un">
 									<i class="icon iconfont">&#xe601;</i>未实名
 								</view>
-							</view>
+							</view> -->
 						</view>
 					</view>
-					<view class="competitiveness">
+<!-- 					<view class="competitiveness">
 						<view class="scale"><view class="inner" style="width: 3%;"></view></view>
 						<view class="score">
 							<view class="fl"><p class="num fl">3</p> <p class="text fl">竞争力指数</p></view>
 							<a @click="tisheng()" class="fr">去提升</a>
 						</view>
 						<view style="clear: both;"></view>
-					</view>
+					</view> -->
 				</view>
 				<view class="stats cl">
-					<view class="item fl"><p class="num">¥ {{totalEarned}}</p> <p class="text t-gray">累计赚取</p></view> 
-					<view class="item fl"><p class="num">{{totalWorkTime}} h</p> <p class="text t-gray">工作时长</p></view>
-					<view class="item fl"><p class="num">¥ {{averageHourlyRate}}</p> <p class="text t-gray">平均时薪</p></view> 
-					<view class="item fl"><p class="num">{{totalContractedJob}}</p> <p class="text t-gray">签约的工作</p></view>
+					<view class="item fl"><p class="num">¥ <span class="num" v-if="flag == false">0</span>{{totalEarned}}</p> <p class="text t-gray">累计赚取</p></view> 
+					<view class="item fl"><p class="num"><span class="num" v-if="fla == false">0</span>{{totalWorkTime}} h</p> <p class="text t-gray">工作时长</p></view>
+					<view class="item fl"><p class="num">¥ <span class="num" v-if="fl == false">0</span>{{averageHourlyRate}}</p> <p class="text t-gray">平均时薪</p></view> 
+					<view class="item fl"><p class="num"><span class="num" v-if="f == false">0</span>{{totalContractedJob}}</p> <p class="text t-gray">签约的工作</p></view>
 					<view style="clear: both;"></view>
 				</view>
 			</view>
@@ -49,6 +49,10 @@
 				totalWorkTime:"",
 				averageHourlyRate:"",
 				totalContractedJob:"",
+				flag:false,
+				fla:false,
+				fl:false,
+				f:false,	
 			}
 		},
 		methods: {
@@ -69,11 +73,31 @@
 			}
 		},
 		created() {
-			this.$http.post('/public/index.php/api/User/getUserTotal',{user_id:2}).then(res => {
-				 this.totalEarned = res.data.data.totalEarned
-				 this.totalWorkTime = res.data.data.totalWorkTime
-				 this.averageHourlyRate = res.data.data.averageHourlyRate
-				 this.totalContractedJob = res.data.data.totalContractedJob
+			this.$http.post('/public/index.php/api/User/getUserTotal',{user_id:this.$store.state.userInfo.user_id,}).then(res => {
+				 if(res.data.data.totalEarned==0){
+				 	this.flag = false
+				 }else{
+				 	this.flag = true
+					this.totalEarned = res.data.data.totalEarned
+				 }
+				 if(res.data.data.totalWorkTime==0){
+				 	this.fla = false
+				 }else{
+				 	this.fla = true
+				 	this.totalWorkTime = res.data.data.totalWorkTime
+				 }
+				 if(res.data.data.averageHourlyRate==0){
+				 	this.fl = false
+				 }else{
+				 	this.fl = true
+				 	 this.averageHourlyRate = res.data.data.averageHourlyRate
+				 }
+				 if(res.data.data.totalContractedJob==0){
+				 	this.f = false
+				 }else{
+				 	this.f = true
+				   this.totalContractedJob = res.data.data.totalContractedJob
+				 }
 			})
 			
 		}
