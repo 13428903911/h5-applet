@@ -25,35 +25,38 @@
 						<view class="item cl">
 							<view class="name fl">
 								<span class="fl">2. 能力描述</span> 
-								<span class="st fl">未完成</span>
+							<i class="icon iconfont fl" v-if="userEvaluateStatus == 1">&#xe624;</i>
+							<span class="st fl" v-else>未完成</span>
 							</view> 
 							<a class="btn-edit fr" @click="gznljy()"><i class="icon iconfont">&#xe668;</i>编辑</a>
 						</view>
 						<view class="item cl">
 							<view class="name fl">
 								<span class="fl">3. 预期时薪及可支配时间</span> 
-								<i class="icon iconfont fl">&#xe624;</i>
-							</view> <a @click="yjsx()" class="btn-edit fr">
-							<i class="icon iconfont">&#xe668;</i>编辑</a>
-						</view>
+								<i class="icon iconfont fl" v-if="jobMimeStaus == 1">&#xe624;</i>
+								<span class="st fl" v-else>未完成</span>
+							</view> <a @click="yjsx()" class="btn-edit fr"><i class="icon iconfont">&#xe668;</i>编辑</a></view>
 						<view class="item cl">
 							<view class="name fl">
 								<span class="fl">4. 工作经历</span> 
-								<span class="st fl">未完成</span>
+								<i class="icon iconfont fl" v-if="jobStatus == 1">&#xe624;</i>
+								<span class="st fl" v-else>未完成</span>
 							</view> 
 							<a @click="gzjl()" class="btn-edit fr"><i class="icon iconfont">&#xe668;</i>编辑</a>
 						</view>
 						<view class="item cl">
 							<view class="name fl">
 								<span class="fl">5. 项目经验</span> 
-								<span class="st fl">未完成</span>
+								<i class="icon iconfont fl" v-if="itemStaus == 1">&#xe624;</i>
+								<span class="st fl"  v-else>未完成</span>
 							</view> 
 							<a @click="xmjy()" class="btn-edit fr"><i class="icon iconfont">&#xe668;</i>编辑</a>
 						</view>
 						<view class="item cl">
 							<view class="name fl">
 								<span class="fl">6. 教育信息</span> 
-								<span class="st fl">未完成</span>
+								<i class="icon iconfont fl" v-if="educationStaus == 1">&#xe624;</i>
+								<span class="st fl" v-else>未完成</span>
 							</view> 
 							<a @click="jyxx()" class="btn-edit fr"><i class="icon iconfont">&#xe668;</i>编辑</a>
 						</view>	
@@ -110,9 +113,20 @@
 	export default {
 		data() {
 			return {
-				
+				jobStatus:'',//工作经历状态
+				educationStaus:'',//教育信息状态
+				itemStaus:'',//项目经验状态
+				jobMimeStaus:'',//工作时间状态
+				userEvaluateStatus:'',//个人评价状态
 			}
 		},
+		mounted() {
+			uni.getStorage({key: 'jobStatus', success:(res) => {if(res.data == 1){this.jobStatus = res.data}},})//取出存储的工作经历状态
+			uni.getStorage({key: 'educationStaus', success:(res) => {if(res.data == 1){this.educationStaus = res.data}},})//取出存储的教育信息状态
+			uni.getStorage({key: 'itemStaus', success:(res) => {if(res.data == 1){this.itemStaus = res.data}},})//取出存储的项目经验状态
+			uni.getStorage({key: 'jobMimeStaus', success:(res) => {if(res.data == 1){this.jobMimeStaus = res.data}},})//取出存储的工作时间状态
+			uni.getStorage({key: 'userEvaluateStatus', success:(res) => {if(res.data == 1){this.userEvaluateStatus = res.data}},})//取出存储的个人评价状态
+			},
 		methods: {
 			cktxjy(){
 				wx.navigateTo({

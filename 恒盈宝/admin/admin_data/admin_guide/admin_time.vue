@@ -101,8 +101,12 @@
 			   },
 			   jowTimeQuery() {//查询
 				   this.$http.post('/public/index.php/api/Position/getWage',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					   if(res.data.data.length<0){} //数组
-					         else{ this.formMess = res.data.data}
+					   if(res.data.code == 1){
+						  uni.setStorage({key:'jobMimeStaus',data:res.data.code});
+						  if(res.data.data.length<0){} //数组
+						  else{ this.formMess = res.data.data}
+					   }
+					  
 					  
 				   })
 			   }

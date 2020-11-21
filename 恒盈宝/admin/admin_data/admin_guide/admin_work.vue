@@ -172,14 +172,17 @@
 			 jowUndergoQuery() {//查询
 	
 					this.$http.post('/public/index.php/api/Position/getExperience',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-						if(res.data.data.length<=0){
-						      }
-						      else{
+						if(res.data.code == 1) {
+							uni.setStorage({key:'jobStatus',data:res.data.code})
+							if(res.data.data.length<=0){}
+							else{
 								let resdata = res.data.data
-						       this.dynamicValidateForm.experience = resdata
-							   let objdata = resdata[resdata.length-1]  //让数组最后一个长度-1
+							    this.dynamicValidateForm.experience = resdata
+							    let objdata = resdata[resdata.length-1]  //让数组最后一个长度-1
 							    this.endId = objdata.id+1//数组的id加1
-						       }
+							 }
+						}
+					
 								
 					}) 	
 				

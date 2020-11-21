@@ -5,9 +5,12 @@
 			<view class="form-wrap">
 				<view class="form-group form-group-select">
 					<view style="width: 100%; margin: auto;margin-bottom: 20px;">
+						 <view class="itemType"><label>账单类型</label></view>
 						<xfl-select 
 						:list="list"
 						:showItemNum="6" 
+						style="width: 100%"
+						@change="billTpye"
 						:isCanInput="false" 
 					    :listShow="false"
 						:clearable="false"
@@ -17,34 +20,40 @@
 						>
 						</xfl-select>
 					</view>
-					<view style="width: 100%; margin: auto;margin-bottom: 20px;">
-						<xfl-select 
-						:list="lists"
-						:showItemNum="5" 
-						:isCanInput="false" 
-					    :listShow="false"
-						:clearable="false"
-						:style_Container="listBoxStyle"
-						:placeholder = "'选择账单状态'"
-						:initValue="'选择账单状态'"
-						>
-						</xfl-select>
-					</view>
+		
 				</view>	
 			</view>
 		</view>
 		 <view class="block">
-		    <el-date-picker
-		      v-model="value1"
-		      type="datetimerange"
-		      range-separator="至"
-		      start-placeholder="开始日期"
-		      end-placeholder="结束日期"
-			  >
-		    </el-date-picker>
+			 <view class="itemType"><label>起止时间</label></view>
+			  <el-date-picker
+			       v-model="value1"
+				    @change="changeStatus"
+					value-format="yyyy-MM-dd"
+			       type="daterange"
+			       range-separator="至"
+			       start-placeholder="开始日期"
+			       end-placeholder="结束日期">
+			     </el-date-picker>
 		  </view>
-		  <span class="btn btn-blue fl">查 询</span>
-		  <view class="data-empty"><img src="/static/images/order_g.png" alt=""> <p>您还没有交易账单</p></view>
+		  <span class="btn btn-blue fl" @tap="bill">查 询</span>
+		  
+		  <view class="header" v-for="(item,index) in billsList">
+		  	<view class="header_cengter">
+		  		<view class="left">
+		  			<p>{{item.record_desc}}</p>
+		  			<span class="ny">{{item.create_time}}</span>
+		  		</view>
+				<view class="billCenter">
+					<view>{{item.record_type}}</view>
+				</view>
+		  		<view class="right">
+		  			<p class="je">{{item.money}}</p>
+		  		</view>
+		  	</view>
+		  </view>
+		  
+		  <view class="data-empty" v-if="fang"><img src="/static/images/order_g.png" alt=""> <p>您还没有交易账单</p></view>
 	</view>
 	
 </template>
@@ -53,25 +62,49 @@
 	export default {
 		data() {
 			return {
+				fang:true,
+				billsList:[],//交易账单数据
+				value1: [],
+				billData:{
+					user_id:this.$store.state.userInfo.user_id,
+					state:'',
+					start_time: '',
+					end_time: '',
+					page:1,
+					limit:10,
+				},
 				listBoxStyle: `height: 50px; font-size: 16px;`,
 				list: [
-					{value: '选择账单类型', active: true},
+					'全部',
 					'入账',
 					'提现',
-					'付款',
-					'退款'
+					// {value: '选择账单类型', active: true},
+					
 				],
-				lists: [
-					{value: '选择账单状态', active: true},
-					'待确认',
-					'已完成',
-					'已驳回',
-					'处理中'
-				],
-				 value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+				
 			}
 		},
+		mounted() {
+			
+		},
 		methods: {
+			billTpye(value){
+				this.billData.state = value.index
+				console.log(this.billData.state)
+			},
+			changeStatus(){
+				this.billData.start_time = this.value1[0]
+				this.billData.end_time = this.value1[1]
+			},
+			bill(){//查询交易账单
+				this.$http.post('/public/index.php/api/User/getBillList',this.billData).then(res => {
+					if(res.data.code == 1){
+						this.fang = false
+						this.billsList = res.data.data.row
+						console.log(this.billsList)
+					}
+				})
+			},
 			visibleChange(isShow){ // 列表框的显示隐藏事件
 				console.log('isShow::', isShow);
 			},
@@ -121,6 +154,11 @@
 			}
 		}
 	}
+}
+.itemType{
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom:6px;
 }
 .show-box .list-container .popper__arrow{
 	left: 50%!important;
@@ -176,6 +214,44 @@
 	}
 	p {
 	    margin-top: 10px;
+	}
+}
+
+
+.header{
+	
+	margin-top: 30px;
+	
+	background: #FFFFFF;
+	.header_cengter{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px 20px;
+		display: flex;
+		border-bottom: 1px solid #edf1f4;
+		border-top: 1px solid #edf1f4;
+		.left{
+			
+			p{
+				font-size: 16px;
+			}
+			.ny{
+				font-size: 10px;
+			}
+		
+		}
+		.billCenter{
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.right{
+			.je{
+				color: red;
+				font-size: 23px;
+				margin-top: -6px;
+			}
+		}
 	}
 }
 </style>

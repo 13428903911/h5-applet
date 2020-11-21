@@ -94,9 +94,16 @@
 					<view style="clear: both;"></view>
 				</ul>
 				
-				<ul class="types cl" v-else if="Detailsll.hiring_type == '一次性工作'"><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
+				<ul class="types cl" v-else-if="Detailsll.hiring_type == '一次性工作'"><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
 				 <p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">一次性完成工作并结算</p></li> <li class="item"><i class="icon iconfont"></i>
 					<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> <p class="name">短期雇用</p> <p class="desc">雇用时长一般在6个月以内 </p></li> <li class="item"><i class="icon iconfont"></i> 
+					<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> <p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上</p></li>
+					<view style="clear: both;"></view>
+				</ul>
+				
+				<ul class="types cl" v-else><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
+				 <p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">雇用时长一般在6个月以内</p></li> <li class="item"><i class="icon iconfont"></i>
+					<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> <p class="name">一次性工作</p> <p class="desc">一次性完成工作并结算 </p></li> <li class="item"><i class="icon iconfont"></i> 
 					<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> <p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上</p></li>
 					<view style="clear: both;"></view>
 				</ul>

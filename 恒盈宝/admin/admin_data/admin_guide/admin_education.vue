@@ -39,27 +39,16 @@
 					</el-form-item> 
 				</view>
 				<view class="form-group">
-					<view class="label"><label style="margin-bottom: 10px;">开始时间</label></view>
+					<view class="label"><label style="margin-bottom: 10px;">起止时间</label></view>
 					<el-date-picker
-					      v-model="value1"
-					      type="date"
-						  @change="dateChangebirthday1"
-						   format="yyyy-MM-dd"
-						   value-format="yyyy-MM-dd"
-					      placeholder="请选择开始时间">
-					</el-date-picker>
-				</view>
-				<view class="form-group">
-					<view class="label"><label style="margin-bottom: 10px;">结束时间</label></view>
-					<el-date-picker
-					      v-model="value2"
-					      type="date"
-						  @change="dateChangebirthday2"
-						   format="yyyy-MM-dd"
-						   value-format="yyyy-MM-dd"
-					      placeholder="请选择结束时间">
-					</el-date-picker>
-					
+					     v-model="value1"
+						@change="changeStatus"
+						value-format="yyyy-MM-dd"
+					     type="daterange"
+					     range-separator="至"
+					     start-placeholder="开始日期"
+					     end-placeholder="结束日期">
+					   </el-date-picker>
 				</view>
 			</el-form>
 			
@@ -78,7 +67,7 @@
 	export default {
 		data() {
 			return {
-				value1:'',
+				value1:[],
 				value2:'',
 				 pickerOptions: {
 				    disabledDate(time) {
@@ -126,9 +115,9 @@
 			}
 		},
 		methods: {
-			dateChangebirthday1(){
-				this.fomeData.start_time = this.value1
-				// console.log(this.fomeData.start_time)
+			changeStatus(){
+				this.fomeData.start_time = this.value1[0]
+				this.fomeData.end_time = this.value1[1]
 			},
 			dateChangebirthday2(){
 				this.fomeData.end_time = this.value2
@@ -151,13 +140,14 @@
 			},
 			educationQuery() {//查询
 				this.$http.post('/public/index.php/api/Position/getEducate',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-					if(res.data.data==""){}
-					      else{
-							 this.fomeData = res.data.data
-							 this.value1 = res.data.data.start_time
-							 this.value2 =  res.data.data.end_time 
-						  }
-					
+					if(res.data.code == 1) {
+						uni.setStorage({key:'educationStaus',data:res.data.code});
+						if(res.data.data==""){}
+						    else{
+								this.fomeData = res.data.data
+								this.value1=[res.data.data.start_time,res.data.data.end_time]
+							  }
+					}
 				})
 			}
 			

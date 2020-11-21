@@ -216,16 +216,17 @@
 			 undergoQuery() {//查询
 		
 					this.$http.post('/public/index.php/api/Position/getProject',{user_id:this.$store.state.userInfo.user_id}).then(res => {
-						//console.log(res)
-							if(res.data.data.length<0){}
-							      else{
-									this.dynamicValidateForm.project = res.data.data
-								   this.imgObj.name = this.dynamicValidateForm.project[0].file.slice(-9)
-								   this.imgObj.url = this.dynamicValidateForm.project[0].file
-								   this.fileList.push(this.imgObj)
-									
-									   
-							      }
+							if(res.data.code == 1) {
+								uni.setStorage({key:'itemStaus',data:res.data.code});
+								if(res.data.data.length<0){}
+								    else{
+										this.dynamicValidateForm.project = res.data.data
+										this.imgObj.name = this.dynamicValidateForm.project[0].file.slice(-9)
+										this.imgObj.url = this.dynamicValidateForm.project[0].file
+										this.fileList.push(this.imgObj)   
+								    }
+							}
+							
 					})
 				
 			 }

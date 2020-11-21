@@ -11,7 +11,7 @@
 		
 		
 		<!-- 主题内容 -->
-		<view class="item" v-for="(item,index) in tabDefault" :key="item.id" @tap="lineItem(item.id)">
+		<view class="item" v-for="(item,index) in tabDefault" :key="item.id" @tap="lineItem(item.id)" v-if="flag == false">
 			<view class="item-hd cl">
 				<view class="fl">
 					<span class="date fl">{{item.create_time}}</span> 
@@ -43,11 +43,9 @@
 			<view class="item-hd cl">
 				<view class="fl">
 					<span class="date fl">{{item.create_time}}</span> 
-					<!-- <span class="id fl t-gray">订单编号：2020110417452405072</span> -->
 				</view> 
 				<view class="fr">
 					<span class="name fl"><span class="t-gray">雇主：</span>{{item.publisher}}</span> 
-					<!-- <a class="btn-text btn-im fl">在线沟通</a> -->
 					<view style="clear: both;"></view>
 				</view>
 			</view>
@@ -66,13 +64,6 @@
 			</view>
 		</view>
 		
-		<!-- <view class="data-empty" v-if="flag == true">
-			<img src="/static/images/order_a.png"> 
-			<p>您还没有合同订单</p>
-		</view> -->
-		<!-- <Tabfour v-if="jow"></Tabfour> -->
-		<!-- <Tabfive :class="[hideing === 4 ? 'actineclass' : 'errorclass']"></Tabfive>
-		<Tabsix :class="[hideing === 5 ? 'actineclass' : 'errorclass']"></Tabsix -->
 		
 	</view>
 </template>
@@ -90,7 +81,7 @@
 				tableList:[{id:1,name:"全部"},{id:2,name:'工作中'},{id:3,name:'待结算'},{id:4,name:'已完成'}],
 				orderForm:[],
 				tabDefault:[],
-				flag:true,
+				flag:false,
 				jow:false
 			}
 		},
@@ -111,6 +102,7 @@
 			},
 			table(index,id){
 				this.num = index
+				this.flag = true
 				if(index == 0) {
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
 						user_id:this.$store.state.userInfo.user_id,

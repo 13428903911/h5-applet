@@ -7,12 +7,6 @@ export default {
 				console.log(res.data)
 	            this.$store.commit('login',res.data); 
 				console.log(this.$store.state.userInfo.token)
-				// this.$http.post('/public/index.php/api/User/login',{
-				// 	username:res.data.username
-				// }).then(res => {
-				// 	this.$store.commit('login',res.data)
-				// 	uni.setStorage({key:'auth',data:res.data});
-				// })
 	        }  
 	    });  
 	}, 

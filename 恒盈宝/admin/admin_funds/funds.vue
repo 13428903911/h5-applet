@@ -9,11 +9,18 @@
 					<view class="account">
 						<view class="balance"><p class="num">{{getCapitalInfo}}</p> <p class="t-gray">收入账户余额（元）</p> <!----></view>
 						<view class="btn-group">
-							<span class="btn-text btn-withdraw btn-disabled">提 现
-								<view class="tool-tip">
-									<p>账号未认证，请先完成认证后再进行提现操作<a @click="renzheng" class="btn-text">去认证</a></p>
-								</view>
-							</span>
+							<span class="btn-text btn-withdraw btn-disabled" @tap="askNow">提 现</span>
+							<el-dialog
+							  center
+							  :visible.sync="dialogVisible"
+							  width="80%"
+							  >
+							  <span>账号<span style="color:red;font-weight: 700;">未认证</span>，请先完成认证后再进行提现操作</span>
+							  <span slot="footer" class="dialog-footer">
+							    <el-button @click="dialogVisible = false">取 消</el-button>
+							    <el-button type="primary" @click="approve">去认证</el-button>
+							  </span>
+							</el-dialog>
 						</view>
 					</view>
 				</view>
@@ -26,12 +33,24 @@
 	export default {
 		data() {
 			return {
+				dialogVisible:false,
 				getCapitalInfo:""
 			}
 		},
 		methods: {
-			renzheng(){
-				wx.navigateTo({url:'/settings/settings_withdraw/settings_withdraw'})
+			askNow(){//查看个人认证信息
+				this.$http.post('/public/index.php/api/User/getAccountInfo',{user_id:this.$store.state.userInfo.user_id}).then(res => {
+					if(res.data.code == 1){
+						 uni.setStorage({key:'userVerify',data:res.data.data});
+						 wx.navigateTo({url:'/settings/settings_withdraw/settings_withdraw'})
+					}else{
+						 this.dialogVisible = true
+					}
+				})
+			},
+			approve(){//跳实名认证
+			     this.dialogVisible = false
+				 wx.navigateTo({url:'/settings/seting_Certification/seting_Certification'})
 			}
 		},
 		created() {
@@ -93,7 +112,7 @@
 						color: #008bf7;
 					}
 					.btn-text.btn-disabled {
-					    color: #9ca6ae;
+					    color: #008bf7;
 					    cursor: not-allowed;
 					}
 					.btn-withdraw {
@@ -145,5 +164,8 @@
 		}
 	}
 	
+}
+/deep/ .el-dialog__body{
+	padding:35px 20px 20px 20px;
 }
 </style>

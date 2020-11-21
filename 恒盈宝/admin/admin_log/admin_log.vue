@@ -138,9 +138,7 @@
 			}
 		},
 		methods: {
-			  handleCheckAllChange(val) {
-			        this.isIndeterminate = false;
-			      },
+			 
 			    handleCheckedCitiesChange(index,items,id) {
 					this.multipleSelection.push(items)
 					this.todayId = id
