@@ -48,9 +48,13 @@
 				this.active = !this.active
 			},
 			shiming(){
-				wx.navigateTo({
-					url:'/settings/seting_Certification/seting_Certification'
-				})
+				uni.getStorage({key: 'userAuthentication', success:(res) => {
+					if(res.data[0].id){
+					wx.navigateTo({	url:'/settings/setting_verified/setting_verified'})
+					}else{
+						wx.navigateTo({url:'/settings/seting_Certification/seting_Certification'})
+					}
+				}})
 			},
 			bdwx(){
 				wx.navigateTo({

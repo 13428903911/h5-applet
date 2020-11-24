@@ -8,7 +8,7 @@
 					<i v-show="!showUpImg" class="icon iconfont">&#xe65a;</i>
 				</h1>
 				<view class="btn-group fr">
-					<!-- <a href="javascript:;" class="btn fl btn-blue">免费招聘</a> -->
+					<a href="http://81.69.199.157:82/public/dTMXbSELzp.php/index/login" class="btn fl btn-blue">企业入驻</a>
 					<a @click = "zgz()" class="btn fl btn-green">找工作</a>
 				</view>
 				<view class="header-drawer" :class="{active:flag}">
@@ -20,11 +20,19 @@
 								<a>注册</a>
 							</li>
 						<li class="hr" v-show="fla"></li>
+						<li @click="adminx()" class="" v-show="fl">
+							<a>我的首页</a>
+						</li>
 						<li @click = "rmgz()" class="">
 							<a>热门工作</a>
 						</li>
 						 <li @click = "jies()"><a>产品介绍</a></li>
 						<li @click = "gushi()"><a>金斗云故事</a></li>
+						<li class="hr" v-show="fl"></li>
+						<li @click="grsz()" v-show="fl">
+							<a>个人设置</a>
+						</li>
+						<li @click="tuichu()" v-show="fl"><a>退出登录</a></li>
 					</ul>
 				</view>
 			</view>
@@ -39,7 +47,8 @@
 			return {
 				showUpImg:true,
 				flag:false,
-				fla:true,		
+				fla:true,
+				fl:false
 			}
 		},
 		methods: {
@@ -58,6 +67,11 @@
 					url:'/pages/register/register'
 				})
 			},
+			adminx(){
+				wx.navigateTo({
+					url:'/admin/admin_index/admin_index'
+				})
+			},
 			rmgz(){
 				wx.navigateTo({
 					url:'/pages/hots/hots'
@@ -72,12 +86,20 @@
 			jies(){
 				wx.navigateTo({
 					url:'/pages/index/index'
-				}),
-				window.location.reload();
+				})
+				
+			},
+			grsz(){
+				wx.navigateTo({
+					url:'/settings/setting_user/setting_user'
+				})
+			},
+			tuichu(){
+				this.$store.commit('clear')
 			},
 			zgz(){
 				if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
-				     wx.navigateTo({url:'/admin/admin_data/admin_data'})
+				     wx.navigateTo({url:'/admin/admin_data/admin_data'})	 
 				    }else{
 					wx.navigateTo({url:'/pages/login/login'})
 				}
@@ -87,8 +109,12 @@
 		mounted() {
 			if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
 				this.fla = !this.fla;
+				this.fl = !this.fl;
+				document.getElementsByClassName("btn-green")[0].innerHTML = "完善资料"
 			}else{
 				this.fla = this.fla;
+				this.fl = this.fl;
+				document.getElementsByClassName("btn-green")[0].innerHTML = "找工作"
 			}
 		}
 		

@@ -9,6 +9,7 @@
 				  :label="'工作经历' + (index+1)"
 				  :key="experience.key"
 				  :prop="'experience.' + index + '.value'" 
+				  
 				>
 				<view style="margin-top: 40px;"><p>请从最近的工作经历开始填写</p></view>
 				<view class="form-group">
@@ -17,7 +18,6 @@
 						<el-input type="text" name="tag0jobTitle" placeholder="请输入职位头衔" class="ipt-text" 
 						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.job_title"></el-input>
 					</el-form-item> 
-						<p class="tips-error" style="display: none;"></p>
 				</view>
 				<view class="form-group">
 					<view class="label">
@@ -27,7 +27,7 @@
 						<el-input type="text" name="tag0corporateName" placeholder="请输入公司名称" class="ipt-text" 
 						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.company"></el-input>
 					</el-form-item> 
-						<p class="tips-error" style="display: none;"></p>
+						<p class="tips-error" style="display: none;">将作为您所属的公司展示</p>
 				</view>
 				<view class="form-group">
 					<view class="label"><label style="margin-bottom: 10px;">入职时间</label></view>
@@ -50,6 +50,7 @@
 					      placeholder="离职时间">
 					    </el-date-picker>
 					  </el-form-item>
+
 				</view>
 				<view class="form-group">
 					<view class="label"><label style="margin-bottom: 10px;">工作内容及业绩</label></view>
@@ -104,9 +105,9 @@
 							]
 						},
 					rules: {
-						// job_title: [
-						//   { required: true, message: '职位头衔不能为空', trigger: 'blur' },
-						// ],
+						  // job_title:[
+							 //  {required: true, message: '职位头衔不能为空', trigger: 'blur' }
+						  // ],
 						// company: [
 						//   { required: true, message: '公司名称不能为空', trigger: 'blur' },
 						// ],
@@ -125,6 +126,20 @@
 			 submit(formName) {
 				 this.$refs[formName].validate((valid) => {
 				         if (valid) {
+							 var p = document.getElementsByClassName("tips-error")
+							 var ipttext = document.getElementsByClassName("el-input__inner")[0]
+							 var ipttexts = document.getElementsByClassName("el-input__inner")[1]
+							 var ipttextk = document.getElementsByClassName("uni-textarea-textarea")[0]
+							 if(ipttext.value.length==0){
+							   p[0].style.display = "block"
+							   return false;
+							 }else if(ipttexts.value.length==0){
+								 p[1].style.display = "block"
+								 return false;
+							 }else if(ipttextk.value.length==0){
+								 uni.showToast({icon: 'none',title: '工作内容及业绩不能为空'})
+								 return false;
+							 }
 							 this.$http.post('/public/index.php/api/Position/saveExperience',{
 							 	user_id:this.user_id,
 							 	experience: JSON.stringify(this.dynamicValidateForm.experience)
@@ -170,7 +185,6 @@
 			 	 uni.reLaunch({url: '/admin/admin_data/admin_data'})
 			 },
 			 jowUndergoQuery() {//查询
-	
 					this.$http.post('/public/index.php/api/Position/getExperience',{user_id:this.$store.state.userInfo.user_id}).then(res => {
 						if(res.data.code == 1) {
 							uni.setStorage({key:'jobStatus',data:res.data.code})
@@ -190,6 +204,7 @@
 		},
 		mounted() {
 			this.jowUndergoQuery()
+			
 		},
 		components:{
 			Adminheader

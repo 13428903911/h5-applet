@@ -11,9 +11,9 @@
 					<p>您还没有投递过的职位</p>
 				</view>
 				<view class="">
-					<view class="item" v-for="(item,index) in management" :key="index" @tap="postDetails(item.id)">
+					<view class="item" v-for="(item,index) in management" :key="item.id">
 						<view class="info">
-							<p class="title">
+							<p class="title" @tap="postDetails(item.id)">
 								<a>{{item.task_name}}</a>
 							</p> 
 							<view class="other"><span class="t-gray">投递时间：{{item.apply_time}}</span></view>
@@ -25,7 +25,7 @@
 							<view class="btn-group">
 								<!-- <a class="btn-text btn-im">在线沟通</a> 
 								<a class="btn-text">查看报价</a> -->
-								<span class="btn-text" @click="chtt" v-show="flg">撤回投递</span>
+								<span class="btn-text" @click="chtt(item.id)" v-show="item.state == 1">撤回投递</span>
 							</view>
 						</view>
 					</view>
@@ -65,9 +65,9 @@
 				management:[],
 				radio: '0',
 				 flag:false,
-				 flg:false,
 				 fl:false,
 				 task_id:'',
+				 itemId:'',
 				 revocate_reason:'',
 				  items: [{
 						  value: '1',
@@ -104,12 +104,8 @@
 			postDetails(id){//跳转详情页
 				wx.navigateTo({url:'/pages/job_detail/job_detail?id='+id})
 			},
-			// zhiweiguanli(){
-			// 	wx.navigateTo({
-			// 		url:'/pages/job_detail/job_detail'
-			// 	})
-			// },
-			chtt(){
+			chtt(id){//撤回投递
+				this.itemId = id
 				 this.flag = !this.flag;
 			},
 			xx(){
@@ -125,13 +121,18 @@
 				}else{
 					this.$http.post('/public/index.php/api/Work/revocateResume',{
 						user_id:this.$store.state.userInfo.user_id,
-						task_id:this.task_id,
+						task_id:this.itemId,
 						revocate_reason:this.revocate_reason
 					}).then(res => {					
-						// console.log(res)
+						this.management.forEach((item,i) => {
+							if(item.id == this.itemId){
+								item.statetext = res.data.msg
+								console.log(res.data.msg)
+								item.state = 4
+							}
+						})
 					})
 					 this.flag = !this.flag;
-					 this.flg = !this.flg;
 				}
 				
 			}
@@ -147,11 +148,7 @@
 				}else{
 					this.fl = true
 				}
-				this.management = res.data.data.row
-				this.management.forEach(item => {
-					this.task_id = item.id
-				})
-				
+				this.management = res.data.data.row	
 			})
 		}
 	}
@@ -243,13 +240,13 @@
 					}
 				}
 				.btn-group {
-				    display: -ms-flexbox;
-				    display: flex;
-				    -ms-flex-pack: justify;
-				    justify-content: space-between;
+				    // display: -ms-flexbox;
+				    // display: flex;
+				    // -ms-flex-pack: justify;
+				    // justify-content: space-between;
 				    width: 100%;
 				    margin-top: 20px;
-					text-align: center;
+					text-align: right;
 					.btn-text {
 					    display: inline-block;
 					    text-align: center;
@@ -271,5 +268,106 @@
 .box:not(:first-child) {
     margin-top: 20px;
 }
-
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background-color: #fff;
+	.panel {
+	    position: relative;
+	    height: 100vh;
+	    padding: 66px 15px 90px;
+	    background: #fff;
+	    box-sizing: border-box;
+	    box-shadow: 0 0 10px 0 rgba(9,34,53,.1);
+	    border-radius: 4px;
+	    overflow-y: auto;
+		.title {
+		    font-size: 24px;
+		    font-weight: 700;
+		    line-height: 34px;
+		}
+		.iconpop_close1 {
+		    position: fixed;
+		    top: 20px;
+		    right: 20px;
+		    width: 20px;
+		    height: 20px;
+		    line-height: 20px;
+		    text-align: center;
+		    color: #9ca6ae;
+		    cursor: pointer;
+		    z-index: 999;
+		}
+		 .bd {
+		    margin-top: 20px;
+			 p {
+			    line-height: 24px;
+			}
+			.t-red {
+			    color: #ff5853;
+			}
+			.form-group {
+			    line-height: 24px;
+			    margin-top: 10px;
+				.uni-radio-input {
+				    margin: 0 10px 0 1px;
+				}
+			}
+		}
+		.ft {
+		    position: fixed;
+		    left: 0;
+		    bottom: 0;
+		    width: 100%;
+		    height: 70px;
+		    padding: 10px 15px;
+		    background: #fff;
+		    box-sizing: border-box;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-pack: justify;
+		    justify-content: space-between;
+			.btn {
+			    display: inline-block;
+			    height: 50px;
+			    line-height: 50px;
+			    text-align: center;
+			    border: none;
+			    border-radius: 2px;
+				width: calc(50% - 10px);
+			    cursor: pointer;
+			    box-sizing: border-box;
+			}
+			.btn.btn-blue {
+			    background: #008bf7;
+			    color: #fff;
+			}
+			.btn.btn-default {
+			    border: 1px solid #008bf7;
+			    color: #008bf7;
+			    line-height: 48px;
+			}
+		}
+	}
+}
+.uni-list-cell{
+	margin-top: 20px;
+}
+.icon{
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	color: #9ca6ae;
+	cursor: pointer;
+	z-index: 999;
+	font-size: 26px;
+}
 </style>

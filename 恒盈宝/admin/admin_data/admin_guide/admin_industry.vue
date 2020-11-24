@@ -319,7 +319,7 @@
 				jobTypeQuery(){//查询
 					this.$http.post('/public/index.php/api/Position/getWorkType',{user_id:1,}).then(res => {
 						if(res.data.code ==1){
-							// uni.setStorage({key:'jobTypeStatus',data:res.data.code});//查询状态存入本地
+							uni.setStorage({key:'jobTypeStatus',data:res.data.code});//查询状态存入本地
 							// let jobTypeId = res.data.data.position_type//查询到的职业类型id赋值
 							// this.flag = jobTypeId//职位类型列表高亮
 							// this.show = true//职业列表显示

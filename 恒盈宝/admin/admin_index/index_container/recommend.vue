@@ -3,6 +3,9 @@
 		<view class="box-hd cl">
 			<h2 class="title">推荐职位</h2>
 		</view>
+		<view class="">
+			
+		</view>
 		<view class="mod mod-jobs hide-jobs" @click="details(item.id)" v-for="(item,index) in offerJob">
 			<view class="hd cl">
 				<h3 class="title">{{item.income_method}}</h3>

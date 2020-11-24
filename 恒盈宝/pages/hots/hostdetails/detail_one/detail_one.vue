@@ -22,7 +22,7 @@
 		 		    <span>{{item.working_hours}}</span></p>
 		 			<div class="tags"> 
 		 				<div class="inner cl t-gray">
-		 					<span v-for="skil in item.skill">
+		 					<span v-for="skil in item.skill" :key="skil.id">
 		 						{{skil}}
 		 					</span>
 		 				</div>
@@ -43,7 +43,7 @@
 		 		    <span>{{item.working_hours}}</span></p>
 		 			<div class="tags"> 
 		 				<div class="inner cl t-gray">
-		 					<span v-for="skil in item.skill">
+		 					<span v-for="skil in item.skill" :key="skil.id">
 		 						{{skil}}
 		 					</span>
 		 				</div>
@@ -54,7 +54,8 @@
 		 		</div>
 		 	</view>
 		 </view>
-		 <view @click="moreShow" data-ga-name="JoblistMoreBtnClick" data-ga-label="all" class="tool-more"><i class="icon iconfont">&#xe600;</i>查看更多</view>
+		 <view v-if="moreShowBoolen" @click="moreShow" data-ga-name="JoblistMoreBtnClick" data-ga-label="all" class="tool-more"><i class="icon iconfont">&#xe600;</i>查看更多</view>
+		 <view v-else @click="moreShow" data-ga-name="JoblistMoreBtnClick" data-ga-label="all" class="tool-more"><i class="icon iconfont">&#xe600;</i>已无更多</view>
 	</view>
 </template>
 
@@ -67,7 +68,9 @@
 				hideing:'',
 				haots:[],
 				Detailsll:[], //页面数据数组
-				allList:[]//默认全部数据
+				allList:[],//默认全部数据
+				 moreShowBoolen: false,
+				 page:1,
 			}
 		},
 		mounted() {
@@ -75,6 +78,23 @@
 		this.getSpecialData()
 		},
 		methods: {
+			   getSpecialData () {	
+			   this.$http.post('public/index.php/api/Work/getWorkList',{
+			   	page:1,
+			   	limit:15,
+			   	position_type:0
+			   }).then(res => {		
+			        if (res.data.data.row.length <= 5) { // 5条数据一页		
+			          this.allList = res.data.data.row 			
+			          this.moreShowBoolen = false			
+			        } else {			
+			          this.allList = res.data.data.row.slice(0, 5)			
+			          this.moreShowBoolen = true			
+			        }
+			
+			      })
+			
+			    },
 			menubtn(id,index){//点击当前的id
 				this.num = id
 				this.hideing = id
@@ -84,20 +104,9 @@
 						limit:15,
 						position_type:id
 					}).then(res => {
-						  this.Detailsll = res.data.data.row 
+						  this.Detailsll = res.data.data.row
 					})
 			
-			},
-			getSpecialData(){//默认显示
-			if(this.fang == false){
-				this.$http.post('public/index.php/api/Work/getWorkList',{
-					page:1,
-					limit:15,
-					position_type:0
-				}).then(res => {
-					this.allList = res.data.data.row 
-				})
-			}	 
 			},
 			getList(){//职位类型的接口
 				 this.$http.post('public/index.php/api/Position/positionType', {
@@ -110,7 +119,23 @@
 			xq(id){//点击显示当前详情
 				wx.navigateTo({url:'/pages/job_detail/job_detail?id='+id})
 				
-		}
+			},
+			moreShow(){
+				this.$http.post('public/index.php/api/Work/getWorkList',{
+					page:1,
+					limit:15,
+					position_type:0
+				}).then(res => {
+				        this.allList = this.allList.concat(res.data.data.row.slice(this.page * 5, (this.page + 1) * 5))
+				        this.page++		
+				        if (res.data.data.row.length >= this.page * 5) {		
+				          this.moreShowBoolen = true				
+				        } else {
+							this.moreShowBoolen = false
+				        }
+				
+				      })
+			}
 	},
 		components:{
 		

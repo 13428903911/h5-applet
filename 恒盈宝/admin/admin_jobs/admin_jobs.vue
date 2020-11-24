@@ -13,9 +13,9 @@
 						<p>您还没有投递过的职位</p>
 					</view>
 					<view class="">
-						<view class="item" v-for="(item,index) in management" :key="index" @tap="workManagement(item.id)">
+						<view class="item" v-for="(item,index) in management" :key="index">
 							<view class="info">
-								<p class="title">
+								<p class="title" @tap="workManagement(item.id)">
 									<a>{{item.task_name}}</a>
 								</p> 
 								<view class="other cl"><span class="t-gray">投递时间：{{item.apply_time}}</span></view>
@@ -27,7 +27,7 @@
 								<view class="btn-group">
 									<!-- <a class="btn-text btn-im">在线沟通</a> 
 									<a class="btn-text">查看报价</a> -->
-									<span class="btn-text" @click="chtt" v-show="flg">撤回投递</span>
+									<span class="btn-text" @click="chtt(item.id)" v-show="item.state == 1">撤回投递</span>
 								</view>
 							</view>
 						</view>
@@ -71,9 +71,9 @@
 				 management:[],
 				 radio: '0',
 				  flag:false,
-				  flg:false,
 				  fl:false,
 				  task_id:'',
+				  itemId:'',
 				  revocate_reason:'',
 				   items: [{
 							  value: '1',
@@ -114,6 +114,7 @@
 			},
 			chtt(){
 				 this.flag = !this.flag;
+				 this.itemId = id
 			},
 			xx(){
 				 this.flag = !this.flag;
@@ -128,13 +129,18 @@
 				}else{
 					this.$http.post('/public/index.php/api/Work/revocateResume',{
 						user_id:this.$store.state.userInfo.user_id,
-						task_id:this.task_id,
+						task_id:this.itemId,
 						revocate_reason:this.revocate_reason
 					}).then(res => {					
-						// console.log(res)
+						this.management.forEach((item,i) => {
+							if(item.id == this.itemId){
+								item.statetext = res.data.msg
+								console.log(res.data.msg)
+								item.state = 4
+							}
+						})
 					})
 					 this.flag = !this.flag;
-					 this.flg = !this.flg;
 				}
 				
 			}
@@ -156,10 +162,7 @@
 					this.fl = true
 				}
 				this.management = res.data.data.row
-				this.management.forEach(item => {
-					this.task_id = item.id
-				})
-				
+
 			})
 		}
 	}

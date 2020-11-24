@@ -4,14 +4,14 @@
 			<view class="box box-orders">
 				<view class="box-hd cl"><h2 class="title fl">合同订单</h2> <!----></view>
 				<view class="table-box">
-					<view class="table" v-for="(item,index) in tableList" :class="{active:index==num}" @tap="table(index,item.id)" :key="index">{{item.name}}</view>
+					<view class="table" v-for="(item,index) in tableList" :class="{active:index==num}" @tap="table(index,item.id)">{{item.name}}</view>
 				</view>
 			</view>
 		</view>
 		
 		
 		<!-- 主题内容 -->
-		<view class="item" v-for="(item,index) in tabDefault" :key="item.id" @tap="lineItem(item.id)" v-if="flag == false">
+		<view class="item" v-for="(item,index) in tabDefault" v-if="flag == false" :key="item.id" @tap="lineItem(item.id)">
 			<view class="item-hd cl">
 				<view class="fl">
 					<span class="date fl">{{item.create_time}}</span> 
@@ -43,9 +43,11 @@
 			<view class="item-hd cl">
 				<view class="fl">
 					<span class="date fl">{{item.create_time}}</span> 
+					<!-- <span class="id fl t-gray">订单编号：2020110417452405072</span> -->
 				</view> 
 				<view class="fr">
 					<span class="name fl"><span class="t-gray">雇主：</span>{{item.publisher}}</span> 
+					<!-- <a class="btn-text btn-im fl">在线沟通</a> -->
 					<view style="clear: both;"></view>
 				</view>
 			</view>
@@ -65,14 +67,14 @@
 		</view>
 		
 		
+		<!-- <Tabfour v-if="jow"></Tabfour> -->
+		<!-- <Tabfive :class="[hideing === 4 ? 'actineclass' : 'errorclass']"></Tabfive>
+		<Tabsix :class="[hideing === 5 ? 'actineclass' : 'errorclass']"></Tabsix -->
+		
 	</view>
 </template>
 
 <script>
-	
-	 import Tabfour from './tab_four.vue'
-	 import Tabfive from './tab_five.vue'
-	 import Tabsix from './tab_six.vue'
 	export default {
 		data() {
 			return {
@@ -101,8 +103,8 @@
 				})	
 			},
 			table(index,id){
-				this.num = index
 				this.flag = true
+				this.num = index
 				if(index == 0) {
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
 						user_id:this.$store.state.userInfo.user_id,
@@ -112,7 +114,6 @@
 						doing:0
 					}).then(res => {
 						this.orderForm = res.data.data.row
-						
 					})	
 				}else if(index == 1){
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
@@ -122,7 +123,7 @@
 						state:0,
 						doing:1
 					}).then(res => {
-							this.orderForm = res.data.data.row		
+							this.orderForm = res.data.data.row
 					})
 				}else if(index == 2){
 					this.$http.post('/public/index.php/api/Work/contractOrder',{
@@ -151,12 +152,6 @@
 				wx.navigateTo({url:'../admin_zpxx/admin_zpxx?id='+id})
 			}
 		},
-		components:{
-			
-			Tabfour,
-			Tabfive,
-			Tabsix
-		}
 	}
 </script>
 
@@ -252,8 +247,7 @@
 		}
 	}
 	.item-bd {
-	    border: 1px solid #edf1f4;
-	    border-top: 0px solid #edf1f4;
+	    border-bottom: 1px solid #edf1f4;
 		.cell {
 		    display: block;
 		    width: 100%;

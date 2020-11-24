@@ -19,7 +19,7 @@
 				<view class="form-group">
 					<view class="label"><label>工作时间</label></view> 
 					<el-form-item class="content" prop="work_hours">
-						<el-input v-model="fomeData.work_hours" type="text" name="tag0jobTitle" placeholder="请输入工作时间" class="ipt-text" 
+						<el-input onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="4" v-model="fomeData.work_hours" type="text" name="tag0jobTitle" placeholder="请输入工作时间" class="ipt-text" 
 						data-vv-scope="__global__" aria-required="true" aria-invalid="false"></el-input>
 					</el-form-item> 
 				</view>
@@ -38,7 +38,7 @@
 							      v-for="item in options"
 							      :key="item.value"
 							      :label="item.name"
-							      :value="item.id">
+							      :value="item.name">
 							    </el-option>
 							  </el-select>
 							</template>
@@ -96,8 +96,8 @@
 					   name: 'Android'
 					  }],
 				fomeData:{
-					user_id:2,
-					apply_id:2,
+					user_id:this.$store.state.userInfo.user_id,
+					apply_id:"",
 					work_date:"",
 					work_hours:"",
 					work_device:"",
@@ -120,7 +120,8 @@
 						]
 				
 				      }
-			}	
+			}
+			
 		},
 		methods: {
 			upload(res, file) {//上传成功钩子
@@ -142,16 +143,20 @@
 				this.$refs[formName].validate((valid) => {
 						if (valid) {
 						    this.$http.post('/public/index.php/api/Work/addWorkHours',this.fomeData).then(res => {
-						    	 uni.reLaunch({url: '/admin/admin_log/admin_log'})
+						    	 uni.reLaunch({url: '/admin/admin_log/admin_log?apply_id='+this.fomeData.apply_id})
 						    })
 						} else {
 						  return false;
 						}
 			      });
 				},
-			
+				onKeyYHKNameInput(){
+					
+				}
 		},
-		
+		onLoad(ids) {
+			this.fomeData.apply_id = ids.id
+		},
 		components:{
 			Adminheader
 		}

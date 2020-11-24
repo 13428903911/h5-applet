@@ -7,8 +7,8 @@
 			<h4 style="margin-top:10px">投递者需要具备的专业技能：</h4>
 			<view class="tags"><view class="inner cl" v-for="item in occupation.skill" :key="item.id"><text>{{item}}</text> </view></view>
 			<h4>投递者需要达到的技能等级：</h4>
-			<ul class="types types-bg cl"><li class="item"><i class="icon iconfont icon-16"></i> <view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">普通级</p> <p class="desc">工作经验 0-3 年
-			<br>适合清晰/简单的工作任务</p></li> <li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">{{occupation.skill_grade}}</p> <p class="desc">工作经验 3-5 年
+			<ul class="types types-bg cl"><li class="item"><i class="icon iconfont icon-16"></i> <view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">{{occupation.skill_grade}}</p> <p class="desc">工作经验 0-3 年
+			<br>适合清晰/简单的工作任务</p></li> <li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">资深级</p> <p class="desc">工作经验 3-5 年
 			<br>适合难度适中的工作任务</p></li> <li class="item"> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">专家级</p> <p class="desc">工作经验 5 年以上
 			<br>适合有一定门槛的工作任务</p></li><view style="clear: both;"></view></ul>
 			<h4 class="yuncheng">远程雇佣方式：</h4>

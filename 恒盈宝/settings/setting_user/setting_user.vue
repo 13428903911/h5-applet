@@ -15,6 +15,7 @@
 						</ul>
 						<view class="user_img">
 						<el-upload
+							v-model = "imageUrl"
 						  class="avatar-uploader"
 						  action="http://81.69.199.157:82/public/index.php/api/Common/upload"
 						  :show-file-list="false"
@@ -102,12 +103,11 @@
 			            if (valid) {
 			               this.$http.post('/public/index.php/api/User/saveUser',this.ruleForm).then(res => {
 			               	uni.showToast({icon: 'none',title: '保存成功'})
-							console.log(res)
 			               	uni.navigateTo({
 			               		url:'/admin/admin_index/admin_index'
 			               	})
-							this.ruleForm = ''
-							this.imageUrl = ''
+							// this.ruleForm = ''
+							// this.imageUrl = ''
 			               })
 			            } else {return false;}
 			        });

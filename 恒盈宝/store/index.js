@@ -31,7 +31,7 @@ const store = new Vuex.Store({
 			uni.removeStorage({key:'userinfo',
 			success:function(res){
 				uni.reLaunch({
-					url:'/pages/login/login'
+					url:'/pages/hots/hots'
 				})
 			}
 			});

@@ -64,7 +64,7 @@
 				          ]
 				         },
 				onfocus: false,
-				checked: true,
+				checked: false,
 				CardCode: "",
 				ClntId: "",
 				total: 60,
@@ -96,7 +96,7 @@
 						  	  
 						  })
 					  }else{
-						  this.$message.error("请先完成表单！");
+						  this.$message.error("请填写完注册信息！");
 						  return false;
 					  }
 				 })

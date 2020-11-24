@@ -8,6 +8,7 @@
 					<i v-show="!showUpImg" class="icon iconfont">&#xe65a;</i>
 				</h1>
 				<view class="btn-group fr">
+					<a href="http://81.69.199.157:82/public/dTMXbSELzp.php/index/login" class="btn fl btn-blue">企业入驻</a>
 					<a @click="resume()" href="javascript:;" class="btn fl btn-green">完善资料</a>
 				</view>
 				<view class="header-drawer" :class="{active:flag}">
@@ -18,6 +19,7 @@
 							<li @click="rmgz()">
 								<a>热门工作</a>
 							</li>
+							<li @click = "jies()"><a>产品介绍</a></li>
 							<li @click="gushi()">
 								<a>金斗云故事</a>
 							</li>
@@ -71,6 +73,7 @@
 				wx.navigateTo({
 					url:'/pages/hots/hots'
 				})
+				window.location.reload();
 			},
 			resume(){
 				wx.navigateTo({
@@ -90,6 +93,12 @@
 			},
 			tuichu(){
 				this.$store.commit('clear')
+			},
+			jies(){
+				wx.navigateTo({
+					url:'/pages/index/index'
+				}),
+				window.location.reload();
 			},
 		}
 		

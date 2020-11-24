@@ -14,13 +14,14 @@
 						<button :class="{'active' : 1 == currents}" @click="clickTab(1)" class="fl">账号密码登录</button>
 					</view>
 					<view class="dxdl" :class="{'actives' : 1== current}" @click="clickTab(0)">
+						
 						<view class="form-po">
 							<text>手机号</text>
-							<input id="phone" v-model="mobile" maxlength="11" type="text" placeholder="输入手机号" />
+							<input @blur = "fun()" v-model="mobile" maxlength="11" type="text" placeholder="输入手机号" />
 						</view>
 						<view class="form-po">
-							<text>短信验证码</text>
-							<input v-model="captcha" maxlength="6" type="text" placeholder="输入短信验证码" />
+								<text>短信验证码</text>
+								<input style="width: 60%;" v-model="captcha" maxlength="6" type="text" placeholder="输入短信验证码" />
 							<view class="form-yz" @tap="handleCode">
 								{{codeBtn}}
 							</view>
@@ -37,7 +38,7 @@
 						<view class="form-po">
 							<view class="form-po-mm">
 								<text class="left">密码</text>
-								<text class="right"><a tabindex="-1" href="javascript:;">忘记密码</a></text>
+								<!-- <text class="right"><a tabindex="-1" href="javascript:;">忘记密码</a></text> -->
 							</view>
 							<input type="password" placeholder="输入密码" v-model="passwordValue"/>
 							<view class="form-dl">
@@ -74,13 +75,37 @@
 			
 		},
 		methods: {
-			//获取验证码
+			fun(){
+				var reg = /^1[3578]{1}[0-9]{9}$/;
+				if(this.mobile==""){
+					uni.showToast({
+						title: '手机号不能为空',
+						duration: 1000,
+						icon: 'none'
+					});
+				}else if(reg.test(this.mobile)==false){
+					uni.showToast({
+						title: '手机号不正确',
+						duration: 1000,
+						icon: 'none'
+					});
+				}
+			},
+			// 获取验证码
 			handleCode() {
 				var that = this;
 				let count = 60;
-				if (that.Phone == '') {
+				//验证手机格式
+				var reg = /^1[3578]{1}[0-9]{9}$/;
+				if(this.mobile==""){
 					uni.showToast({
 						title: '手机号不能为空',
+						duration: 1000,
+						icon: 'none'
+					});
+				}else if(reg.test(this.mobile)==false){
+					uni.showToast({
+						title: '手机号不正确',
 						duration: 1000,
 						icon: 'none'
 					});
@@ -241,17 +266,18 @@
 				font-size: 28rpx;
 			}
 			.form-yz{
-				   width: 37%;
+				   width: 33%;
 				   display: inline-block;		
 				   text-align: center;
 				   position: absolute;
-				    height: 2.35rem;
-				    line-height: 48px;
-				    top: 20%;
+				    height: 42px;
+				    line-height: 42px;
+				    top: 21%;
 				   left: 50%;
-				   margin-left: 12%;
-				   color: #008bf7;
-				   border-left: 1px solid #9ca6ae;
+				   margin-left: 16%;
+				  background: #409EFF;
+				  color: #FFFFFF;
+				  border-radius: 4px;
 			}
 			.form-po-mm .left{
 				float: left;

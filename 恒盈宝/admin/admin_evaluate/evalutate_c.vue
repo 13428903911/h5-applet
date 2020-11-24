@@ -16,7 +16,6 @@
 			
 		</view>
 		<view class="content suggest-wrap">
-			<span id="texty" class="text-span">{{remnant}}/1000</span> 
 			<textarea name="workExperience" maxlength="1000" id="textarea" class="ipt-area" @input = "descInput" />
 		</view> 
 		<view class="footer">

@@ -66,7 +66,7 @@
 					</view>
 					<view class="bd"><view><pre>{{Detailsll.description}}</pre><!--  -->
 					</view>
-					 <view class="quota">
+					 <view class="quota" style="margin-top: 5px;">
 						 <i class="icon iconfont icon-rencai1 fl"></i>本职位招聘<text class="text">{{Detailsll.people_limit}}名</text>人才
 					 </view></view>
 				</view>
@@ -80,31 +80,75 @@
 				<view class="tags"><view class="inner cl"><span>{{Detailsll.occupate}}</span></view></view>
 				<h4 style="margin-top:10px">投递者需要具备的专业技能：</h4>
 				<view class="tags"><view class="inner cl" v-for="item in Detailsll.skill" :key="item.id"><text style="display: inline-block;">{{item}}</text> </view></view> 
-				<h4>投递者需要达到的技能等级：</h4>
-				<ul class="types types-bg cl"><li class="item"><i class="icon iconfont icon-16"></i> <view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">普通级</p> <p class="desc">工作经验 0-3 年        
-				<br>适合清晰/简单的工作任务</p></li> <li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">{{Detailsll.skill_grade}}</p> <p class="desc">工作经验 3-5 年
-				<br>适合难度适中的工作任务</p></li> <li class="item"> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">专家级</p> <p class="desc">工作经验 5 年以上
-				<br>适合有一定门槛的工作任务</p></li><view style="clear: both;"></view></ul>
+				<h4>投递者需要达到的技能等级：</h4>	
+					
+					<ul class="types types-bg cl"  v-if="Detailsll.skill_grade == '资深级'"><li class="item"><i class="icon iconfont icon-16"></i> <view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">普通级</p> <p class="desc">工作经验 0-3 年
+					<br>适合清晰/简单的工作任务</p></li> <li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">{{Detailsll.skill_grade}}</p> <p class="desc">工作经验 3-5 年
+					<br>适合难度适中的工作任务</p></li> <li class="item"> <view class="icon-group cl"><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i></view> <p class="name zishen">专家级</p> <p class="desc">工作经验 5 年以上
+					<br>适合有一定门槛的工作任务</p></li><view style="clear: both;"></view></ul>
+					<ul class="types types-bg cl"  v-else-if="Detailsll.skill_grade == '专家级'"><li class="item"><i class="icon iconfont icon-16"></i> <view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">普通级</p> <p class="desc">工作经验 3-5 年
+					<br>适合清晰/简单的工作任务</p></li> <li class="item"></i> <view class="icon-group cl"><i class="icon iconfont icon-16"></i><i class="icon iconfont icon-16"></i></view> <p class="name zishen">资深级</p> <p class="desc">工作经验 5 年以上
+					<br>适合难度适中的工作任务</p></li> <li class="item cur"> <i class="icon iconfont icon-dui1"></i>  <view class="icon-group cl"><i class="icon iconfont icon-16"></i><i class="icon iconfont icon-16"></i> <i class="icon iconfont icon-16"></i> </view> <p class="name zishen">{{Detailsll.skill_grade}}</p> <p class="desc">工作经验 0-3 年
+					<br>适合有一定门槛的工作任务</p></li><view style="clear: both;"></view></ul>
+					<ul class="types types-bg cl"  v-else><li class="item cur"><i class="icon iconfont icon-dui1"></i> <i class="icon iconfont icon-16"></i><view class="icon-group cl"><i class="icon iconfont iconlevel-price"></i></view> <p class="name">{{Detailsll.skill_grade}}</p> <p class="desc">工作经验 5 年以上
+					<br>适合清晰/简单的工作任务</p></li> <li class="item"><view class="icon-group cl"><i class="icon iconfont icon-16"></i><i class="icon iconfont icon-16"></i></view> <p class="name zishen">资深级</p> <p class="desc">工作经验 0-3 年
+					<br>适合难度适中的工作任务</p></li> <li class="item"> <view class="icon-group cl"><i class="icon iconfont icon-16"></i><i class="icon iconfont icon-16"></i>  <i class="icon iconfont icon-16"></i></view> <p class="name zishen">专家级</p> <p class="desc">工作经验 3-5 年
+					<br>适合有一定门槛的工作任务</p></li><view style="clear: both;"></view></ul>
 				<h4 class="yuncheng">远程雇佣方式：</h4>
 				
-				<ul class="types cl" v-if="Detailsll.hiring_type == '长期雇佣'"><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
-				 <p class="name">{{Detailsll.hiring_type}}</p> <p class="desc"> 雇用时长一般在6个月以上</p></li> <li class="item"><i class="icon iconfont"></i>
-					<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> <p class="name">短期雇用</p> <p class="desc">雇用时长一般在6个月以内 </p></li> <li class="item"><i class="icon iconfont"></i> 
-					<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> <p class="name">一次性工作</p> <p class="desc">一次性完成工作并结算</p></li>
+				<ul class="types cl" v-if="Detailsll.hiring_type == '短期雇佣'">
+					<li class="item cur">
+						<i class="icon iconfont icon-dui1"></i> 
+						<view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
+						<p class="name">{{Detailsll.hiring_type}}</p> <p class="desc"> 雇用时长一般在6个月以内</p>
+					</li> 
+					<li class="item">
+						<i class="icon iconfont"></i>
+						<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> 
+						<p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上</p>
+					</li> 
+					<li class="item">
+						<i class="icon iconfont"></i> 
+						<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> 
+						<p class="name">一次性工作</p> <p class="desc">一次性完成工作并结算</p>
+					</li>
 					<view style="clear: both;"></view>
 				</ul>
 				
-				<ul class="types cl" v-else-if="Detailsll.hiring_type == '一次性工作'"><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
-				 <p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">一次性完成工作并结算</p></li> <li class="item"><i class="icon iconfont"></i>
-					<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> <p class="name">短期雇用</p> <p class="desc">雇用时长一般在6个月以内 </p></li> <li class="item"><i class="icon iconfont"></i> 
-					<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> <p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上</p></li>
+				<ul class="types cl" v-else-if="Detailsll.hiring_type == '长期雇佣'">
+					<li class="item">
+						<i class="icon iconfont"></i> 
+						<view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
+						<p class="name">短期雇佣</p> <p class="desc">雇用时长一般在6个月以内</p>
+					</li> 
+					<li class="item cur">
+						<i class="icon iconfont icon-dui1"></i>
+						<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> 
+						<p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">雇用时长一般在6个月以上</p>
+					</li> 
+					<li class="item">
+						<i class="icon iconfont"></i> 
+						<view class="icon-group cl">
+							<i class="icon iconfont icon-shou"></i></view> 
+							<p class="name">一次性工作</p> <p class="desc">一次性完成工作并结算</p>
+						</li>
 					<view style="clear: both;"></view>
 				</ul>
-				
-				<ul class="types cl" v-else><li class="item cur"><i class="icon iconfont icon-dui1"></i> <view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
-				 <p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">雇用时长一般在6个月以内</p></li> <li class="item"><i class="icon iconfont"></i>
-					<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> <p class="name">一次性工作</p> <p class="desc">一次性完成工作并结算 </p></li> <li class="item"><i class="icon iconfont"></i> 
-					<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> <p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上</p></li>
+				<ul class="types cl" v-else>
+					<li class="item"> 
+						<view class="icon-group cl"><i class="icon iconfont icon-duanqi"></i></view>
+						<p class="name">短期雇佣</p> <p class="desc">雇用时长一般在6个月以内</p>
+					</li> 
+					<li class="item">
+						<i class="icon iconfont"></i>
+						<view class="icon-group cl"><i class="icon iconfont icon-longtime"></i></view> 
+						<p class="name">长期雇佣</p> <p class="desc">雇用时长一般在6个月以上 </p>
+					</li> 
+					<li class="item cur">
+						<i class="icon iconfont icon-dui1"></i> 
+						<view class="icon-group cl"><i class="icon iconfont icon-shou"></i></view> 
+						<p class="name">{{Detailsll.hiring_type}}</p> <p class="desc">一次性完成工作并结算</p>
+					</li>
 					<view style="clear: both;"></view>
 				</ul>
 				
@@ -173,12 +217,11 @@
 		methods: {
 			//详情
 			detail(income_method){
-				console.log(this.task_id)
 				 this.$http.post('public/index.php/api/Work/getWorkInfo',{
 					task_id:this.task_id
 				 }).then(res => {
 					this.Detailsll = res.data.data
-					console.log(this.Detailsll)
+					console.log(this.Detailsll.hiring_type)
 				 })	
 			},
 			postRed() {//查询
@@ -196,16 +239,30 @@
 				
 			},
 			deliveryPosition() {//投递职位
-				this.$http.post('/public/index.php/api/Work/sendResume',{
-					task_id:this.task_id,
-					user_id:this.$store.state.userInfo.user_id,
-					expand_content:''
-				}).then(res => {
-					if(res.data.code == 1){
-						let optionObj = JSON.stringify(this.RedJow)
-						uni.reLaunch({url: '/pages/job_tdzw/job_tdzw?optionObj='+optionObj})
+			
+			
+				uni.getStorage({key: 'userAuthentication', success:(res) => {
+					if(res.data[0].id){
+						this.$http.post('/public/index.php/api/Work/sendResume',{
+							task_id:this.task_id,
+							user_id:this.$store.state.userInfo.user_id,
+							expand_content:''
+						}).then(res => {
+							if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
+								if(res.data.code == 1){
+									let optionObj = JSON.stringify(this.RedJow)
+									uni.reLaunch({url: '/pages/job_tdzw/job_tdzw?optionObj='+optionObj})
+								}
+							}else{
+								uni.reLaunch({url:'/pages/login/login'})
+							}
+							
+						})
+					}else{
+						uni.reLaunch({url: '/settings/seting_Certification/seting_Certification'})
 					}
-				})
+				}})
+			
 			},
 			queryTask(){//查看任务是否投递
 				this.$http.post('/public/index.php/api/Work/checkIsSend',{
@@ -224,8 +281,7 @@
 			this.postRed()
 			this.detail()
 			this.queryTask()	
-			
-			
+		
 			
 		},
 		components:{

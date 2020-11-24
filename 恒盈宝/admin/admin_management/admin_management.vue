@@ -52,7 +52,7 @@
 		},
 		created() {
 			this.$http.post('/public/index.php/api/Work/getWorkManagement',{
-				user_id:2,
+				user_id:this.$store.state.userInfo.user_id,
 				page:1,
 				limit:10,
 			}).then(res => {

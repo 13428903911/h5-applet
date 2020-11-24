@@ -138,7 +138,9 @@
 			}
 		},
 		methods: {
-			 
+			  handleCheckAllChange(val) {
+			        this.isIndeterminate = false;
+			      },
 			    handleCheckedCitiesChange(index,items,id) {
 					this.multipleSelection.push(items)
 					this.todayId = id
@@ -158,9 +160,9 @@
 					 this.LookWorkTime = res.data.data
 				})
 			},
-			tjsj(){
+			tjsj(id){
 				wx.navigateTo({
-					url: '/admin/admin_sj/admin_sj'
+					url: '/admin/admin_sj/admin_sj?id='+this.apply_id
 				})
 			},
 			undergoQuery() {//默认
@@ -184,6 +186,8 @@
 						this.defaultData.forEach((item,i) => {
 							if(item.id == this.todayId){
 								this.defaultData.splice(i,1)
+								window.location.reload();
+								// this.LookWork = ''
 								 this.lang[i] = false
 							}
 						})
@@ -198,13 +202,13 @@
 				}).then(res => {
 					if(res.data.code == 1){
 						 uni.showToast({icon: 'none',title: '申请结算成功'});
+						 window.location.reload();
 					}
 				})
 			}
 		},
 		onLoad(option) {
 			this.apply_id = option.apply_id
-			console.log(this.apply_id)
 			this.undergoQuery()
 			this.undergo()
 		},
