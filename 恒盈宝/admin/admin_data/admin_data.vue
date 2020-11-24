@@ -18,7 +18,8 @@
 					<view class="list">
 						<view class="item cl">
 							<view class="name fl"><span class="fl">1. 工作类型</span> 
-								<i class="icon iconfont fl">&#xe624;</i>
+								<i class="icon iconfont fl" v-if="userEvaluateStatus == 1">&#xe624;</i>
+								<span class="st fl" v-else>未完成</span>
 							</view>
 							<a class="btn-edit fr" @click="gzlx()"><i class="icon iconfont">&#xe668;</i>编辑</a>
 						</view>
@@ -118,6 +119,7 @@
 				itemStaus:'',//项目经验状态
 				jobMimeStaus:'',//工作时间状态
 				userEvaluateStatus:'',//个人评价状态
+				jobTypeStatus:''//工作类型状态
 			}
 		},
 		mounted() {
@@ -126,6 +128,7 @@
 			uni.getStorage({key: 'itemStaus', success:(res) => {if(res.data == 1){this.itemStaus = res.data}},})//取出存储的项目经验状态
 			uni.getStorage({key: 'jobMimeStaus', success:(res) => {if(res.data == 1){this.jobMimeStaus = res.data}},})//取出存储的工作时间状态
 			uni.getStorage({key: 'userEvaluateStatus', success:(res) => {if(res.data == 1){this.userEvaluateStatus = res.data}},})//取出存储的个人评价状态
+			uni.getStorage({key: 'jobTypeStatus', success:(res) => {if(res.data == 1){this.jobTypeStatus = res.data}},})//取出存储的工作类型状态
 			},
 		methods: {
 			cktxjy(){

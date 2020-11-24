@@ -19,10 +19,8 @@
 				<view class="form-group" @change="checkboxChange">
 					<view class="btn-group cl">
 						<view class="label"><label>周一至周五（工作日）</label></view> 
-						<view class="btn-group fl" style="display: flex;">
-							<span prop="weekday_am" class="btn btn-gray frc left1" style="margin: 0px 10px 0px 0px;" v-model="formMess.weekday_am">上午</span> 
-							<span prop="weekday_pm" class="btn btn-gray frc cente" style="margin: 0px 10px;" v-model="formMess.weekday_pm">下午</span> 
-							<span prop="weekday_night" class="btn btn-gray frc righ" style="margin: 0px 0px 10px 10px;" v-model="formMess.weekday_night">晚上</span>
+						<view class="btn-group fl">
+							<span v-for="(item,index) in jobTiem" class="btn btn-gray" @tap="clickJobTiem(item.id,index)"  :class="{'activ':rSelect.indexOf(index)>-1}">{{item.name}}</span>
 						</view>
 					</view>
 				</view>
@@ -30,16 +28,12 @@
 					<view class="btn-group cl">
 						<view class="label"><label>周六</label></view> 
 						<view class="btn-group fl" style="display: flex;">
-							<span prop="sat_am" class="btn btn-gray frc left1" style="margin: 0px 10px 0px 0px;" v-model="formMess.sat_am">上午</span> 
-							<span prop="sat_pm" class="btn btn-gray frc cente" style="margin: 0px 10px;" v-model="formMess.sat_pm">下午</span> 
-							<span prop="sat_night" class="btn btn-gray frc righ" style="margin: 0px 0px 10px 10px;" v-model="formMess.sat_night">晚上</span>
+						<span v-for="(item,index) in jobTiem" class="btn btn-gray" @tap="clickJobTiem2(item.id,index)" :class="{'activ':rSelect2.indexOf(index)>-1}">{{item.name}}</span>
 					</view>
 				</view>
 				</view>
 				<view class="form-group" style="margin-bottom:60px"><view class="btn-group cl"><view class="label"><label>周日</label></view> <view class="btn-group fl" style="display: flex;">
-					<span prop="sun_am" class="btn btn-gray frc left1" style="margin: 0px 10px 0px 0px;" v-model="formMess.sun_am">上午</span> 
-					<span prop="sun_pm" class="btn btn-gray frc cente" style="margin: 0px 10px;" v-model="formMess.sun_pm">下午</span> 
-					<span prop="sun_night" class="btn btn-click frc righ" style="margin: 0px 0px 10px 10px;" v-model="formMess.sun_night">晚上</span>
+					<span v-for="(item,index) in jobTiem" class="btn btn-gray"  @tap="clickJobTiem3(item.id,index)" :class="{'activ':rSelect3.indexOf(index)>-1}">{{item.name}}</span>
 				</view></view></view>
 				<view class="ft-wrap"><view class="w700 mcenter cl"><span @click="fanhui()" class="to-head fl-li-co"><i style="font-size: 24px;margin-right: 5px;vertical-align: bottom;" class="icon iconfont">&#xe60b;</i>&nbsp;返回
 				  </span> <span class="btn btn-blue fr"  @click="onSubmit('formMess')">下一步</span></view></view>
@@ -53,17 +47,21 @@
 	export default {
 		data() {
 			return {
+				rSelect:[],
+				rSelect2:[],
+				rSelect3:[],
+				jobTiem:[{id:1,name:'上午',},{id:2,name:'下午'},{id:3,name:'晚上'}],
 				formMess:{
 					wage:"",
-					weekday_am:0,
-					weekday_pm:0,
-					weekday_night:1,
-					sat_am:0,
-					sat_pm:1,
-					sat_night:0,
-					sun_am:0,
-					sun_pm:1,
-					sun_night:0,
+					weekday_am:'',
+					weekday_pm:'',
+					weekday_night:'',
+					sat_am:'',
+					sat_pm:'',
+					sat_night:'',
+					sun_am:'',
+					sun_pm:'',
+					sun_night:'',
 					user_id:this.$store.state.userInfo.user_id
 				},
 				rules: {
@@ -77,8 +75,87 @@
 			this.jowTimeQuery()
 		},
 		methods: {
+			clickJobTiem(id,index){
+				console.log(this.formMess)
+				let jobIndex = this.rSelect.indexOf(index)
+					if(jobIndex>-1){
+						 this.rSelect.splice(jobIndex,1)//取消高亮
+						 if(index == 0){
+						 	this.formMess.weekday_am = ''
+						 }else if(index == 1){
+						 	this.formMess.weekday_pm = ''
+						 }else{
+						 	this.formMess.weekday_night = ''
+						 }
+					}
+					 else{
+						this.rSelect.push(index) //高亮
+						if(index == 0){
+							this.formMess.weekday_am = 1
+							console.log(this.formMess)
+						}else if(index == 1){
+							this.formMess.weekday_pm = 1
+							console.log(this.formMess)
+						}else if(index == 2){
+							this.formMess.weekday_night = 1
+							console.log(this.formMess)
+						}
+					}
+			},
+			clickJobTiem2(id,index){
+				let jobIndex2 = this.rSelect2.indexOf(index)
+					if(jobIndex2 > -1){
+						 this.rSelect2.splice(jobIndex2,1)//取消高亮
+						 if(index == 0){
+						 	this.formMess.sat_am = ''
+						 }else if(index == 1){
+						 	this.formMess.sat_pm = ''
+						 }else{
+						 	this.formMess.sat_night = ''
+						 }
+					}
+					 else{
+						this.rSelect2.push(index) //高亮
+						if(index == 0){
+							this.formMess.sat_am = 1
+							
+						}else if(index == 1){
+							this.formMess.sat_pm = 1
+							
+						}else if(index == 2){
+							this.formMess.sat_night = 1
+							
+						}
+					}
+			},
+			clickJobTiem3(id,index){
+				let jobIndex3 = this.rSelect3.indexOf(index)
+					if(jobIndex3 > -1){
+						 this.rSelect3.splice(jobIndex3,1)//取消高亮
+						 if(index == 0){
+						 	this.formMess.sun_am = ''
+						 }else if(index == 1){
+						 	this.formMess.sun_pm = ''
+						 }else{
+						 	this.formMess.sun_night = ''
+						 }
+					}
+					 else{
+						this.rSelect3.push(index) //高亮
+						if(index == 0){
+							this.formMess.sun_am = 1
+							
+						}else if(index == 1){
+							this.formMess.sun_pm = 1
+							
+						}else if(index == 2){
+							this.formMess.sun_night = 1
+							
+						}
+					}
+			},
 			fanhui(){
-				uni.navigateBack();
+				uni.reLaunch({url: '/admin/admin_data/admin_data'})	
 			},
 			checkboxChange(){
 				
@@ -104,14 +181,37 @@
 					   if(res.data.code == 1){
 						  uni.setStorage({key:'jobMimeStaus',data:res.data.code});
 						  if(res.data.data.length<0){} //数组
-						  else{ this.formMess = res.data.data}
-					   }
+						  else{ 
+							  this.formMess = res.data.data
+							  let jobIndex = this.rSelect.indexOf(0)
+							  if(jobIndex>-1){ this.rSelect.splice(jobIndex,1)}
+							  else{
+								  if(this.formMess.weekday_am == 1){this.rSelect.push(0)}
+								  if(this.formMess.weekday_pm == 1){this.rSelect.push(1)}
+								  if(this.formMess.weekday_night == 1){this.rSelect.push(2)}
+								 }
+								let jobIndex2 = this.rSelect2.indexOf(0)
+								if(jobIndex2 > -1){ this.rSelect2.splice(jobIndex2,1)}
+								else{
+								  if(this.formMess.sat_am == 1){this.rSelect2.push(0)}
+								  if(this.formMess.sat_pm == 1){this.rSelect2.push(1)}
+								  if(this.formMess.sat_night == 1){this.rSelect2.push(2)}
+								 }
+								 let jobIndex3 = this.rSelect3.indexOf(0)
+								 if(jobIndex3 > -1){ this.rSelect3.splice(jobIndex3,1)}
+								 else{
+								   if(this.formMess.sun_am == 1){this.rSelect3.push(0)}
+								   if(this.formMess.sun_pm == 1){this.rSelect3.push(1)}
+								   if(this.formMess.sun_night == 1){this.rSelect3.push(2)}
+								  }
+							}
 					  
 					  
-				   })
-			   }
+				   }
+			   })
 			 
-		},
+		}
+	},
 		components:{
 			Adminheader
 		},
@@ -193,7 +293,8 @@
 			    font-weight: 700;
 			}
 			.fl {
-			    float: left;
+			    display: flex;
+				justify-content: space-between;
 			}
 		}
 	}
@@ -215,6 +316,7 @@
     background: #f6f8f9;
 	color: #092235;
 	border-radius: 2px;
+	margin: 0 10px;
 }
 .frc {
     font-weight: 400;

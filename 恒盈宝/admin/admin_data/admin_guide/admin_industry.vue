@@ -11,7 +11,7 @@
 						</view> 
 						<view class="content no-border cl">
 							<view class="tags cl">
-								<view class="item" v-for="(item,index) in productList" :key="item.id" @click="position_click(item.id)" :class="{'active':flag==item.id}">
+								<view class="item" v-for="(item,index) in productList" :key="index" @click="position_click(item.id)" :class="{'active':flag==item.id}">
 									{{item.position_type}}
 								</view>
 							</view>
@@ -21,12 +21,14 @@
 					</view>
 					<view class="form-group">
 						<view class="label">
-							<label class="bg" v-if="show">所属职业</label> 
-							<!-- <p>最多可选择3个</p> -->
+							<label class="bg" v-if="show">所属职业
+							<p>最多可选择3个</p>
+							</label> 
+							
 						</view> 
 						<view class="content no-border cl">
 							<view class="tags cl">
-								<view class="item" v-for="(item,index) in productListb" :key="index" @click="positionb_click(item.id)" :class="{'activ':fl==item.id}">
+								<view class="item" v-for="(item,index) in productListb" :key="index" @click="positionb_click(item.id,index,item)" :class="{'activ':rSelect.indexOf(index)>-1}">
 									{{item.occupate}}
 								</view>
 							</view>
@@ -38,15 +40,15 @@
 					
 					
 					
-					
-					<view class="form-group">
-						<view class="label"  v-if="show2" >
+					<view class="form-group" v-if="rSelect.length>=1">
+						<view class="label">
 							<label class="bg">需要具备的技能标签（标签越准，匹配越准）</label> 
 							<p style="margin-top: 20px;">技能标签最多添加3个，没找到合适的可以添加自定义标签</p>
 						</view> 
+						<p style="font-weight: bold;">{{occupate0}}:</p>
 						<view class="content no-border cl">
 							<view class="tags cl">
-								<view class="item filter_item" v-for="(item,index) in productListc" :key="item.id" @click="positionc_click(item.id)" :class="{'acti': fla==item.id}">
+								<view class="item filter_item" v-for="(item,index) in productListc" :key="item.id" @click="positionc_click(item.id,index,item)" :class="{'activ':rSelect1.indexOf(index)>-1}" >
 									{{item.skill_label}}
 								</view>
 							</view>
@@ -57,33 +59,71 @@
 								<div class="content">
 									<form onsubmit="return false">
 										<input  v-model="msg" type="text" placeholder="添加自定义标签（点击添加完成添加）" name="customTag0" class="ipt-text" data-vv-scope="__global__" aria-required="false" aria-invalid="false"> 
-										<span class="ipt-rt btn-text" @click="add()">添加</span>
+										<span class="ipt-rt btn-text" @click="addSkill()">添加</span>
 									</form>
 								</div> 
-								
-								
-								<view class="content no-border cl">
-									<view class="tags cl">
-										<view class="item filter_item" v-for="(item,index) in productListc" :key="item.id" @click="positionc_click(item.id)" :class="{'acti': fla==item.id}">
-											{{item.skill_label}}
-										</view>
-									</view>
-									<div class="form-group" v-if="show2">
-										<div class="label">
-											<label>没有找到我的技能标签？手动添加</label>
-										</div> 
-										<div class="content">
-											<form onsubmit="return false">
-												<input  v-model="msg" type="text" placeholder="添加自定义标签（点击添加完成添加）" name="customTag0" class="ipt-text" data-vv-scope="__global__" aria-required="false" aria-invalid="false"> 
-												<span class="ipt-rt btn-text" @click="add()">添加</span>
-											</form>
-										</div> 
-									</div>
-								</view> 
 							</div>
 						</view> 
 						<p class="tips-error" style="display: none;">最多可选择3个职业</p>
 					</view>
+					
+					
+					
+					<view class="form-group" v-if="rSelect.length>=2">
+						<p style="font-weight: bold;margin-top:60px">{{occupate1}}:</p>
+						<view class="content no-border cl">
+							<view class="tags cl">
+								<view class="item filter_item" v-for="(item,index) in productListc1" :key="item.id" @click="SkillsList(item.id,index,item)" :class="{'activ':rSelect2.indexOf(index)>-1}">
+									{{item.skill_label}}
+								</view>
+							</view>
+							<div class="form-group" v-if="show2">
+								<div class="label">
+									<label>没有找到我的技能标签？手动添加</label>
+								</div> 
+								<div class="content">
+									<form onsubmit="return false">
+										<input  v-model="msg" type="text" placeholder="添加自定义标签（点击添加完成添加）" name="customTag0" class="ipt-text" 
+										data-vv-scope="__global__" aria-required="false" aria-invalid="false"> 
+										<span class="ipt-rt btn-text"@click="addSkill1()">添加</span>
+									</form>
+								</div> 
+							</div>
+						</view> 
+						<p class="tips-error" style="display: none;">最多可选择3个职业</p>
+					</view>
+					
+					
+					
+					<view class="form-group" v-if="rSelect.length>=3">
+						<p style="font-weight: bold;margin-top:60px">{{occupate2}}:</p>
+						<view class="content no-border cl">
+							<view class="tags cl">
+								<view class="item filter_item" v-for="(item,index) in productListc2" :key="item.id" @click="SkillsListEnd(item.id,index,item)" :class="{'activ':rSelect3.indexOf(index)>-1}">
+									{{item.skill_label}}
+								</view>
+							</view>
+							<div class="form-group" v-if="show2">
+								<div class="label">
+									<label>没有找到我的技能标签？手动添加</label>
+								</div> 
+								<div class="content">
+									<form onsubmit="return false">
+										<input  v-model="msg" type="text" placeholder="添加自定义标签（点击添加完成添加）" name="customTag0" class="ipt-text" data-vv-scope="__global__" aria-required="false" aria-invalid="false"> 
+										<span class="ipt-rt btn-text" @click="addSkill2()">添加</span>
+									</form>
+								</div> 
+							</div>
+						</view> 
+						<p class="tips-error" style="display: none;">最多可选择3个职业</p>
+					</view>
+					
+					
+					
+					
+					
+					
+					
 				</view>
 				<div class="ft-wrap"><div class="w700 mcenter cl"><span class="btn btn-blue fr" @click="jobType">下一步</span></div></div>
 			</form>
@@ -96,98 +136,224 @@
 	export default {
 		data() {
 			return {
+				occupate0:'',
+				occupate1:'',
+				occupate2:'',
 				show:false,
 				show2:false,
 				productList:[],
-				flag: null,
-				fla: null,
-				fl: null,
 				productListb:[],
 				productListc:[],
-				rSelect:[],
+				productListc1:[],
+				productListc2:[],
+				flag:0,
+				rSelect:[],//控制职业列表多选
+				rSelect1:[],//控制技能列表第一项
+				rSelect2:[],//控制技能列表第二项
+				rSelect3:[],//控制技能列表第三项
 				index:[],
 				msg:"",
-			
-				user_id:this.$store.state.userInfo.user_id,
-				position_type:'',
-				occupate:'',
-				skill:[]
-				
+				num :0,
+				arrId:[],
+				jobId:'',
+				jobId1:'',
+				jobId2:'',
+					user_id:this.$store.state.userInfo.user_id,
+					position_type:'',
+					occupate:'',
+					skill:{},
+					jobIdList:[],
+					jobIdList1:[],
+					jobIdList2:[],
 				}
 			
 		},
+		
+		
 		methods: {
-			add(){//添加技能
+			addSkill(){
 				if(this.msg!==""){
 					this.productListc.push({id:0,skill_label:this.msg})
 					this.msg=''
 				}
 			},
-			 getList() {//职业类型
-					this.$http.post('/public/index.php/api/Position/positionType', {alltype:1}).then(res => {
-						if(res.data.code ==1) {
-							this.productList = res.data.data;
-						}
+			addSkill1(){
+				if(this.msg!==""){
+					this.productListc1.push({id:0,skill_label:this.msg})
+					this.msg=''
+				}
+			},
+			addSkill2(){
+				if(this.msg!==""){
+					this.productListc2.push({id:0,skill_label:this.msg})
+					this.msg=''
+				}
+			},
+			 getList() {//默认显示
+					this.$request('/api/Position/positionType', {
+					}).then(res => {
+						this.productList = res.data;
 					})
 					
 				},
-				position_click(index){//职位列表
-					this.show = true//显示职业列表
-					this.flag = index;//职业列表高亮
-					this.$http.post('/public/index.php/api/Position/positionDetail', {position_id:index}).then(res => {
-						if(res.data.code == 1){
-							this.productListb = res.data.data
-						}
+				position_click(index){
+					this.show = true
+					this.flag = index;
+					this.$request('/api/Position/positionDetail', {position_id:index}).then(res => {
+						this.productListb = res.data;
+		
 					})
-					// 当前点击的哪一个
-					this.productList.forEach(item => {
+					this.productList.forEach(item => {// 当前点击的哪一个职位类型id
 						if(item.id == index) {
 							this.position_type = item.id
 						}
 					})
+					console.log(this.position_type)
+					
 					
 				},
-				positionb_click(index){//技能列表
-					this.show2 = true//显示技能列表
-					this.fl = index;//技能列表高亮
-					this.$http.post("/public/index.php/api/Position/skillLabel", {occupate_id:index}).then(res => {
-						if(res.data.code == 1){
-							this.productListc = res.data.data;
+				// 点击第二层联动
+				positionb_click(index,i,item){
+					this.show2 = true
+					this.$request('/api/Position/skillLabel', {occupate_id:index}).then(res => {
+						let arrIndex = this.rSelect.indexOf(i)
+						 if(arrIndex>-1){
+							this.rSelect.splice(arrIndex,1);//取消高亮
+							this.arrId.splice(arrIndex,1)
+							this.occupate = this.arrId.toString()//数组id转字符串
+						}else{
+							this.rSelect.push(i);
+							if(this.rSelect.length<=3){//显示高亮
+								if(this.rSelect.length == 1){
+									this.occupate0 = item.occupate
+									this.productListc = res.data;
+									this.jobId = index
+									this.arrId.push(index)
+									this.occupate = this.arrId.toString()//数组id转字符串
+									console.log(this.occupate)
+								}else if(this.rSelect.length == 2){
+									this.occupate1 = item.occupate
+									this.productListc1 = res.data;
+									this.jobId1 = index
+									this.arrId.push(index)
+									this.occupate = this.arrId.toString()//数组id转字符串
+									console.log(this.occupate)
+								}else if(this.rSelect.length == 3){
+									this.occupate2 = item.occupate
+									this.productListc2 = res.data;
+									this.jobId2 = index
+									this.arrId.push(index)
+									this.occupate = this.arrId.toString()//数组id转字符串
+								}
+							}else{
+								alert('只能选择3个')
+								this.rSelect.splice(arrIndex,1)
+							}
 						}
 						
 					})
-					// 当前点击的哪一个
-					this.productListb.forEach(item => {
-						if(item.id == index) {
-							this.occupate = item.id
-						}
-					})
-				},
-				positionc_click(index){
-					this.fla = index//技能列表高亮
-					this.productListc.forEach(item => {
-						if(item.id == index) {
-							this.skill.push(item)
-							console.log(this.skill)
-						}
-					})
 					
-				},
-				jobType(){//工作类型保存
-					// this.$http.post('/public/index.php/api/Position/saveWorkType',{
-					// 	user_id:this.user_id,
-					// 	position_type:this.position_type,
-					// 	occupate:this.occupate,
-					// 	skill:JSON.stringify(this.skill)
-					// }).then(res => {
-					// 	console.log(res)
+					// position_type2.forEach(itme => {
+					// 	this.occupate = itme.id
 					// })
-				}
 				
+				},
+				positionc_click(id,index,item){//技能列表第一项
+					let arrIndex1 = this.rSelect1.indexOf(index)
+					   if(arrIndex1>-1){
+						   this.rSelect1.splice(arrIndex1,1);//取消高亮
+						    this.jobIdList.splice(arrIndex1,1)
+						    console.log( this.skill)
+					   }else{
+						   if(this.rSelect1.length<9){
+							   this.rSelect1.push(index); //显示高亮
+								this.jobIdList.push(item)
+							   this.skill[this.jobId] =  this.jobIdList;
+							   console.log( this.skill)
+						   }else{alert('只能选择9个')} 
+							
+					     }
+				},
+				SkillsList(id,index,item){//技能列表第二项
+					let arrIndex2 = this.rSelect2.indexOf(index)
+					   if(arrIndex2>-1){
+						   this.rSelect2.splice(arrIndex2,1);//取消高亮
+						    this.jobIdList1.splice(arrIndex2,1)
+							console.log(this.skill)
+					   }else{
+						   if(this.rSelect2.length<9){
+							   this.rSelect2.push(index); 
+							   this.jobIdList1.push(item)
+							   this.skill[this.jobId1] =  this.jobIdList1;
+						   }else{alert('只能选择9个')} 
+					    }
+				},
+				SkillsListEnd(id,index,item){//技能列表第三项
+					let arrIndex3 = this.rSelect3.indexOf(index)
+					   if(arrIndex3 > -1){
+						   this.rSelect3.splice(arrIndex3,1);//取消高亮
+						   this.jobIdList2.splice(arrIndex3,1)
+						   console.log(this.skill)
+					   }else{
+						   if(this.rSelect3.length<9){
+							   this.rSelect3.push(index); 
+							   this.jobIdList2.push(item)
+							   this.skill[this.jobId2] =  this.jobIdList2;
+							   console.log(this.skill)
+						   }else{alert('只能选择9个')} 
+					    }
+				},
+				jobType(){//工作类型
+					this.$http.post('/public/index.php/api/Position/saveWorkType',{
+						user_id:this.user_id,
+						position_type:this.position_type,
+						occupate:this.occupate,
+						skill:JSON.stringify(this.skill)
+					}).then(res => {
+						if(res.data.code ==1){
+							uni.showToast({icon: 'none',title: '保存成功'})
+							uni.reLaunch({url: '/admin/admin_data/admin_data'})	
+						}
+					})
+				},
+				jobTypeQuery(){//查询
+					this.$http.post('/public/index.php/api/Position/getWorkType',{user_id:1,}).then(res => {
+						if(res.data.code ==1){
+							// uni.setStorage({key:'jobTypeStatus',data:res.data.code});//查询状态存入本地
+							// let jobTypeId = res.data.data.position_type//查询到的职业类型id赋值
+							// this.flag = jobTypeId//职位类型列表高亮
+							// this.show = true//职业列表显示
+							// this.$request('/api/Position/positionDetail', {position_id:jobTypeId}).then(res => {//职业列表接口
+							// 	if(res.code == 1){
+							// 		this.productListb = res.data;
+							// 	}
+							// })
+							// this.arrId = res.data.data.occupate//职业id
+							// let arr = JSON.parse(JSON.stringify(res.data.data.occupate))
+							
+							// 	let jobIndex = this.rSelect.indexOf(this.arrId)
+							// 	 if(jobIndex>-1){this.rSelect.splice(jobIndex,1)}//取消高亮
+							// 	 else{
+							// 		 arr.forEach(item => {
+							// 			this.rSelect.push(item) 
+							// 		 })
+										
+							// 		}
+							// this.arrId.forEach(item => {
+							// 	this.$request('/api/Position/skillLabel', {occupate_id:item}).then(res => {
+							// 		this.productListc = res.data;
+							// 		this.rSelect.length =1
+							// 		// this.show2 = true
+							// 	})
+							// })
+							
+						}
+					})
+				}
 			},
 		mounted(){
 			this.getList()
-			// this.jobTypeQuery()
+			this.jobTypeQuery()
 			
 		},
 		components:{
