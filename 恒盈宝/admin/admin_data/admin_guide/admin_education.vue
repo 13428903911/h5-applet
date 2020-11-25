@@ -97,13 +97,13 @@
 				},
 				rules: {
 				        school: [
-				          { required: true, message: '工作能力不能为空', trigger: 'blur' },
+				          { required: true, message: '学校名称不能为空', trigger: 'blur' },
 				        ],
 				        education: [
-				          { required: true, message: '描述内容不能为空', trigger: 'blur' }
+				          { required: true, message: '学历不能为空', trigger: 'blur' }
 				        ],
 				        major: [
-				          { required: true, message: '工作经验不能为空', trigger: 'blur' }
+				          { required: true, message: '专业不能为空', trigger: 'blur' }
 				        ]
 						// start_time: [
 						//   { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
@@ -141,7 +141,6 @@
 			educationQuery() {//查询
 				this.$http.post('/public/index.php/api/Position/getEducate',{user_id:this.$store.state.userInfo.user_id}).then(res => {
 					if(res.data.code == 1) {
-						uni.setStorage({key:'educationStaus',data:res.data.code});
 						if(res.data.data==""){}
 						    else{
 								this.fomeData = res.data.data

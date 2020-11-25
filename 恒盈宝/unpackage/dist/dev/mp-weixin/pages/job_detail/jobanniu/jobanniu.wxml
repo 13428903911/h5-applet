@@ -1,1 +1,0 @@
-<view class="btn-group data-v-494fd8ac"><label class="btn btn-blue _span data-v-494fd8ac" data-ga-name="JobdetailSubmitBtnClick" data-event-opts="{{[['tap',[['denglu']]]]}}" bindtap="__e">投递职位</label><navigator class="btn btn-default _a data-v-494fd8ac" href="javascript:;" data-event-opts="{{[['tap',[['denglu']]]]}}" bindtap="__e">免费发布类似职位</navigator></view>

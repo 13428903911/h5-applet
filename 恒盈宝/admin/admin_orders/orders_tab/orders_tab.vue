@@ -97,7 +97,9 @@
 					wait_sign:0,
 					is_account:0,
 					state:0,
-					doing:0
+					doing:0,
+					page:1,
+					limit:10
 				}).then(res => {
 					this.tabDefault = res.data.data.row
 				})	
@@ -111,7 +113,9 @@
 						wait_sign:0,
 						is_account:0,
 						state:0,
-						doing:0
+						doing:0,
+						page:1,
+						limit:10
 					}).then(res => {
 						this.orderForm = res.data.data.row
 					})	
@@ -121,7 +125,9 @@
 						wait_sign:0,
 						is_account:0,
 						state:0,
-						doing:1
+						doing:1,
+						page:1,
+						limit:10
 					}).then(res => {
 							this.orderForm = res.data.data.row
 					})
@@ -131,7 +137,9 @@
 						wait_sign:0,
 						is_account:1,
 						state:0,
-						doing:0
+						doing:0,
+						page:1,
+						limit:10
 					}).then(res => {
 						this.orderForm = res.data.data.row
 					})
@@ -141,7 +149,9 @@
 						wait_sign:0,
 						is_account:0,
 						state:1,
-						doing:0
+						doing:0,
+						page:1,
+						limit:10
 					}).then(res => {
 						this.orderForm = res.data.data.row
 					})

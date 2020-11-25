@@ -62,7 +62,7 @@
 					</dl>
 				</view>
 			</view>
-			<view class="ft-wrap w1060 cl"  v-if="status"><span @click = "qianyue" class="btn btn-blue btn-disabled" style="backgroundColor: #646566;">已签约</span></view>
+			<view class="ft-wrap w1060 cl"  v-if="is_sign == 1"><span @click = "qianyue" class="btn btn-blue btn-disabled" style="backgroundColor: #646566;">已签约</span></view>
 			<view class="ft-wrap w1060 cl" v-else><span @click = "qianyue" class="btn btn-blue btn-disabled" >确 认</span></view>
 		</view>
 		<view class="dialog quote-retract" v-show="flag">
@@ -83,11 +83,11 @@
 	export default {
 		data() {
 			return {
-				status:false,
 				getContract:[],
 				contractname:"",
 				flag:false,
 				task_id: this.appId,
+				is_sign:''
 			}
 		},
 		props:{
@@ -109,6 +109,7 @@
 					user_id:this.$store.state.userInfo.user_id,
 				}).then(res => {
 					if(res.data.code == 1){
+						// uni.setStorage({key:'signinStaus',data:res.data.code});
 						this.flag = !this.flag;
 						this.status = true
 					}
@@ -117,16 +118,16 @@
 			}
 		},
 		created() {
-			this.$http.post('/public/index.php/api/Work/getContract',{
-				task_id:this.task_id
-			}).then(res => {
+			this.$http.post('/public/index.php/api/Work/getContract',{task_id:this.task_id}).then(res => {
 				this.getContract = res.data.data
 				this.getContract.forEach(item => {
 					this.task_id = item.id
+					this.is_sign = item.is_sign
 					this.contractname = item.name
 					this.$emit("delete",this.contractname)
 				})
 			})
+			
 		}
 	}
 </script>

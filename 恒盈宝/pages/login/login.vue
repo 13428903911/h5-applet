@@ -141,7 +141,6 @@
 					mobile: that.mobile,
 					captcha:that.captcha,
 				}).then(function(res) {
-					console.log(res)
 					// let resData =res.data
 					if (res.data.code == 1) {
 						that.$store.commit('login',res.data.data.userinfo)

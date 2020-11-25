@@ -3,62 +3,72 @@
 		<Adminheader></Adminheader>
 		<view class="resume-work w700 fixed-ft work-exper container">
 			<view class="form-group-hd"><h2 class="title">您的工作经历</h2></view>
-			<el-form class="form-wrap" :model="dynamicValidateForm" ref="dynamicValidateForm.experience" :rules="rules">
+			<el-form class="form-wrap" :model="dynamicValidateForm" ref="dynamicValidateForm">
 				<el-form-item class="form-group"
-				  v-for="(experience,index) in dynamicValidateForm.experience"
+				  v-for="(item,index) in dynamicValidateForm.experience"
 				  :label="'工作经历' + (index+1)"
-				  :key="experience.key"
-				  :prop="'experience.' + index + '.value'" 
-				  
+				  :key="item.key"
+				 
 				>
 				<view style="margin-top: 40px;"><p>请从最近的工作经历开始填写</p></view>
 				<view class="form-group">
 					<view class="label"><label>职位头衔</label></view> 
-					<el-form-item class="content" prop="job_title">
-						<el-input type="text" name="tag0jobTitle" placeholder="请输入职位头衔" class="ipt-text" 
-						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.job_title"></el-input>
+					<el-form-item class="content" :prop="'experience.' + index + '.job_title'" 
+						:rules="{required: true, message: '职位头衔不能为空', trigger: 'blur'}" >
+						<el-input type="text" name="tag0jobTitle" placeholder="请输入职位头衔" id="ipt" class="ipt-text" 
+						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="item.job_title"></el-input>
 					</el-form-item> 
+					<!-- <p class="tips-error" style="display: none;">职位头衔不能为空</p> -->
 				</view>
 				<view class="form-group">
 					<view class="label">
 						<label>公司名称<span class="remark">（将作为您所属的公司展示）</span></label>
 					</view> 
-					<el-form-item class="content" prop="company">
-						<el-input type="text" name="tag0corporateName" placeholder="请输入公司名称" class="ipt-text" 
-						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.company"></el-input>
+					<el-form-item class="content"
+					:prop="'experience.' + index + '.company'" :rules="{required: true, message: '公司名称不能为空', trigger: 'blur'}">
+						<el-input type="text" name="tag0corporateName" placeholder="请输入公司名称" id="text" class="ipt-text" 
+						data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="item.company"></el-input>
 					</el-form-item> 
-						<p class="tips-error" style="display: none;">将作为您所属的公司展示</p>
+						<!-- <p class="tips-error" style="display: none;">公司名称不能为空</p> -->
 				</view>
 				<view class="form-group">
 					<view class="label"><label style="margin-bottom: 10px;">入职时间</label></view>
-					 <el-form-item class="block" prop="entry_time">
+					 <el-form-item class="block" :prop="'experience.' + index + '.entry_time'"
+					  :rules="{required: true, message: '入职时间不能为空', trigger: 'blur'}">
 					    <el-date-picker
-					      v-model="experience.entry_time"
+						 id="ruzhi"
+					      v-model="item.entry_time"
 						   value-format=" yyyy-MM-dd" format="yyyy-MM-dd"
 					      type="date"
 					      placeholder="入职时间">
 					    </el-date-picker>
 					  </el-form-item>
+					  <!-- <p class="tips-error" style="display: none;">入职时间不能为空</p> -->
 				</view>
 				<view class="form-group">
 					<view class="label"><label style="margin-bottom: 10px;">离职时间</label></view>
-					 <el-form-item class="block" prop="leave_time">
+					 <el-form-item class="block" :prop="'experience.' + index + '.leave_time'" 
+					  :rules="{required: true, message: '离职时间不能为空', trigger: 'blur'}">
 					    <el-date-picker
-					      v-model="experience.leave_time"
+						  id =  "lizhi"
+					      v-model="item.leave_time"
 						   value-format=" yyyy-MM-dd" format="yyyy-MM-dd"
 					      type="date"
 					      placeholder="离职时间">
 					    </el-date-picker>
 					  </el-form-item>
-
+					  <!-- <p class="tips-error" style="display: none;">离职时间不能为空</p> -->
 				</view>
 				<view class="form-group">
 					<view class="label"><label style="margin-bottom: 10px;">工作内容及业绩</label></view>
-					<el-form-item class="content" prop="job_content">
-						<textarea @input = "descInput" name="tag0jobContent" placeholder="请填写您的工作内容及工作业绩" 
-						class="ipt-area" data-vv-scope="__global__" aria-required="true" aria-invalid="false" v-model="experience.job_content">
-						</textarea>
+					<el-form-item class="content" :prop="'experience.' + index + '.job_content'" 
+					  :rules="{required: true, message: '工作内容及业绩不能为空', trigger: 'blur'}">
+					   <el-input type="textarea" v-model="item.job_content" :rows="5" class="textarea"></el-input>
+						<!-- <textarea id="neirong" name="tag0jobContent" placeholder="请填写您的工作内容及工作业绩" 
+						class="ipt-area" v-model="item.job_content">
+						</textarea> -->
 					</el-form-item>
+					<!-- <p class="tips-error" style="display: none;">工作内容及业绩不能为空</p> -->
 				</view>
 			
 				 <view class="form-group form-group-del" @click.prevent="removeDomain(experience)">
@@ -75,7 +85,7 @@
 			</view>
 			<view class="ft-wrap"><view class="w700 mcenter cl"><span @click="fanhui()" class="to-head fl-li-co">
 				<i style="font-size: 24px;margin-right: 5px;vertical-align: bottom;" class="icon iconfont">&#xe60b;</i>&nbsp;返回
-			            </span> <span class="btn btn-blue fr" @click="submit('dynamicValidateForm.experience')">保 存</span> <!----></view></view>
+			            </span> <span class="btn btn-blue fr" @click="submit('dynamicValidateForm')">保 存</span> <!----></view></view>
 		</view>
 	</view>
 </template>
@@ -85,7 +95,6 @@
 	export default {
 		data() {
 			return {
-				arr:[],
 				endId:'',
 				 remnant:0,
 				//保存的参数
@@ -103,17 +112,7 @@
 									update_time: parseInt(new Date().getTime()/1000)
 								}
 							]
-						},
-					rules: {
-						  // job_title:[
-							 //  {required: true, message: '职位头衔不能为空', trigger: 'blur' }
-						  // ],
-						// company: [
-						//   { required: true, message: '公司名称不能为空', trigger: 'blur' },
-						// ],
-						// job_content: [
-						//   { required: true, message: '工作内容及业绩不能为空', trigger: 'blur' },
-						// ],
+						
 					}
 				}	
 		},
@@ -126,25 +125,10 @@
 			 submit(formName) {
 				 this.$refs[formName].validate((valid) => {
 				         if (valid) {
-							 var p = document.getElementsByClassName("tips-error")
-							 var ipttext = document.getElementsByClassName("el-input__inner")[0]
-							 var ipttexts = document.getElementsByClassName("el-input__inner")[1]
-							 var ipttextk = document.getElementsByClassName("uni-textarea-textarea")[0]
-							 if(ipttext.value.length==0){
-							   p[0].style.display = "block"
-							   return false;
-							 }else if(ipttexts.value.length==0){
-								 p[1].style.display = "block"
-								 return false;
-							 }else if(ipttextk.value.length==0){
-								 uni.showToast({icon: 'none',title: '工作内容及业绩不能为空'})
-								 return false;
-							 }
 							 this.$http.post('/public/index.php/api/Position/saveExperience',{
 							 	user_id:this.user_id,
 							 	experience: JSON.stringify(this.dynamicValidateForm.experience)
 							 }).then(res => {
-								 console.log(res)
 							 	if(res.data.code === 1){
 							 		this.experience=''
 							 		uni.showToast({icon: 'none',title: '保存成功'})
@@ -187,7 +171,6 @@
 			 jowUndergoQuery() {//查询
 					this.$http.post('/public/index.php/api/Position/getExperience',{user_id:this.$store.state.userInfo.user_id}).then(res => {
 						if(res.data.code == 1) {
-							uni.setStorage({key:'jobStatus',data:res.data.code})
 							if(res.data.data.length<=0){}
 							else{
 								let resdata = res.data.data
@@ -353,4 +336,5 @@
     cursor: pointer;
     line-height: 20px;
 }
+
 </style>

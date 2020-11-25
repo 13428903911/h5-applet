@@ -150,7 +150,6 @@
 	 powerQuery(){//查询
 		this.$http.post('/public/index.php/api/Position/getAbility',{user_id:this.$store.state.userInfo.user_id}).then(res => {
 			if(res.data.code ==1){
-				uni.setStorage({key:'userEvaluateStatus',data:res.data.code});
 				if(res.data.data.length<0){}
 				else{this.ruleForm = res.data.data}
 			}		
@@ -207,7 +206,7 @@
 		    box-sizing: border-box;
 		    border-radius: 2px;
 			select, textarea {
-			    *font-size: 100%;
+			    font-size: 100%;
 			    line-height: 1.2;
 			    color: inherit;
 				outline: 0;

@@ -137,11 +137,12 @@
 		background: #fff;
 		.fl {
 		    float: left;
+			height: 50px;
 		}
 		.logo{
 			img{width: 109px;height: 32px;}
 			.icon {
-			    margin-left: 9px;
+			    margin-left: 0px;
 			    color: #fff;
 			    vertical-align: super;
 			    font-size: 24px;
@@ -166,7 +167,7 @@
 			.btn.btn-blue {
 			    background: #008bf7;
 			    color: #fff;  
-				margin-right: 10px;
+				margin-right: 5px;
 			}
 			.btn.btn-green {
 			    background: #2ed573;

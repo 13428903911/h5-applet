@@ -5,102 +5,21 @@
 			<h2 class="text">金斗云故事</h2>
 		</view>
 		<view class="main">
-			<navigator url="./details/details1" open-type="navigate">
-			<view class="main_box">
-				
+			<view class="main_box" v-for="(item,index) in toryList" :key="item.id">	
 					<view class="img_text">
-						<img src="../../static/images/story1.png"/>
+						<img :src="item.head_image"/>
 					</view>
-					<view class="text">
-						<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-						<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-						 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-						 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-						 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
+					<view class="text" @click="title(item.id)">
+						<h3>{{item.title}}</h3>
+						<p>
+							{{item.digest}}
 						 </p>
-						 <p>2020年10月29日 14:33</p>
+						 <p>{{item.create_time}}</p>
 					</view>
-				
 			</view>
-			</navigator>
-			
-			<view class="main_box">
-				<view class="img_text">
-					<img src="../../static/images/story2.png"/>
-				</view>
-				<view class="text">
-					<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-					<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-					 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-					 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-					 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
-					 </p>
-					 <p>2020年10月29日 14:33</p>
-				</view>
-			</view>
-			
-			<view class="main_box">
-				<view class="img_text">
-					<img src="../../static/images/story3.png"/>
-				</view>
-				<view class="text">
-					<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-					<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-					 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-					 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-					 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
-					 </p>
-					 <p>2020年10月29日 14:33</p>
-				</view>
-			</view>
-			
-			<view class="main_box">
-				<view class="img_text">
-					<img src="../../static/images/story4.png"/>
-				</view>
-				<view class="text">
-					<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-					<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-					 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-					 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-					 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
-					 </p>
-					 <p>2020年10月29日 14:33</p>
-				</view>
-			</view>
-			
-			<view class="main_box">
-				<view class="img_text">
-					<img src="../../static/images/story5.png"/>
-				</view>
-				<view class="text">
-					<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-					<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-					 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-					 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-					 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
-					 </p>
-					 <p>2020年10月29日 14:33</p>
-				</view>
-			</view>
-			
-			<view class="main_box">
-				<view class="img_text">
-					<img src="../../static/images/story6.png"/>
-				</view>
-				<view class="text">
-					<h3>金斗云双十一送福利，消费满1000元送1000元！</h3>
-					<p>2020 双十一即将到来，金斗云远程工作平台推出双十一特惠福利活动！
-					 满足参与条件即可领取优惠礼包！【注册福利】活动时间：2020年11月01日至2020年11月11日参与要求：
-					 活动时间内注册成为金斗云招聘账户并发布职位福利介绍：注册发布职位需求即送100元福利领取方式：
-					 活动期间进入优惠券-领券中心即可领取【消费福利】活动时间：2020年11月01日至2020年11月30日参与要求
-					 </p>
-					 <p>2020年10月29日 14:33</p>
-				</view>
-			</view>
+		</view>
 			<!-- 底部 -->
 			<Jobfooter></Jobfooter>
-		</view>
 	</view>
 </template>
 
@@ -109,15 +28,30 @@
 	import Jobfooter from '@/pages/job_detail/jobfooter/jobfooter.vue'
 	export default {
 		data() {
-			return{}
+			return{
+				toryList:[],
+			}
 		},
 		methods:{
-		
+			getStory(){
+				this.$http.post('/public/index.php/api/Index/getStoryList',{
+					page:1,
+					limit:2,
+				}).then(res =>{
+					this.toryList  = res.data.data.row
+				})
+			},
+			title(id){
+				uni.reLaunch({url: '/pages/story/details/details1?id='+id})	
+			}
 		},
 		components:{
 			Header,
 			Jobfooter
 		},
+		mounted(){
+			this.getStory()
+		}
 	}
 </script>
 

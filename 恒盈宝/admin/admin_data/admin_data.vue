@@ -101,8 +101,8 @@
 		</view>
 		<view class="ft-wrap">
 			<view class="w700 mcenter">
-				<span class="text">审核通过后，即可投递职位</span> 
-				<span class="btn-group"><span class="btn btn-disabled">提交审核</span></span>
+				<!-- <span class="text">审核通过后，即可投递职位</span> -->
+				<span class="btn-group"><span @click="queding" class="btn btn-disabled">确 定</span></span>
 			</view>
 		</view>
 	</view>
@@ -123,13 +123,7 @@
 			}
 		},
 		mounted() {
-			uni.getStorage({key: 'jobTypeStatus', success:(res) => {if(res.data == 1){this.jobTypeStatus = res.data}},})//取出存储的工作类型
-			uni.getStorage({key: 'jobStatus', success:(res) => {if(res.data == 1){this.jobStatus = res.data}},})//取出存储的工作经历状态
-			uni.getStorage({key: 'educationStaus', success:(res) => {if(res.data == 1){this.educationStaus = res.data}},})//取出存储的教育信息状态
-			uni.getStorage({key: 'itemStaus', success:(res) => {if(res.data == 1){this.itemStaus = res.data}},})//取出存储的项目经验状态
-			uni.getStorage({key: 'jobMimeStaus', success:(res) => {if(res.data == 1){this.jobMimeStaus = res.data}},})//取出存储的工作时间状态
-			uni.getStorage({key: 'userEvaluateStatus', success:(res) => {if(res.data == 1){this.userEvaluateStatus = res.data}},})//取出存储的个人评价状态
-			
+			this.completeData()
 			},
 		methods: {
 			cktxjy(){
@@ -171,6 +165,28 @@
 				wx.navigateTo({
 					url:'/admin/admin_data/admin_guide/admin_education'
 				})
+			},
+			completeData(){//查看是否完成资料
+				this.$http.post('/public/index.php/api/User/getIsFill',{user_id:this.$store.state.userInfo.user_id}).then(res => {
+					if(res.data.code ==1){
+						this.jobTypeStatus = res.data.data.work_type
+						this.jobStatus = res.data.data.experience
+						this.educationStaus = res.data.data.educate
+						this.itemStaus = res.data.data.project
+						this.jobMimeStaus = res.data.data.wage
+						this.userEvaluateStatus = res.data.data.ability
+					}
+				})
+			},
+			queding(){
+				if(this.jobTypeStatus==1 && this.jobStatus==1 && this.educationStaus==1 && this.itemStaus==1 && this.jobMimeStaus==1 && this.userEvaluateStatus==1){
+					wx.navigateTo({
+						url:'/pages/hots/hots'
+					})
+				}else{
+					 uni.showToast({icon: 'none',title: '请先完善资料'})
+				}
+				
 			}
 		},
 		components:{
@@ -286,8 +302,8 @@ a {
 		    box-sizing: border-box;
 		}
 		.btn.btn-disabled {
-		    background: #f6f8f9;
-		    color: #9ca6ae;
+		    color: #fff;
+		    background: #008bf7;
 		    cursor: not-allowed;
 		}
 	}

@@ -55,13 +55,6 @@
 			}
 		},
 		{
-		    "path" : "pages/job_tdzw/job_tdzw",
-		    "style": {
-		    	"navigationBarTitleText": "金斗云",
-		    	"navigationBarBackgroundColor":"#FFFFFF"
-		    }
-		},
-		{
 		    "path" : "admin/admin_log/admin_log",
 		   "style": {
 		   	"navigationBarTitleText": "金斗云",
@@ -129,21 +122,8 @@
 		    	"navigationBarBackgroundColor":"#FFFFFF"
 		    }
 		},
-		{
-		    "path" : "pages/job_detail/ProjectBudget",
-		    "style": {
-		    	"navigationBarTitleText": "金斗云",
-		    	"navigationBarBackgroundColor":"#FFFFFF"
-		    }
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "金斗云",
-				"navigationBarBackgroundColor":"#FFFFFF"
-			}
-		}
-	    ,{
+
+	    {
             "path" : "pages/register/register",
             "style": {
             	"navigationBarTitleText": "金斗云",

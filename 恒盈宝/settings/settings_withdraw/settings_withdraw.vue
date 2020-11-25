@@ -65,6 +65,7 @@
 			 uni.getStorage({key:'userVerify',success:(res) => {
 				 this.formData.payee = res.data.username
 				 this.formData.id_card = res.data.id_card
+				 this.formData.account_number = res.data.card_no
 			 }});
 		},
 		methods: {

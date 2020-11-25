@@ -24,9 +24,24 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.data-v-891c2434 .el-input__inner {
+  border-radius: 0px;
+  height: 45px;
+  line-height: 45px;
+  border: 1px solid #9ca6ae;
+}
+.data-v-891c2434 .el-input-group__append {
+  background-color: #FFFFFF;
+  border: none;
+}
+.data-v-891c2434 .el-button {
+  background: #409EFF;
+  color: #FFFFFF;
+}
 .register.data-v-891c2434 {
   font-size: 28rpx;
   padding: 0rpx 40rpx;
+  padding-bottom: 20px;
 }
 .register .images image.data-v-891c2434 {
   width: 240rpx;
@@ -65,15 +80,15 @@
   font-size: 28rpx;
 }
 .register .form-group .form-po .form-yz.data-v-891c2434 {
-  width: 120px;
+  width: 37%;
   display: inline-block;
-  height: 46px;
-  line-height: 46px;
   text-align: center;
   position: absolute;
-  top: 29px;
+  height: 2.4rem;
+  line-height: 40px;
+  top: 40%;
   left: 50%;
-  margin-left: 47px;
+  margin-left: 12%;
   color: #008bf7;
   border-left: 1px solid #9ca6ae;
 }

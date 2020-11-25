@@ -102,6 +102,7 @@
 }
 .bg-gray .header .header-drawer .nav ._li ._a.data-v-45ae3526 {
   color: #092235;
+  font-size: 16px;
 }
 .bg-gray .header .header-drawer .nav ._li.cur ._a.data-v-45ae3526 {
   color: #008bf7;
@@ -113,7 +114,7 @@
 }
 .bg-gray .header .active.data-v-45ae3526 {
   display: block;
-  padding: 0px 0 332px;
+  padding: 0px 0 470px;
 }
 .bg-gray .header.switch.data-v-45ae3526 {
   box-shadow: 0 0 10px 0 rgba(9, 34, 53, 0.05);

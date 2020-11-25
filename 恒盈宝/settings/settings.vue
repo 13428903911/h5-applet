@@ -9,7 +9,7 @@
 					  <span class="right"><i class="icon iconfont">&#xe605;</i></span>
 				  </view>
 				 
-				 <view class="admin_nbr gaodu" @click="shiming()">
+				 <view class="admin_nbr gaodu" @click="shiming">
 				  		<view class="left"><i class="icon iconfont" style="margin-top:15px;font-size: 22px;color:#9ca6ae">&#xe6d0;</i></view>
 				  		<view class="center">实名认证</view>
 				  	    <view class="right"><i class="icon iconfont">&#xe605;</i></view>
@@ -40,7 +40,8 @@
 	export default {
 		data() {
 			return {
-				active:false
+				active:false,
+				AuthenticationId:'',
 			}
 		},
 		methods: {
@@ -50,11 +51,14 @@
 			shiming(){
 				uni.getStorage({key: 'userAuthentication', success:(res) => {
 					if(res.data[0].id){
-					wx.navigateTo({	url:'/settings/setting_verified/setting_verified'})
-					}else{
-						wx.navigateTo({url:'/settings/seting_Certification/seting_Certification'})
+						this.AuthenticationId = res.data[0].id
 					}
 				}})
+				if(this.AuthenticationId){
+					wx.navigateTo({	url:'/settings/setting_verified/setting_verified'})
+				}else{
+					wx.navigateTo({url:'/settings/seting_Certification/seting_Certification'})
+				}
 			},
 			bdwx(){
 				wx.navigateTo({

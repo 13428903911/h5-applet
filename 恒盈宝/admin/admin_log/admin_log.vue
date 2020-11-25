@@ -135,6 +135,7 @@
 				todayIndex:'',
 				checkInfo:'',
                 multipleSelection: [],
+				checked:false
 			}
 		},
 		methods: {
@@ -142,6 +143,7 @@
 			        this.isIndeterminate = false;
 			      },
 			    handleCheckedCitiesChange(index,items,id) {
+					this.checked = !this.checked
 					this.multipleSelection.push(items)
 					this.todayId = id
 					this.todayIndex = index
@@ -196,15 +198,21 @@
 				})
 			},
 			sqjs(){//结算
+			if(this.checked){
 				this.$http.post('/public/index.php/api/Work/saveWorkCheck',{
 					work_id:this.todayId,
 					apply_id:this.apply_id
 				}).then(res => {
 					if(res.data.code == 1){
+						uni.setStorage({key:'SettlementId',data:this.apply_id})
 						 uni.showToast({icon: 'none',title: '申请结算成功'});
-						 window.location.reload();
+						 window.location.reload();//刷新
 					}
 				})
+			}else{
+				uni.showToast({icon: 'none',title: '请先选择需要结算任务'})
+			}
+				
 			}
 		},
 		onLoad(option) {

@@ -5,7 +5,7 @@
 				<h2 style="font-size: 16px;margin-left:65px">系统通知</h2>
 			</template>
 		    <template slot="left">
-		    	<view style="font-size: 30px;" @click="$router.back()"><</view>
+		    	<view style="font-size: 30px;" @click="$router.back()"></view>
 		    </template>
 		</uni-nav-bar>
 	</view>

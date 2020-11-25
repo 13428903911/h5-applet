@@ -1,5 +1,16 @@
 {
   "navigationBarTitleText": "金斗云",
   "navigationBarBackgroundColor": "#FFFFFF",
-  "usingComponents": {}
+  "usingComponents": {
+    "header": "/pages/header/header",
+    "index-banner": "/pages/index/index_banner/index_banner",
+    "index-category": "/pages/index/index_category/index_category",
+    "idnex-intro": "/pages/index/idnex_intro/idnex_intro",
+    "index-floorcase": "/pages/index/index_floorcase/index_floorcase",
+    "index-floorstep": "/pages/index/index_floorstep/index_floorstep",
+    "index-floorcomment": "/pages/index/index_floorcomment/index_floorcomment",
+    "index-floorcustomer": "/pages/index/index_floorcustomer/index_floorcustomer",
+    "index-container": "/pages/index/index_container/index_container",
+    "jobfooter": "/pages/job_detail/jobfooter/jobfooter"
+  }
 }

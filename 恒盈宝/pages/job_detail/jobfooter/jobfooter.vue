@@ -1,7 +1,7 @@
 <template>
 	<view class="footer">
 		<view class="intro-more w1060">
-			<view class="intro-more-detail">
+		<!-- 	<view class="intro-more-detail">
 				<view  class="intro-more-title">热门类目</view>
 				<view  class="intro-more-items">
 					<a  href="jvascript:;" class="intro-more-item">市场销售</a>
@@ -22,7 +22,7 @@
 					<a  href="javascript:;" class="intro-more-item">解决方案</a> 
 					<a  href="javascript:;" class="intro-more-item">团队协同</a>
 				</div>
-			</view>
+			</view> -->
 			<view class="intro-more-detail">
 				<div  class="intro-more-title">联系我们</div>
 				<div  class="intro-more-items">

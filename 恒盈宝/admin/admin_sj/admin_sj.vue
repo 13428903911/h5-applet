@@ -143,7 +143,11 @@
 				this.$refs[formName].validate((valid) => {
 						if (valid) {
 						    this.$http.post('/public/index.php/api/Work/addWorkHours',this.fomeData).then(res => {
-						    	 uni.reLaunch({url: '/admin/admin_log/admin_log?apply_id='+this.fomeData.apply_id})
+								if(res.data.code == 1){
+									uni.setStorage({key:'jobStatus',data:res.data.code})
+									uni.reLaunch({url: '/admin/admin_log/admin_log?apply_id='+this.fomeData.apply_id})
+								}
+						    	
 						    })
 						} else {
 						  return false;

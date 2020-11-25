@@ -15,7 +15,7 @@
 					<view class="">
 						<view class="item" v-for="(item,index) in management" :key="index">
 							<view class="info">
-								<p class="title" @tap="workManagement(item.id)">
+								<p class="title" @tap="workManagement(item.task_id)">
 									<a>{{item.task_name}}</a>
 								</p> 
 								<view class="other cl"><span class="t-gray">投递时间：{{item.apply_time}}</span></view>

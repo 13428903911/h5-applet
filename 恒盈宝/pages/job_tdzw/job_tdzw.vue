@@ -86,7 +86,7 @@
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
 		button{
-			width: 30%;
+			width: 35%;
 			color: #FFFFFF;
 			font-size: 14px;
 		}

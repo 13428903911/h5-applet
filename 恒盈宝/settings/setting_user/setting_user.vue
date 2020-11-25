@@ -174,8 +174,8 @@
 				.user_img{
 					margin-top:20px;
 					img{
-						width:200px;
-						border-radius: 50% !important;
+						width: 100%;
+						height: 100%;
 					}					
 				}
 				.headPortrait{
@@ -196,5 +196,21 @@
 				}
 			}
 		}
+		}
+		/deep/ .el-upload{
+			margin-left: 0px;
+		}
+		.avatar-uploader{
+			width: 170px;
+			height: 170px;
+			background-color: #f2f2f2;
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-pack: center;
+			justify-content: center;
+			-ms-flex-align: center;
+			align-items: center;
+			border-radius: 100%;
+			overflow: hidden;
 		}
 </style>

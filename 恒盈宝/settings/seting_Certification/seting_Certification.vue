@@ -119,6 +119,15 @@
 			})
 			
 		},
+		watch:{
+			ruleForm:{
+				handler(){
+					this.wiathAlter = true
+					console.log(this.wiathAlter)
+				},
+				deep:true
+			}
+		},
 		methods:{
 			submitForm(formName) {
 			     this.$refs[formName].validate((valid) => {

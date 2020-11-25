@@ -177,7 +177,7 @@
 									<h3 class="t-default"><!---->{{item.name}}</h3>
 									 <p class="t-gray"><span style="padding-right: 15px;">{{item.hiring_type}}</span> <span>{{item.working_hours}}</span><!----></p> 
 									 <view class="tags">
-										 <view style="display: inline-block;" class="inner cl t-gray" v-for="items in item.skill"><span>{{items}}</span>
+										 <view style="display: inline-block;" class="inner cl t-gray" v-for="items in item.skill" :key="items.index"><span>{{items}}</span>
 										 </view>
 									 </view> 
 								<view class="meta"></view></view></a>
@@ -190,7 +190,7 @@
 		<Jobanniu></Jobanniu>-->
 		<view class="footer">
 			 <el-button type="primary" class="btn" @tap="deliveryPosition" v-if="is_send == 0">投递职位</el-button>
-			 <el-button type="primary" class="btn noDeliveryPosition" @tap="deliveryPosition" v-else disabled>已投递</el-button>
+			 <el-button type="primary" class="btn noDeliveryPosition" v-else disabled>已投递</el-button>
 		</view>
 	</view>
 </template>
@@ -221,7 +221,6 @@
 					task_id:this.task_id
 				 }).then(res => {
 					this.Detailsll = res.data.data
-					console.log(this.Detailsll.hiring_type)
 				 })	
 			},
 			postRed() {//查询
@@ -239,29 +238,30 @@
 				
 			},
 			deliveryPosition() {//投递职位
-			
-			
 				uni.getStorage({key: 'userAuthentication', success:(res) => {
 					if(res.data[0].id){
+						this.AuthenticationId = true
+					}
+				}})
+				if(this.AuthenticationId){
+					if(this.$store.state.userInfo.user_id){
 						this.$http.post('/public/index.php/api/Work/sendResume',{
 							task_id:this.task_id,
 							user_id:this.$store.state.userInfo.user_id,
 							expand_content:''
 						}).then(res => {
-							if(this.$store.state.userInfo.user_id || this.$store.state.userInfo.nickname){
 								if(res.data.code == 1){
 									let optionObj = JSON.stringify(this.RedJow)
 									uni.reLaunch({url: '/pages/job_tdzw/job_tdzw?optionObj='+optionObj})
 								}
-							}else{
-								uni.reLaunch({url:'/pages/login/login'})
-							}
-							
 						})
 					}else{
-						uni.reLaunch({url: '/settings/seting_Certification/seting_Certification'})
+						uni.reLaunch({url:'/pages/login/login'})
 					}
-				}})
+				
+				}else{
+					uni.reLaunch({url: '../../settings/seting_Certification/seting_Certification'})
+				}
 			
 			},
 			queryTask(){//查看任务是否投递

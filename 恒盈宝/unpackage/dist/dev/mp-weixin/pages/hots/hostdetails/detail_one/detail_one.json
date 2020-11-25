@@ -1,10 +1,4 @@
 {
-  "usingComponents": {
-    "hostdetails": "/pages/hots/hostdetails/hostdetails",
-    "detaila": "/pages/hots/hostdetails/detail_one/detail_a/detail_a",
-    "detailb": "/pages/hots/hostdetails/detail_one/detail_b/detail_b",
-    "detailc": "/pages/hots/hostdetails/detail_one/detail_c/detail_c",
-    "detaild": "/pages/hots/hostdetails/detail_one/detail_d/detail_d",
-    "detailf": "/pages/hots/hostdetails/detail_one/detail_f/detail_f"
-  }
+  "component": true,
+  "usingComponents": {}
 }

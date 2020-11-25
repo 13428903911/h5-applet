@@ -56,8 +56,7 @@
 							<label>项目链接 <span style="color: rgb(156, 166, 174); font-size: 14px;"></span></label>
 						</view> 
 						<view class="content">
-							<input type="text" name="tag0projectLink" placeholder="请输入项目链接，如github.com/react" class="ipt-text"
-							 data-vv-scope="__global__" aria-required="false" aria-invalid="false" v-model="project.project_link">
+							<el-input name="tag0projectLink" placeholder="请输入项目链接，如github.com/react" v-model="project.project_link"></el-input>
 						</view> 
 						<p class="tips-error" style="display: none;"></p>
 					</view>
@@ -105,6 +104,7 @@
 	export default {
 		data() {
 			return {
+				endId:"",
 				remnant:0,
 				 fileList: [],//显示图片地址
 				 imgObj:{//图片地址
@@ -198,6 +198,7 @@
 			   },
 			   addDomain() {
 				 this.dynamicValidateForm.project.push({
+					 id:this.endId,
 				     user_id: this.$store.state.userInfo.user_id,
 				     project_name:'',
 				     introduce:'',
@@ -217,13 +218,17 @@
 		
 					this.$http.post('/public/index.php/api/Position/getProject',{user_id:this.$store.state.userInfo.user_id}).then(res => {
 							if(res.data.code == 1) {
-								uni.setStorage({key:'itemStaus',data:res.data.code});
 								if(res.data.data.length<0){}
 								    else{
-										this.dynamicValidateForm.project = res.data.data
+										// this.dynamicValidateForm.project = res.data.data
 										this.imgObj.name = this.dynamicValidateForm.project[0].file.slice(-9)
 										this.imgObj.url = this.dynamicValidateForm.project[0].file
-										this.fileList.push(this.imgObj)   
+										this.fileList.push(this.imgObj)  
+										  let resdata = res.data.data
+										           this.dynamicValidateForm.project = resdata
+										           let objdata = resdata[resdata.length-1]  //让数组最后一个长度-1
+										           this.endId = objdata.id+1//数组的id加1
+										           
 								    }
 							}
 							

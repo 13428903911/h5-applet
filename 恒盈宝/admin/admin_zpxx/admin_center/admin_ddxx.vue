@@ -2,22 +2,21 @@
 	<view class="box box-order">
 		<view class="steps">
 			<view class="fl done">
-				<view class="num"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="activ" v-if="is_sign == 1"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="num" v-else><i class="icon iconfont">&#xe625;</i></view>
 				<p class="text">签约</p>
 			</view>
-			<!-- <view class="fl done">
-				<view class="num"><i class="icon iconfont">&#xe625;</i></view>
-				<p class="text">预付款</p>
-			</view> -->
 			<view class="fl done">
-				<view class="num"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="activ" v-if="is_sign == 1"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="num" v-else><i class="icon iconfont">&#xe625;</i></view>
 				<p class="text">人才工作</p>
 			</view>
 			<view class="fl done">
-				<view class="num"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="activ" v-if="is_sign == 1 && SettlementId == apply_id"><i class="icon iconfont">&#xe625;</i></view>
+				<view class="num" v-else><i class="icon iconfont">&#xe625;</i></view>
 				<p class="text">结算</p>
 			</view>
-			<view class="fl done cur">
+			<view class="fl done">
 				<view class="num"><i class="icon iconfont">&#xe625;</i></view>
 				<p class="text">完成</p>
 			</view>
@@ -61,7 +60,9 @@
 		data() {
 			return {
 				apply_id:this.appId,
-				aimMsge:{}
+				SettlementId:'',//结算状态
+				aimMsge:{},
+				is_sign:''//签约状态
 			}
 		},
 		props:{
@@ -69,12 +70,29 @@
 		},
 		mounted() {
 			this.indentDetails()
+			this.signinQuery()
+			// uni.getStorage({key: 'jobStatus', success:(res) => {this.jobStatus = res.data}})
+			uni.getStorage({key: 'SettlementId', success:(res) => {this.SettlementId = res.data}})
 		},
 		methods: {
-			ckgz(){
-				wx.navigateTo({
-					url:'/admin/admin_log/admin_log?apply_id='+this.apply_id
+			signinQuery(){//查看是否签约
+				this.$http.post('/public/index.php/api/Work/getContract',{task_id:this.apply_id}).then(res => {
+					if(res.data.code == 1){
+						this.getContract = res.data.data
+						this.getContract.forEach(item => {
+							this.is_sign = item.is_sign
+						})
+					}
+					
 				})
+			},
+			ckgz(){
+				if(this.is_sign == 1){
+					wx.navigateTo({url:'/admin/admin_log/admin_log?apply_id='+this.apply_id})
+				}else{
+					 uni.showToast({icon: 'none',title: '请先完成签约'})
+				}
+				
 			},
 			indentDetails(){
 				this.$http.post('/public/index.php/api/Work/getOrderInfo',{
@@ -146,6 +164,19 @@
 					font-weight: 400;
 				}
 			}
+			.activ{
+				background: #008bf7;
+				color: #FFFFFF;
+				position: relative;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+				line-height: 40px;
+				border-radius: 40px;
+				font-family: Montserrat-Regular;
+				z-index: 1;
+			}
+			
 			.text {
 			    margin-top: 10px;
 			}
@@ -218,6 +249,7 @@
 					.text {
 					    color: rgba(9,34,53,.5);
 					}
+					
 				}
 			}
 			.fl {

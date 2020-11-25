@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "金斗云",
-  "navigationBarBackgroundColor": "#FFFFFF",
-  "usingComponents": {}
+  "usingComponents": {},
+  "component": true
 }

@@ -3,14 +3,7 @@
   "navigationBarBackgroundColor": "#FFFFFF",
   "usingComponents": {
     "header": "/pages/header/header",
-    "jobheader": "/pages/job_detail/job_header/job_header",
-    "jobxsjs": "/pages/job_detail/jobxsjs/jobxsjs",
-    "jobzwxx": "/pages/job_detail/jobzwxx/jobzwxx",
-    "jobzwyq": "/pages/job_detail/jobzwyq/jobzwyq",
     "jobzyet": "/pages/job_detail/jobzyet/jobzyet",
-    "jobgzbz": "/pages/job_detail/jobgzbz/jobgzbz",
-    "jobzwtj": "/pages/job_detail/jobzwtj/jobzwtj",
-    "jofooter": "/pages/job_detail/jobfooter/jobfooter",
-    "jobanniu": "/pages/job_detail/jobanniu/jobanniu"
+    "jobgzbz": "/pages/job_detail/jobgzbz/jobgzbz"
   }
 }

@@ -129,11 +129,11 @@
 				        this.allList = this.allList.concat(res.data.data.row.slice(this.page * 5, (this.page + 1) * 5))
 				        this.page++		
 				        if (res.data.data.row.length >= this.page * 5) {		
-				          this.moreShowBoolen = true				
+				          this.moreShowBoolen = true	
+							
 				        } else {
 							this.moreShowBoolen = false
 				        }
-				
 				      })
 			}
 	},

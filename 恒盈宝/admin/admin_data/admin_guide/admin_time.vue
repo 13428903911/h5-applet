@@ -215,20 +215,6 @@
 		components:{
 			Adminheader
 		},
-		mounted() {
-			var obtn = document.getElementsByClassName("frc")
-			for(var i=0;i<obtn.length;i++){
-				obtn[i].index = i;
-				obtn[i].onclick = function(index){
-					if(this.className.indexOf('active')){
-						this.className = "active btn btn-gray"
-					}else{
-						this.className = "btn btn-gray"
-					}
-					
-				}				
-			}
-		}
 	}
 </script>
 
